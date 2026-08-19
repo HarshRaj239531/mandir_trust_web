@@ -1,4 +1,4 @@
-<section id="hero-section" class="relative min-h-[90vh] sm:min-h-screen flex flex-col justify-between pt-32 sm:pt-40 pb-0 overflow-hidden">
+<section id="hero-section" class="relative -mt-16 sm:-mt-20 min-h-screen flex flex-col justify-between pt-20 sm:pt-24 pb-0 overflow-hidden">
     
     <!-- 1. Background Mandir Sanctuary (100% Unobstructed, Crisp & High Definition) -->
     <div class="absolute inset-0 w-full h-full -z-10 overflow-hidden">

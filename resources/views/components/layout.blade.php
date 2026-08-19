@@ -38,26 +38,28 @@
 
         <div class="overflow-x-clip min-h-screen flex flex-col justify-between relative z-10">
             
-            <!-- Ancient Manuscript Top Ribbon -->
-            <div class="bg-[#2C1D14] text-[#EADBC0] text-xs py-2 px-4 border-b border-[#A16207]/40 shadow-sm relative z-50">
-                <div class="container mx-auto flex flex-wrap justify-between items-center gap-2">
-                    <div class="flex items-center gap-3">
-                        <span class="text-[#CA8A04] text-sm animate-flame">🪔</span>
+            <!-- Ancient Manuscript Top Ribbon (Clean, Single-Line, Responsive) -->
+            <div class="bg-[#2C1D14] text-[#EADBC0] text-[11px] sm:text-xs py-1.5 px-3 sm:px-4 border-b border-[#A16207]/40 shadow-sm relative z-50">
+                <div class="container mx-auto flex justify-between items-center gap-2">
+                    <div class="flex items-center gap-2">
+                        <span class="text-[#CA8A04] text-xs animate-flame">🪔</span>
                         <span class="font-marcellus tracking-wider">
-                            <strong class="text-[#F4EBD9] uppercase">Nitya Sandhya Aarti:</strong> Starting in <span id="aarti-timer" class="font-mono font-bold text-[#FFFDF9] bg-[#1C120C] px-2 py-0.5 rounded border border-[#A16207]/50 shadow-inner">01h : 42m : 18s</span>
+                            <strong class="text-[#F4EBD9] uppercase hidden xs:inline">Sandhya Aarti:</strong>
+                            <span class="text-[#F4EBD9] uppercase xs:hidden">Aarti:</span>
+                            <span id="aarti-timer" class="font-mono font-bold text-[#FFFDF9] bg-[#1C120C] px-1.5 py-0.5 rounded border border-[#A16207]/50 text-[10px] sm:text-xs ml-1">01h : 42m : 18s</span>
                         </span>
                     </div>
 
-                    <div class="flex items-center gap-6 text-[11px] uppercase tracking-wider font-semibold">
+                    <div class="flex items-center gap-3 sm:gap-6 text-[10px] sm:text-[11px] uppercase tracking-wider font-semibold">
                         <span class="hidden md:inline-flex items-center gap-2 text-[#EADBC0] font-marcellus">
                             <span class="text-[#CA8A04]">ॐ</span> ॐ असतो मा सद्गमय । तमसो मा ज्योतिर्गमय । <span class="text-[#CA8A04]">ॐ</span>
                         </span>
-                        <button onclick="playTempleBell()" class="inline-flex items-center gap-1.5 bg-[#422B1E] hover:bg-[#5C3C2A] text-[#F4EBD9] px-3 py-1 rounded-full border border-[#A16207]/60 transition-all cursor-pointer group shadow-sm hover:border-[#CA8A04]">
-                            <span class="group-hover:scale-125 transition-transform text-[#CA8A04] inline-block">🔔</span>
-                            <span class="font-cinzel text-[10px] tracking-wider">Sound Temple Bell</span>
+                        <button onclick="playTempleBell()" class="inline-flex items-center gap-1 bg-[#422B1E] hover:bg-[#5C3C2A] text-[#F4EBD9] px-2.5 py-1 rounded-full border border-[#A16207]/60 transition-all cursor-pointer shadow-xs">
+                            <span class="text-[#CA8A04]">🔔</span>
+                            <span class="font-cinzel text-[9px] sm:text-[10px]">Bell</span>
                         </button>
-                        <a href="{{ route('donate') }}" class="hidden sm:inline-block text-[#CA8A04] hover:text-[#FFFDF9] underline decoration-[#CA8A04]/50 underline-offset-4 transition-colors">
-                            80G Tax Exemption
+                        <a href="{{ route('donate') }}" class="text-[#CA8A04] hover:text-[#FFFDF9] underline decoration-[#CA8A04]/50 underline-offset-2 transition-colors">
+                            80G Exemption
                         </a>
                     </div>
                 </div>
@@ -67,8 +69,8 @@
                 {{ $slot }}
             </main>
 
-            <!-- Global Floating Action Buttons with Divine Hover Glow -->
-            <div class="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
+            <!-- Global Floating Action Buttons (Hidden on small mobile to avoid covering screen, visible on tablet/desktop) -->
+            <div class="hidden md:flex fixed bottom-6 right-6 z-40 flex-col gap-3">
                 <button onclick="openBookingModal()" class="shimmer-btn hover-lift group relative flex items-center gap-3 bg-gradient-to-r from-[#912003] via-[#B93815] to-[#912003] hover:from-[#6C1802] hover:to-[#912003] text-[#FFFDF9] font-medium text-sm py-3 px-5 rounded-full shadow-[0_10px_25px_rgba(108,24,2,0.35)] border border-[#DEC7A2]/50 transition-all duration-300 hover:scale-105 cursor-pointer">
                     <span class="text-base animate-flame">🪔</span>
                     <span class="font-cinzel tracking-wider font-semibold">Book Sankalpam</span>
