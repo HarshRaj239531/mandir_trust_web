@@ -2,8 +2,401 @@
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
+@source '../views/**/*.blade.php';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Outfit', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-serif: 'Cinzel', 'Marcellus', Georgia, serif;
+    --font-cinzel: 'Cinzel', Georgia, serif;
+    --font-decorative: 'Cinzel Decorative', Georgia, serif;
+    --font-marcellus: 'Marcellus', Georgia, serif;
+    
+    --color-parchment-50: #FFFDF9;
+    --color-parchment-100: #FAF6EC;
+    --color-parchment-200: #F4EBD9;
+    --color-parchment-300: #EADBC0;
+    --color-parchment-400: #DEC7A2;
+    --color-parchment-500: #CBB084;
+    
+    --color-ink-900: #1C120C;
+    --color-ink-800: #2C1D14;
+    --color-ink-700: #422B1E;
+    
+    --color-terracotta-600: #B93815;
+    --color-terracotta-700: #912003;
+    --color-terracotta-800: #6C1802;
+    
+    --color-gold-antique: #A16207;
+    --color-gold-leaf: #CA8A04;
+}
+
+/* Ancient Parchment Paper Texture Background */
+body {
+    background-color: #F8F3E8;
+    background-image: 
+        radial-gradient(ellipse at 50% 0%, rgba(254, 243, 199, 0.6) 0%, transparent 70%),
+        radial-gradient(ellipse at 100% 100%, rgba(217, 119, 6, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 0% 100%, rgba(180, 83, 9, 0.06) 0%, transparent 60%);
+    color: #2C1D14;
+    font-family: 'Outfit', sans-serif;
+}
+
+/* Custom Scrollbar styled as antique brass */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #F4EBD9;
+}
+::-webkit-scrollbar-thumb {
+    background: #B93815;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #912003;
+}
+
+/* Top Sacred Reading Progress Bar */
+#reading-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #912003, #CA8A04, #DEC7A2, #CA8A04, #912003);
+    background-size: 200% 100%;
+    z-index: 100;
+    width: 0%;
+    transition: width 0.1s ease-out;
+    box-shadow: 0 0 10px rgba(202, 138, 4, 0.7);
+    animation: gold-shimmer-bar 3s linear infinite;
+}
+
+@keyframes gold-shimmer-bar {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+/* Ancient Sacred Scroll (ताम्रपत्र / भोजपत्र) Style */
+.parchment-scroll {
+    background: #FFFDF9;
+    background-image: linear-gradient(180deg, #FBF6EB 0%, #FFFDF9 8%, #FFFDF9 92%, #FBF6EB 100%);
+    border: 1px solid #D6C29E;
+    box-shadow: 
+        0 15px 40px rgba(66, 43, 30, 0.08),
+        inset 0 0 40px rgba(180, 83, 9, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    position: relative;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+}
+
+.parchment-scroll::before,
+.parchment-scroll::after {
+    content: '';
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #D6C29E, transparent);
+    transition: background 0.3s ease;
+}
+.parchment-scroll::before { top: 6px; }
+.parchment-scroll::after { bottom: 6px; }
+
+/* Antique Gold Leaf Gradient Text */
+.gold-leaf-text {
+    background: linear-gradient(135deg, #782606 0%, #A16207 40%, #CA8A04 70%, #912003 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    position: relative;
+}
+
+/* Antique Ornate Border Trim */
+.antique-border {
+    border: 2px double #CBB084;
+    outline: 1px solid rgba(180, 83, 9, 0.15);
+    outline-offset: 4px;
+    transition: outline-color 0.3s ease, border-color 0.3s ease;
+}
+
+.antique-border:hover {
+    outline-color: rgba(202, 138, 4, 0.4);
+    border-color: #A16207;
+}
+
+/* Illuminated Initial Capital Letter for Ancient Scripture */
+.drop-cap::first-letter {
+    font-family: 'Cinzel Decorative', Georgia, serif;
+    float: left;
+    font-size: 3.5rem;
+    line-height: 0.8;
+    padding-top: 4px;
+    padding-right: 10px;
+    padding-bottom: 2px;
+    color: #912003;
+    font-weight: 900;
+    text-shadow: 1px 1px 2px rgba(145, 32, 3, 0.2);
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+.drop-cap:hover::first-letter {
+    transform: scale(1.05);
+    color: #CA8A04;
+}
+
+/* Sacred Mandala Divider */
+.sacred-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin: 2rem 0;
+    color: #A16207;
+}
+.sacred-divider::before,
+.sacred-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #DEC7A2, #A16207, #DEC7A2, transparent);
+}
+
+/* Sacred Marquee Keyframes */
+@keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee 35s linear infinite;
+}
+
+.animate-marquee:hover {
+    animation-play-state: paused;
+}
+
+/* Diya Flame Flicker */
+@keyframes flame-flicker {
+    0%, 100% {
+        transform: scale(1) translateY(0);
+        opacity: 0.95;
+        filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.8)) drop-shadow(0 0 16px rgba(217, 119, 6, 0.4));
+    }
+    25% {
+        transform: scale(1.06, 0.96) translateY(-1px);
+        opacity: 1;
+        filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.9)) drop-shadow(0 0 20px rgba(217, 119, 6, 0.6));
+    }
+    50% {
+        transform: scale(0.95, 1.05) translateY(-2px);
+        opacity: 0.85;
+        filter: drop-shadow(0 0 7px rgba(251, 191, 36, 0.7)) drop-shadow(0 0 14px rgba(217, 119, 6, 0.3));
+    }
+    75% {
+        transform: scale(1.03, 0.98) translateY(-0.5px);
+        opacity: 0.92;
+        filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.85)) drop-shadow(0 0 18px rgba(217, 119, 6, 0.5));
+    }
+}
+.animate-flame {
+    display: inline-block;
+    animation: flame-flicker 2.5s ease-in-out infinite;
+}
+
+/* Subtle Diya Float */
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-7px) rotate(0.6deg); }
+}
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+/* Gentle Slow Float for Badges & Icons */
+@keyframes float-gentle {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-4px); }
+}
+.animate-float-gentle {
+    animation: float-gentle 4s ease-in-out infinite;
+}
+
+/* Temple Bell Ringing Animation */
+@keyframes bell-swing {
+    0% { transform: rotate(0deg); }
+    15% { transform: rotate(18deg); }
+    30% { transform: rotate(-16deg); }
+    45% { transform: rotate(12deg); }
+    60% { transform: rotate(-10deg); }
+    75% { transform: rotate(6deg); }
+    90% { transform: rotate(-3deg); }
+    100% { transform: rotate(0deg); }
+}
+.bell-ring-active {
+    display: inline-block;
+    transform-origin: top center;
+    animation: bell-swing 1s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* Sacred Pulse Glow */
+@keyframes sacred-pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(202, 138, 4, 0.4), 0 0 20px rgba(145, 32, 3, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 0 12px rgba(202, 138, 4, 0), 0 0 35px rgba(202, 138, 4, 0.35);
+    }
+}
+.animate-sacred-pulse {
+    animation: sacred-pulse 3s infinite;
+}
+
+/* Slow Rotating Sacred Mandala / Chakra */
+@keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+    animation: spin-slow 28s linear infinite;
+}
+
+/* Gold Shimmer Sweep across buttons and cards */
+@keyframes gold-shimmer {
+    0% { transform: translateX(-150%) rotate(45deg); }
+    100% { transform: translateX(250%) rotate(45deg); }
+}
+.shimmer-btn {
+    position: relative;
+    overflow: hidden;
+}
+.shimmer-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        60deg,
+        rgba(255, 255, 255, 0) 30%,
+        rgba(255, 255, 255, 0.35) 50%,
+        rgba(255, 255, 255, 0) 70%
+    );
+    transform: translateX(-150%) rotate(45deg);
+    transition: all 0.75s ease;
+    pointer-events: none;
+}
+.shimmer-btn:hover::after {
+    animation: gold-shimmer 1.2s ease-in-out;
+}
+
+/* Card Hover Elevation Lift with Warm Shadow */
+.hover-lift {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+.hover-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 45px rgba(66, 43, 30, 0.14), 0 0 25px rgba(202, 138, 4, 0.12);
+    border-color: #A16207;
+}
+
+/* Ken Burns slow breathing animation for Hero and Darshan windows */
+@keyframes ken-burns {
+    0% { transform: scale(1.03) translate(0, 0); }
+    50% { transform: scale(1.12) translate(-1%, -1%); }
+    100% { transform: scale(1.03) translate(0, 0); }
+}
+.ken-burns {
+    animation: ken-burns 24s ease-in-out infinite alternate;
+}
+
+/* Ancient Parchment Scroll Modal Opening Animation */
+@keyframes modal-unfold {
+    0% {
+        opacity: 0;
+        transform: scale(0.92) translateY(25px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+.modal-unfold {
+    animation: modal-unfold 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Glowing Diya Aura on Live Stream */
+@keyframes live-glow {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(145, 32, 3, 0.5), 0 0 30px rgba(202, 138, 4, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(145, 32, 3, 0.8), 0 0 50px rgba(202, 138, 4, 0.5);
+    }
+}
+.animate-live-glow {
+    animation: live-glow 2.5s infinite;
+}
+
+/* Pulsing Ring for Live Indicators */
+@keyframes pulse-ring {
+    0% {
+        transform: scale(0.95);
+        opacity: 0.9;
+    }
+    50% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+}
+.pulse-ring::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: inherit;
+    background: currentColor;
+    animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    pointer-events: none;
+}
+
+/* Background floating sparks canvas */
+#divine-particles-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0.7;
+}
+
+/* Stagger & Scroll Animation Ready States */
+.reveal-fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    will-change: transform, opacity;
+}
+
+.reveal-fade-left {
+    opacity: 0;
+    transform: translateX(-35px);
+    will-change: transform, opacity;
+}
+
+.reveal-fade-right {
+    opacity: 0;
+    transform: translateX(35px);
+    will-change: transform, opacity;
+}
+
+.reveal-scale-in {
+    opacity: 0;
+    transform: scale(0.92);
+    will-change: transform, opacity;
 }
