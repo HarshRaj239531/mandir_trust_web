@@ -31,66 +31,58 @@
 
             <!-- Center: Elegant Parchment Nav Links -->
             <nav class="hidden lg:flex items-center gap-1 xl:gap-2 text-xs font-bold uppercase tracking-wider font-cinzel relative z-10">
-                <a href="{{ route('home') }}" class="px-3.5 py-2 rounded-xl transition-all duration-300 relative group hover:scale-105 {{ request()->routeIs('home') ? 'bg-[#912003] text-[#FFFDF9] shadow-sm' : 'text-[#422B1E] hover:text-[#912003] hover:bg-[#FAF6EC]' }}">
+                <a href="{{ route('home') }}" class="px-3 py-2 rounded-xl transition-all duration-300 relative group hover:scale-105 {{ request()->routeIs('home') ? 'bg-[#912003] text-[#FFFDF9] shadow-sm' : 'text-[#422B1E] hover:text-[#912003] hover:bg-[#FAF6EC]' }}">
                     <span>Home</span>
-                    @if(request()->routeIs('home'))
-                        <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#CA8A04] rounded-full animate-ping"></span>
-                        <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#CA8A04] rounded-full"></span>
-                    @endif
                 </a>
 
-                <a href="{{ route('about') }}" class="px-3.5 py-2 rounded-xl transition-all duration-300 relative group hover:scale-105 {{ request()->routeIs('about') ? 'bg-[#912003] text-[#FFFDF9] shadow-sm' : 'text-[#422B1E] hover:text-[#912003] hover:bg-[#FAF6EC]' }}">
+                <a href="{{ route('about') }}" class="px-3 py-2 rounded-xl transition-all duration-300 relative group hover:scale-105 {{ request()->routeIs('about') ? 'bg-[#912003] text-[#FFFDF9] shadow-sm' : 'text-[#422B1E] hover:text-[#912003] hover:bg-[#FAF6EC]' }}">
                     <span>Heritage</span>
-                    @if(request()->routeIs('about'))
-                        <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#CA8A04] rounded-full animate-ping"></span>
-                        <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#CA8A04] rounded-full"></span>
-                    @endif
                 </a>
 
-                <a href="{{ route('poojas') }}" class="px-3.5 py-2 rounded-xl transition-all duration-300 relative group hover:scale-105 {{ request()->routeIs('poojas') ? 'bg-[#912003] text-[#FFFDF9] shadow-sm' : 'text-[#422B1E] hover:text-[#912003] hover:bg-[#FAF6EC]' }}">
+                <a href="{{ route('poojas') }}" class="px-3 py-2 rounded-xl transition-all duration-300 relative group hover:scale-105 {{ request()->routeIs('poojas') ? 'bg-[#912003] text-[#FFFDF9] shadow-sm' : 'text-[#422B1E] hover:text-[#912003] hover:bg-[#FAF6EC]' }}">
                     <span>Poojas</span>
-                    @if(request()->routeIs('poojas'))
-                        <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#CA8A04] rounded-full animate-ping"></span>
-                        <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#CA8A04] rounded-full"></span>
-                    @endif
                 </a>
 
-                <a href="{{ route('events') }}" class="px-3.5 py-2 rounded-xl transition-all duration-300 relative group hover:scale-105 {{ request()->routeIs('events') ? 'bg-[#912003] text-[#FFFDF9] shadow-sm' : 'text-[#422B1E] hover:text-[#912003] hover:bg-[#FAF6EC]' }}">
+                <a href="{{ route('events') }}" class="px-3 py-2 rounded-xl transition-all duration-300 relative group hover:scale-105 {{ request()->routeIs('events') ? 'bg-[#912003] text-[#FFFDF9] shadow-sm' : 'text-[#422B1E] hover:text-[#912003] hover:bg-[#FAF6EC]' }}">
                     <span>Festivals</span>
-                    @if(request()->routeIs('events'))
-                        <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#CA8A04] rounded-full animate-ping"></span>
-                        <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#CA8A04] rounded-full"></span>
-                    @endif
                 </a>
 
-                <a href="{{ route('facilities') }}" class="px-3.5 py-2 rounded-xl transition-all duration-300 relative group hover:scale-105 {{ request()->routeIs('facilities') ? 'bg-[#912003] text-[#FFFDF9] shadow-sm' : 'text-[#422B1E] hover:text-[#912003] hover:bg-[#FAF6EC]' }}">
+                <a href="{{ route('facilities') }}" class="px-3 py-2 rounded-xl transition-all duration-300 relative group hover:scale-105 {{ request()->routeIs('facilities') ? 'bg-[#912003] text-[#FFFDF9] shadow-sm' : 'text-[#422B1E] hover:text-[#912003] hover:bg-[#FAF6EC]' }}">
                     <span>Ashram</span>
-                    @if(request()->routeIs('facilities'))
-                        <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#CA8A04] rounded-full animate-ping"></span>
-                        <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#CA8A04] rounded-full"></span>
-                    @endif
                 </a>
 
-                <a href="{{ route('gallery') }}" class="px-3.5 py-2 rounded-xl transition-all duration-300 relative group hover:scale-105 {{ request()->routeIs('gallery') ? 'bg-[#912003] text-[#FFFDF9] shadow-sm' : 'text-[#422B1E] hover:text-[#912003] hover:bg-[#FAF6EC]' }}">
+                <a href="{{ route('gallery') }}" class="px-3 py-2 rounded-xl transition-all duration-300 relative group hover:scale-105 {{ request()->routeIs('gallery') ? 'bg-[#912003] text-[#FFFDF9] shadow-sm' : 'text-[#422B1E] hover:text-[#912003] hover:bg-[#FAF6EC]' }}">
                     <span>Gallery</span>
-                    @if(request()->routeIs('gallery'))
-                        <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#CA8A04] rounded-full animate-ping"></span>
-                        <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[#CA8A04] rounded-full"></span>
-                    @endif
                 </a>
+
+                <!-- Devotee Registration Link -->
+                @guest
+                    <a href="{{ route('register') }}" class="px-3 py-2 rounded-xl transition-all duration-300 relative group hover:scale-105 text-[#912003] hover:bg-[#912003]/10 font-bold border border-[#912003]/30">
+                        <span>भक्त पंजीकरण</span>
+                    </a>
+                @endguest
             </nav>
 
-            <!-- Right: Quick Actions (Temple Bell & Pavitra Daan) -->
-            <div class="hidden sm:flex items-center gap-3 relative z-10">
+            <!-- Right: Devotee Account & Quick Actions -->
+            <div class="hidden sm:flex items-center gap-2.5 relative z-10">
                 <button onclick="playTempleBell()" title="Sound Temple Bell" class="w-9 h-9 rounded-full bg-[#FAF6EC] hover:bg-[#EADBC0] border border-[#DEC7A2] flex items-center justify-center text-[#912003] hover:scale-110 transition-all cursor-pointer shadow-xs group">
                     <span class="group-hover:rotate-12 transition-transform text-sm inline-block">🔔</span>
                 </button>
 
-                <button onclick="openBookingModal()" class="hover-lift text-xs uppercase tracking-wider font-bold text-[#6C1802] hover:text-black px-4 py-2 rounded-full border border-[#DEC7A2] hover:bg-[#FAF6EC] transition-all cursor-pointer font-cinzel">
-                    Book Pooja
-                </button>
+                @auth
+                    <!-- Devotee My Account Dropdown / Button -->
+                    <a href="{{ route('devotee.profile') }}" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAF6EC] hover:bg-[#F4EBD9] border border-[#CA8A04] shadow-xs text-xs font-cinzel font-bold text-[#1C120C] hover:scale-105 transition-all">
+                        <img src="{{ auth()->user()->profile_photo_url }}" alt="{{ auth()->user()->nickname }}" class="w-6 h-6 rounded-full object-cover border border-[#912003]">
+                        <span class="max-w-[90px] truncate text-[#912003]">{{ auth()->user()->nickname }}</span>
+                    </a>
+                @else
+                    <!-- Login / Register Modal Trigger -->
+                    <a href="{{ route('login') }}" class="text-xs uppercase tracking-wider font-bold text-[#6C1802] hover:text-[#912003] px-3 py-2 rounded-full border border-[#DEC7A2] hover:bg-[#FAF6EC] transition-all cursor-pointer font-cinzel">
+                        Login
+                    </a>
+                @endauth
 
-                <a href="{{ route('donate') }}" class="shimmer-btn hover-lift px-5 py-2 rounded-full bg-gradient-to-r from-[#912003] via-[#B93815] to-[#912003] hover:from-[#6C1802] text-[#FFFDF9] font-cinzel font-bold text-xs uppercase tracking-widest shadow-md transition-all flex items-center gap-1.5">
+                <a href="{{ route('donate') }}" class="shimmer-btn hover-lift px-4 py-2 rounded-full bg-gradient-to-r from-[#912003] via-[#B93815] to-[#912003] hover:from-[#6C1802] text-[#FFFDF9] font-cinzel font-bold text-xs uppercase tracking-widest shadow-md transition-all flex items-center gap-1.5">
                     <span>🙏</span> <span>Pavitra Daan</span>
                 </a>
             </div>
@@ -132,8 +124,24 @@
                 <span>॥</span>
             </a>
             
-            <div class="pt-4 border-t border-[#DEC7A2] flex flex-col gap-2.5">
-                <button onclick="openBookingModal()" class="w-full py-3 rounded-xl bg-[#FAF6EC] border border-[#DEC7A2] text-[#6C1802] font-bold text-xs uppercase tracking-wider transition-all hover:bg-[#DEC7A2]/40">
+            <div class="pt-3 border-t border-[#DEC7A2] flex flex-col gap-2">
+                @auth
+                    <a href="{{ route('devotee.profile') }}" class="p-3 rounded-xl bg-[#FAF6EC] border border-[#CA8A04] text-[#912003] font-bold text-xs uppercase tracking-wider flex items-center justify-between">
+                        <span>👤 Mera Khata ({{ auth()->user()->nickname }})</span>
+                        <span>→</span>
+                    </a>
+                @else
+                    <div class="grid grid-cols-2 gap-2">
+                        <a href="{{ route('register') }}" class="py-2.5 px-3 rounded-xl bg-[#912003] text-[#FFFDF9] text-center font-bold text-xs uppercase tracking-wider">
+                            भक्त पंजीकरण
+                        </a>
+                        <a href="{{ route('login') }}" class="py-2.5 px-3 rounded-xl bg-[#FAF6EC] border border-[#DEC7A2] text-[#422B1E] text-center font-bold text-xs uppercase tracking-wider">
+                            भक्त लॉगिन
+                        </a>
+                    </div>
+                @endauth
+
+                <button onclick="openBookingModal()" class="w-full py-3 rounded-xl bg-[#FAF6EC] border border-[#DEC7A2] text-[#6C1802] font-bold text-xs uppercase tracking-wider transition-all hover:bg-[#DEC7A2]/40 mt-1">
                     Book Sacred Pooja
                 </button>
                 <a href="{{ route('donate') }}" class="shimmer-btn w-full text-center py-3.5 rounded-xl bg-gradient-to-r from-[#912003] to-[#B93815] text-[#FFFDF9] font-cinzel font-bold text-xs uppercase tracking-widest shadow-md transition-all hover:scale-[1.02]">

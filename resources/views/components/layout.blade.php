@@ -50,17 +50,32 @@
                         </span>
                     </div>
 
-                    <div class="flex items-center gap-3 sm:gap-6 text-[10px] sm:text-[11px] uppercase tracking-wider font-semibold">
-                        <span class="hidden md:inline-flex items-center gap-2 text-[#EADBC0] font-marcellus">
+                    <div class="flex items-center gap-2 sm:gap-4 text-[10px] sm:text-[11px] uppercase tracking-wider font-semibold">
+                        <span class="hidden lg:inline-flex items-center gap-2 text-[#EADBC0] font-marcellus">
                             <span class="text-[#CA8A04]">ॐ</span> ॐ असतो मा सद्गमय । तमसो मा ज्योतिर्गमय । <span class="text-[#CA8A04]">ॐ</span>
                         </span>
-                        <button onclick="playTempleBell()" class="inline-flex items-center gap-1 bg-[#422B1E] hover:bg-[#5C3C2A] text-[#F4EBD9] px-2.5 py-1 rounded-full border border-[#A16207]/60 transition-all cursor-pointer shadow-xs">
+                        <button onclick="playTempleBell()" class="inline-flex items-center gap-1 bg-[#422B1E] hover:bg-[#5C3C2A] text-[#F4EBD9] px-2 py-0.5 rounded-full border border-[#A16207]/60 transition-all cursor-pointer shadow-xs">
                             <span class="text-[#CA8A04]">🔔</span>
                             <span class="font-cinzel text-[9px] sm:text-[10px]">Bell</span>
                         </button>
-                        <a href="{{ route('donate') }}" class="text-[#CA8A04] hover:text-[#FFFDF9] underline decoration-[#CA8A04]/50 underline-offset-2 transition-colors">
-                            80G Exemption
-                        </a>
+                        
+                        @auth
+                            <a href="{{ route('devotee.profile') }}" class="text-[#CA8A04] hover:text-[#FFFDF9] font-cinzel font-bold flex items-center gap-1">
+                                <span>👤</span> <span>{{ auth()->user()->nickname }}</span>
+                            </a>
+                            @if (auth()->user()->is_admin)
+                                <a href="{{ route('admin.dashboard') }}" class="text-[#DEC7A2] hover:text-white bg-[#422B1E] px-2 py-0.5 rounded text-[9px] border border-[#CA8A04]/40">
+                                    Admin
+                                </a>
+                            @endif
+                        @else
+                            <a href="{{ route('register') }}" class="text-[#CA8A04] hover:text-[#FFFDF9] underline decoration-[#CA8A04]/50 underline-offset-2 transition-colors">
+                                भक्त पंजीकरण
+                            </a>
+                            <a href="{{ route('login') }}" class="text-[#EADBC0] hover:text-white transition-colors">
+                                लॉगिन
+                            </a>
+                        @endauth
                     </div>
                 </div>
             </div>

@@ -13,10 +13,20 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->string('name'); // Real Name (Private, Admin editable)
+            $table->string('nickname'); // Nick Name (Publicly visible to other mobiles, Devotee editable)
+            $table->string('mother_name'); // Mother's Name (Admin editable only)
+            $table->string('gender'); // Gender: Male, Female, Other (Admin editable only)
+            $table->date('dob'); // Date of Birth (Admin editable only)
+            $table->string('email')->unique(); // Gmail/Email (Admin editable only)
+            $table->string('mobile_number'); // Mobile Number (Devotee & Admin editable)
+            $table->string('whatsapp_number')->nullable(); // WhatsApp Number (Devotee & Admin editable)
+            $table->string('pincode', 10); // Pincode (Devotee & Admin editable)
+            $table->string('profile_photo')->nullable(); // Selfie / File Picture (Devotee updatable anytime)
+            $table->string('password'); // Password
+            $table->boolean('is_admin')->default(false); // Admin flag
+            $table->string('status')->default('active'); // Account status: active / inactive
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });
