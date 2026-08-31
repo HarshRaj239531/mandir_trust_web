@@ -39,7 +39,7 @@
                 
                 <!-- Live Stream Video Window (7 cols) -->
                 <div class="lg:col-span-7 relative bg-black rounded-2xl overflow-hidden aspect-video shadow-md group reveal-fade-left">
-                    <img src="{{ asset('images/mandir-aarti.jpg') }}" alt="Live Aarti Broadcast" class="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-1000">
+                    <img src="{{ \App\Models\SiteSetting::getImageUrl('live_darshan_image', 'images/mandir-aarti.jpg') }}" alt="Live Aarti Broadcast" class="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-1000">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
                     
                     <div class="absolute top-4 left-4 flex items-center gap-2 px-3 py-1 rounded-full bg-[#912003] text-white font-bold text-xs uppercase tracking-widest shadow animate-live-glow">
@@ -138,7 +138,7 @@
 
                 <div class="lg:col-span-6 relative reveal-fade-right">
                     <div class="parchment-scroll p-3 rounded-3xl antique-border shadow-xl aspect-[4/3] group overflow-hidden hover-lift">
-                        <img src="{{ asset('images/mandir-goshala.jpg') }}" alt="Temple Goshala" class="w-full h-full object-cover rounded-2xl transition-transform duration-1000 group-hover:scale-105">
+                        <img src="{{ \App\Models\SiteSetting::getImageUrl('goshala_seva_image', 'images/mandir-goshala.jpg') }}" alt="Temple Goshala" class="w-full h-full object-cover rounded-2xl transition-transform duration-1000 group-hover:scale-105">
                     </div>
                     <div class="text-center mt-3 text-xs font-marcellus text-[#6C1802] italic">
                         ॥ सुरभि गोशाला आश्रम • नित्य गोपूजन ॥

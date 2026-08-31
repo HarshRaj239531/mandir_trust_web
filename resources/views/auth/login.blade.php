@@ -76,13 +76,25 @@
                 </div>
             </form>
 
-            <div class="mt-6 pt-4 border-t border-[#DEC7A2]/60 text-center">
+            <div class="mt-6 pt-4 border-t border-[#DEC7A2]/60 text-center space-y-3">
                 <p class="text-xs text-[#6C1802] font-marcellus">
                     New Devotee? 
                     <a href="{{ route('register') }}" class="text-[#912003] font-bold underline hover:text-black ml-1">
                         भक्त पंजीकरण (Register Here)
                     </a>
                 </p>
+
+                <!-- Admin Access Note -->
+                <div class="p-3 rounded-2xl bg-[#FAF6EC] border border-[#DEC7A2] text-left text-xs font-sans">
+                    <div class="flex items-center justify-between text-[#912003] font-cinzel font-bold mb-1">
+                        <span>🛡️ Admin Portal Login Demo:</span>
+                        <span class="text-[10px] bg-[#912003]/10 px-2 py-0.5 rounded-full">Administrator</span>
+                    </div>
+                    <div class="text-[#422B1E] space-y-0.5 font-mono text-[11px]">
+                        <div>ID: <strong class="text-[#1C120C]">mandiradmin@gmail.com</strong></div>
+                        <div>Password: <strong class="text-[#1C120C]">Admin@12345</strong></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

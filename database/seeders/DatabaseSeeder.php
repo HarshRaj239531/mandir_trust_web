@@ -60,5 +60,7 @@ class DatabaseSeeder extends Seeder
             'is_admin' => false,
             'status' => 'active',
         ]);
+        // 4. Seed Dynamic Mandir CMS (Poojas, Bookings, Donations, Events, Facilities, Galleries)
+        $this->call(MandirCmsSeeder::class);
     }
 }

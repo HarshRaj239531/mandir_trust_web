@@ -155,6 +155,11 @@ class AuthController extends Controller
                 return back()->withErrors(['login' => 'Your account is deactivated. Please contact Mandir Trust Administration.'])->onlyInput('login');
             }
 
+            // If Admin, redirect straight to Mandir Admin Portal
+            if (Auth::user()->is_admin) {
+                return redirect()->intended(route('admin.dashboard'))->with('success', '॥ ॐ नमः शिवाय ॥ Welcome to Mandir Admin Portal, ' . (Auth::user()->nickname ?: Auth::user()->name) . '!');
+            }
+
             return redirect()->intended(route('devotee.profile'))->with('success', '॥ ॐ नमः शिवाय ॥ Welcome back, ' . Auth::user()->nickname . '!');
         }
 

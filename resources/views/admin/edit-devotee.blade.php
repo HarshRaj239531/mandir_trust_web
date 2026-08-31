@@ -11,8 +11,8 @@
                     Modify locked fields (1, 3, 4, 5, 6) and all devotee records.
                 </p>
             </div>
-            <a href="{{ route('admin.dashboard') }}" class="px-4 py-2 rounded-xl bg-white hover:bg-[#FAF7F2] border border-[#E5DCD0] text-xs font-bold font-cinzel text-[#6C1802] transition-colors">
-                ← Back to Roster
+            <a href="{{ route('admin.devotees.index') }}" class="px-4 py-2 rounded-xl bg-white hover:bg-[#FAF7F2] border border-[#E5DCD0] text-xs font-bold font-cinzel text-[#6C1802] transition-colors">
+                ← Back to Devotees Roster
             </a>
         </div>
 

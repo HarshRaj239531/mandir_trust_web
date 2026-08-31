@@ -29,91 +29,47 @@
     <section class="py-16 bg-[#FAF6EC] border-y border-[#DEC7A2]/60">
         <div class="container mx-auto px-6 md:px-12 max-w-5xl space-y-12 stagger-parent">
             
-            <!-- Festival 1: Maha Shivaratri -->
-            <div class="parchment-scroll p-6 sm:p-10 rounded-3xl antique-border shadow-xl space-y-6 hover-lift group">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-4 border-b border-[#DEC7A2]">
-                    <div>
-                        <span class="text-[10px] uppercase font-marcellus tracking-widest text-[#912003] font-bold">फाल्गुन कृष्ण चतुर्दशी • All Night Vigil</span>
-                        <h3 class="font-cinzel text-2xl sm:text-3xl font-bold text-[#1C120C] mt-1 group-hover:text-[#912003] transition-colors">Maha Shivaratri Akhand Mahotsav</h3>
+            @forelse ($events as $e)
+                @php
+                    $eventImg = $e->image ? (str_starts_with($e->image, 'http') ? $e->image : asset('storage/' . $e->image)) : null;
+                @endphp
+                <div class="parchment-scroll p-6 sm:p-10 rounded-3xl antique-border shadow-xl space-y-6 hover-lift group">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-4 border-b border-[#DEC7A2]">
+                        <div>
+                            <span class="text-[10px] uppercase font-marcellus tracking-widest text-[#912003] font-bold">{{ $e->category }} • {{ $e->event_date }}</span>
+                            <h3 class="font-cinzel text-2xl sm:text-3xl font-bold text-[#1C120C] mt-1 group-hover:text-[#912003] transition-colors">{{ $e->title }}</h3>
+                        </div>
+                        <span class="px-3.5 py-1 rounded-full bg-[#912003] text-[#FFFDF9] font-cinzel text-xs font-bold uppercase tracking-wider shadow-sm">
+                            {{ $e->status }}
+                        </span>
                     </div>
-                    <span class="px-3.5 py-1 rounded-full bg-[#912003] text-[#FFFDF9] font-cinzel text-xs font-bold uppercase tracking-wider shadow-sm animate-pulse">
-                        Grand Mahotsav
-                    </span>
-                </div>
 
-                <p class="text-sm text-[#422B1E] leading-relaxed font-normal">
-                    The supreme night of Lord Shiva. Continuous 4-Prahar Abhishekam with milk, bilva leaves, sugarcane juice, and holy bhasma, accompanied by non-stop Vedic chanting by 108 priests.
-                </p>
+                    @if ($eventImg)
+                        <div class="h-56 sm:h-72 rounded-2xl overflow-hidden shadow-inner border border-[#DEC7A2]">
+                            <img src="{{ $eventImg }}" alt="{{ $e->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        </div>
+                    @endif
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-[#FAF6EC] p-4 rounded-2xl border border-[#DEC7A2] text-xs text-[#2C1D14] font-marcellus">
-                    <div><strong class="text-[#912003]">04:00 AM:</strong> Mangala Snanam & Aarti</div>
-                    <div><strong class="text-[#912003]">11:00 AM:</strong> 1,008 Rudrabhishek</div>
-                    <div><strong class="text-[#912003]">07:00 PM:</strong> 1st Prahar Sandhya Aarti</div>
-                    <div><strong class="text-[#912003]">12:00 AM:</strong> Midnight Lingodbhava Pooja</div>
-                </div>
+                    <p class="text-sm text-[#422B1E] leading-relaxed font-normal">
+                        {{ $e->description }}
+                    </p>
 
-                <div class="flex items-center justify-between pt-2">
-                    <span class="text-xs text-[#5C3C2A] italic">Free Mahaprasad served to all pilgrims.</span>
-                    <button onclick="openBookingModal()" class="shimmer-btn hover-lift px-5 py-2 rounded-full bg-[#912003] hover:bg-[#6C1802] text-[#FFFDF9] font-cinzel font-bold text-xs uppercase tracking-wider shadow-sm transition-all cursor-pointer">
-                        RSVP / Book Sankalp 🙏
-                    </button>
-                </div>
-            </div>
-
-            <!-- Festival 2: Sri Ram Navami -->
-            <div class="parchment-scroll p-6 sm:p-10 rounded-3xl antique-border shadow-xl space-y-6 hover-lift group">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-4 border-b border-[#DEC7A2]">
-                    <div>
-                        <span class="text-[10px] uppercase font-marcellus tracking-widest text-[#912003] font-bold">चैत्र शुक्ल नवमी • 12:00 PM Noon Janmotsav</span>
-                        <h3 class="font-cinzel text-2xl sm:text-3xl font-bold text-[#1C120C] mt-1 group-hover:text-[#912003] transition-colors">Sri Ram Navami & Chhappan Bhog</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-[#FAF6EC] p-4 rounded-2xl border border-[#DEC7A2] text-xs text-[#2C1D14] font-marcellus">
+                        <div><strong class="text-[#912003]">Timings:</strong> {{ $e->timings ?: 'Daily Aarti & Darshan Timings' }}</div>
+                        <div><strong class="text-[#912003]">Expected Crowd:</strong> {{ $e->expected_crowd }}</div>
+                        <div class="sm:col-span-2"><strong class="text-[#912003]">Coordinator:</strong> {{ $e->coordinator }}</div>
                     </div>
-                    <span class="px-3.5 py-1 rounded-full bg-[#912003] text-[#FFFDF9] font-cinzel text-xs font-bold uppercase tracking-wider shadow-sm">
-                        Janmotsav
-                    </span>
-                </div>
 
-                <p class="text-sm text-[#422B1E] leading-relaxed font-normal">
-                    Appearance of Lord Rama. Concluding 9 days of Chaitra Navratri with flower shower over the Garbhagriha, Ramcharitmanas recitation samapti, and grand royal palanquin procession.
-                </p>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-[#FAF6EC] p-4 rounded-2xl border border-[#DEC7A2] text-xs text-[#2C1D14] font-marcellus">
-                    <div><strong class="text-[#912003]">09:00 AM:</strong> Valmiki Ramayana Samapti</div>
-                    <div><strong class="text-[#912003]">12:00 PM:</strong> Ram Janmotsav Aarti & Flowers</div>
-                    <div><strong class="text-[#912003]">01:00 PM:</strong> 56-Bhog Mahaprasadam</div>
-                    <div><strong class="text-[#912003]">05:30 PM:</strong> Shobha Yatra Procession</div>
-                </div>
-
-                <div class="flex items-center justify-between pt-2">
-                    <span class="text-xs text-[#5C3C2A] italic">Akhand kirtan by traditional bhajan mandalis.</span>
-                    <button onclick="openBookingModal()" class="shimmer-btn hover-lift px-5 py-2 rounded-full bg-[#912003] hover:bg-[#6C1802] text-[#FFFDF9] font-cinzel font-bold text-xs uppercase tracking-wider shadow-sm transition-all cursor-pointer">
-                        Sponsor 56-Bhog 🙏
-                    </button>
-                </div>
-            </div>
-
-            <!-- Festival 3: Gopashtami -->
-            <div class="parchment-scroll p-6 sm:p-10 rounded-3xl antique-border shadow-xl space-y-6 hover-lift group">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-4 border-b border-[#DEC7A2]">
-                    <div>
-                        <span class="text-[10px] uppercase font-marcellus tracking-widest text-[#912003] font-bold">कार्तिक शुक्ल अष्टमी • Goshala Mahotsav</span>
-                        <h3 class="font-cinzel text-2xl sm:text-3xl font-bold text-[#1C120C] mt-1 group-hover:text-[#912003] transition-colors">Gopashtami Surabhi Veneration</h3>
+                    <div class="flex items-center justify-between pt-2">
+                        <span class="text-xs text-[#5C3C2A] italic">Free Mahaprasad served to all visiting pilgrims.</span>
+                        <a href="{{ route('donate') }}" class="shimmer-btn hover-lift px-5 py-2 rounded-full bg-[#912003] hover:bg-[#6C1802] text-[#FFFDF9] font-cinzel font-bold text-xs uppercase tracking-wider shadow-sm transition-all cursor-pointer">
+                            Sponsor Seva / Daan 🙏
+                        </a>
                     </div>
-                    <span class="px-3.5 py-1 rounded-full bg-[#912003] text-[#FFFDF9] font-cinzel text-xs font-bold uppercase tracking-wider shadow-sm">
-                        Gau Seva Day
-                    </span>
                 </div>
-
-                <p class="text-sm text-[#422B1E] leading-relaxed font-normal">
-                    Ceremonial bathing, marigold decoration, and mass sweet jaggery feeding of all 500+ indigenous Gir cows in the ashram sanctuary.
-                </p>
-
-                <div class="flex items-center justify-between pt-2">
-                    <span class="text-xs text-[#5C3C2A] italic">Devotees are invited to feed cows with family.</span>
-                    <a href="{{ route('donate') }}" class="shimmer-btn hover-lift px-5 py-2 rounded-full bg-[#912003] hover:bg-[#6C1802] text-[#FFFDF9] font-cinzel font-bold text-xs uppercase tracking-wider shadow-sm transition-all text-center">
-                        Sponsor Cow Grass 🙏
-                    </a>
-                </div>
-            </div>
+            @empty
+                <div class="text-center py-12 text-gray-500 parchment-scroll rounded-3xl p-8">No upcoming events scheduled right now in the temple database.</div>
+            @endforelse
 
         </div>
     </section>

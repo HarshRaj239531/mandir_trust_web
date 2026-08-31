@@ -117,31 +117,58 @@
                         </div>
                     </div>
 
-                    <form onsubmit="handleModalSubmit(event, 'Thank you for your sacred offering! 80G receipt has been generated.')" class="space-y-4 pt-2">
+                    @if (session('donation_success'))
+                        <div class="p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-500 text-emerald-900 text-xs font-sans space-y-1 mb-3">
+                            <div class="font-cinzel font-bold text-sm text-emerald-800 flex items-center gap-2">
+                                <span>🎉</span> <span>॥ Daan Sankalpa Consecrated ॥</span>
+                            </div>
+                            <div>Receipt Number: <strong class="font-mono text-emerald-950">{{ session('donation_success')['receipt'] }}</strong></div>
+                            <div>Donor Devotee: <strong>{{ session('donation_success')['name'] }}</strong></div>
+                            <div>Contribution: <strong class="text-emerald-950 font-bold">₹ {{ number_format(session('donation_success')['amount'], 2) }}</strong></div>
+                            <div class="text-[11px] text-emerald-700 pt-1 border-t border-emerald-200">
+                                80G tax exemption details have been permanently recorded in the Mandir Trust MySQL register.
+                            </div>
+                        </div>
+                    @endif
+
+                    <form action="{{ route('donate.process') }}" method="POST" class="space-y-4 pt-2">
+                        @csrf
+                        <input type="hidden" name="seva_cause" id="form-seva-cause" value="Maha Annadanam">
+                        <input type="hidden" name="amount" id="form-final-amount" value="1100">
+
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                             <div>
-                                <label class="block text-[11px] uppercase tracking-wider font-bold text-[#422B1E] mb-1">Donor Full Name</label>
-                                <input type="text" required placeholder="Name on PAN Card" class="w-full bg-[#FAF6EC] border border-[#DEC7A2] rounded-xl px-3.5 py-2.5 text-xs text-[#2C1D14] focus:outline-none focus:border-[#912003] transition-colors">
+                                <label class="block text-[11px] uppercase tracking-wider font-bold text-[#422B1E] mb-1">Donor Full Name *</label>
+                                <input type="text" name="donor_name" required placeholder="Name on PAN Card" class="w-full bg-[#FAF6EC] border border-[#DEC7A2] rounded-xl px-3.5 py-2.5 text-xs text-[#2C1D14] focus:outline-none focus:border-[#912003] transition-colors">
                             </div>
                             <div>
                                 <label class="block text-[11px] uppercase tracking-wider font-bold text-[#422B1E] mb-1">PAN Card (For 80G)</label>
-                                <input type="text" placeholder="ABCDE1234F" class="w-full bg-[#FAF6EC] border border-[#DEC7A2] rounded-xl px-3.5 py-2.5 text-xs text-[#2C1D14] uppercase focus:outline-none focus:border-[#912003] transition-colors">
+                                <input type="text" name="pan_number" placeholder="ABCDE1234F" class="w-full bg-[#FAF6EC] border border-[#DEC7A2] rounded-xl px-3.5 py-2.5 text-xs text-[#2C1D14] uppercase focus:outline-none focus:border-[#912003] transition-colors">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                             <div>
-                                <label class="block text-[11px] uppercase tracking-wider font-bold text-[#422B1E] mb-1">Email for Receipt</label>
-                                <input type="email" required placeholder="devotee@gmail.com" class="w-full bg-[#FAF6EC] border border-[#DEC7A2] rounded-xl px-3.5 py-2.5 text-xs text-[#2C1D14] focus:outline-none focus:border-[#912003] transition-colors">
+                                <label class="block text-[11px] uppercase tracking-wider font-bold text-[#422B1E] mb-1">Email for Receipt *</label>
+                                <input type="email" name="email" required placeholder="devotee@gmail.com" class="w-full bg-[#FAF6EC] border border-[#DEC7A2] rounded-xl px-3.5 py-2.5 text-xs text-[#2C1D14] focus:outline-none focus:border-[#912003] transition-colors">
                             </div>
                             <div>
-                                <label class="block text-[11px] uppercase tracking-wider font-bold text-[#422B1E] mb-1">Mobile / WhatsApp</label>
-                                <input type="tel" required placeholder="+91 98765 43210" class="w-full bg-[#FAF6EC] border border-[#DEC7A2] rounded-xl px-3.5 py-2.5 text-xs text-[#2C1D14] focus:outline-none focus:border-[#912003] transition-colors">
+                                <label class="block text-[11px] uppercase tracking-wider font-bold text-[#422B1E] mb-1">Mobile / WhatsApp *</label>
+                                <input type="tel" name="mobile_number" required placeholder="9876543210" class="w-full bg-[#FAF6EC] border border-[#DEC7A2] rounded-xl px-3.5 py-2.5 text-xs text-[#2C1D14] focus:outline-none focus:border-[#912003] transition-colors">
                             </div>
                         </div>
 
+                        <div>
+                            <label class="block text-[11px] uppercase tracking-wider font-bold text-[#422B1E] mb-1">Preferred Offering Mode</label>
+                            <select name="payment_mode" class="w-full bg-[#FAF6EC] border border-[#DEC7A2] rounded-xl px-3.5 py-2.5 text-xs text-[#2C1D14]">
+                                <option value="UPI / Online QR">Instant UPI / QR Code</option>
+                                <option value="Net Banking">Net Banking</option>
+                                <option value="Debit/Credit Card">Debit / Credit Card</option>
+                            </select>
+                        </div>
+
                         <button type="submit" class="shimmer-btn w-full py-4 bg-gradient-to-r from-[#912003] via-[#B93815] to-[#912003] hover:from-[#6C1802] text-[#FFFDF9] font-cinzel font-bold text-xs uppercase tracking-widest rounded-xl shadow-md transition-all duration-300 hover:scale-[1.02] cursor-pointer">
-                            Proceed to Offering (UPI / Card / NetBanking) 💳
+                            Proceed to Divine Offering & Save Receipt 💳
                         </button>
                     </form>
                 </div>
@@ -179,6 +206,7 @@
     <script>
         function selectPresetAmt(amt) {
             document.getElementById('custom-amt-input').value = amt;
+            document.getElementById('form-final-amount').value = amt;
             document.querySelectorAll('.amt-btn').forEach(btn => {
                 btn.classList.remove('bg-[#912003]', 'text-white', 'border-[#912003]', 'scale-105', 'shadow-sm');
                 btn.classList.add('bg-[#FAF6EC]', 'text-[#422B1E]', 'border-[#DEC7A2]');
@@ -186,6 +214,16 @@
             event.target.classList.remove('bg-[#FAF6EC]', 'text-[#422B1E]', 'border-[#DEC7A2]');
             event.target.classList.add('bg-[#912003]', 'text-white', 'border-[#912003]', 'scale-105', 'shadow-sm');
         }
+
+        document.getElementById('custom-amt-input')?.addEventListener('input', function(e) {
+            document.getElementById('form-final-amount').value = e.target.value;
+        });
+
+        document.querySelectorAll('input[name="seva_cause"]').forEach(radio => {
+            radio.addEventListener('change', function(e) {
+                document.getElementById('form-seva-cause').value = e.target.value;
+            });
+        });
 
         function updateImpact(text) {
             const desc = document.getElementById('impact-description');

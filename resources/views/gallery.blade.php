@@ -47,67 +47,65 @@
 
             <!-- Gallery Grid with Staggered Entrance & Masonry -->
             <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 stagger-parent">
-                
-                <div class="gal-item aarti parchment-scroll p-3 rounded-2xl antique-border shadow-md break-inside-avoid cursor-pointer group hover-lift overflow-hidden" onclick="openLightbox('{{ asset('images/mandir-aarti.jpg') }}', 'Daily Sandhya Deepam Aarti with 108 tiered brass lamps')">
-                    <img src="{{ asset('images/mandir-aarti.jpg') }}" alt="Maha Deepam Aarti" class="w-full h-auto rounded-xl object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="pt-3 px-1 text-center">
-                        <span class="text-[10px] uppercase font-marcellus tracking-widest text-[#912003] font-bold">Maha Aarti</span>
-                        <h4 class="font-cinzel text-base font-bold text-[#1C120C] group-hover:text-[#912003] transition-colors">Daily Sandhya Deepam Aarti</h4>
+                @forelse ($galleries as $g)
+                    @php
+                        $gImg = str_starts_with($g->image_path, 'http') ? $g->image_path : asset('storage/' . $g->image_path);
+                    @endphp
+                    <div class="gal-item {{ Str::slug($g->category) }} parchment-scroll p-3 rounded-2xl antique-border shadow-md break-inside-avoid cursor-pointer group hover-lift overflow-hidden" onclick="openLightbox('{{ $gImg }}', '{{ addslashes($g->caption ?: $g->title) }}')">
+                        <img src="{{ $gImg }}" alt="{{ $g->title }}" class="w-full h-auto rounded-xl object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="pt-3 px-1 text-center">
+                            <span class="text-[10px] uppercase font-marcellus tracking-widest text-[#912003] font-bold">{{ $g->category }}</span>
+                            <h4 class="font-cinzel text-base font-bold text-[#1C120C] group-hover:text-[#912003] transition-colors">{{ $g->title }}</h4>
+                            @if ($g->caption)
+                                <p class="text-xs text-[#6C1802] mt-1 font-sans">{{ $g->caption }}</p>
+                            @endif
+                        </div>
                     </div>
-                </div>
-
-                <div class="gal-item sanctum parchment-scroll p-3 rounded-2xl antique-border shadow-md break-inside-avoid cursor-pointer group hover-lift overflow-hidden" onclick="openLightbox('{{ asset('images/hero-mandir.jpg') }}', 'Sunrise over the 100-year-old temple sanctum')">
-                    <img src="{{ asset('images/hero-mandir.jpg') }}" alt="Temple Sunrise" class="w-full h-auto rounded-xl object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="pt-3 px-1 text-center">
-                        <span class="text-[10px] uppercase font-marcellus tracking-widest text-[#912003] font-bold">Architecture</span>
-                        <h4 class="font-cinzel text-base font-bold text-[#1C120C] group-hover:text-[#912003] transition-colors">Sunrise over Garbhagriha</h4>
-                    </div>
-                </div>
-
-                <div class="gal-item goshala parchment-scroll p-3 rounded-2xl antique-border shadow-md break-inside-avoid cursor-pointer group hover-lift overflow-hidden" onclick="openLightbox('{{ asset('images/mandir-goshala.jpg') }}', 'Sacred Indigenous Gir cows in the ashram sanctuary')">
-                    <img src="{{ asset('images/mandir-goshala.jpg') }}" alt="Surabhi Cows" class="w-full h-auto rounded-xl object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="pt-3 px-1 text-center">
-                        <span class="text-[10px] uppercase font-marcellus tracking-widest text-[#912003] font-bold">Gau Seva</span>
-                        <h4 class="font-cinzel text-base font-bold text-[#1C120C] group-hover:text-[#912003] transition-colors">Surabhi Cow Sanctuary</h4>
-                    </div>
-                </div>
-
-                <div class="gal-item aarti parchment-scroll p-3 rounded-2xl antique-border shadow-md break-inside-avoid cursor-pointer group hover-lift overflow-hidden" onclick="openLightbox('{{ asset('images/mandir-aarti.jpg') }}', 'Devotees chanting in unison during twilight Aarti')">
-                    <img src="{{ asset('images/mandir-aarti.jpg') }}" alt="Aarti Ceremony" class="w-full h-auto rounded-xl object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="pt-3 px-1 text-center">
-                        <span class="text-[10px] uppercase font-marcellus tracking-widest text-[#912003] font-bold">Vedic Rituals</span>
-                        <h4 class="font-cinzel text-base font-bold text-[#1C120C] group-hover:text-[#912003] transition-colors">Devotee Congregation</h4>
-                    </div>
-                </div>
-
-                <div class="gal-item sanctum parchment-scroll p-3 rounded-2xl antique-border shadow-md break-inside-avoid cursor-pointer group hover-lift overflow-hidden" onclick="openLightbox('{{ asset('images/hero-mandir.jpg') }}', 'Ancient sandstone spires reflecting sacred geometry')">
-                    <img src="{{ asset('images/hero-mandir.jpg') }}" alt="Shikhar" class="w-full h-auto rounded-xl object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="pt-3 px-1 text-center">
-                        <span class="text-[10px] uppercase font-marcellus tracking-widest text-[#912003] font-bold">Sanctum</span>
-                        <h4 class="font-cinzel text-base font-bold text-[#1C120C] group-hover:text-[#912003] transition-colors">Shikhar & Water Courtyard</h4>
-                    </div>
-                </div>
-
-                <div class="gal-item goshala parchment-scroll p-3 rounded-2xl antique-border shadow-md break-inside-avoid cursor-pointer group hover-lift overflow-hidden" onclick="openLightbox('{{ asset('images/mandir-goshala.jpg') }}', 'Morning green grass feeding in peaceful ashram grounds')">
-                    <img src="{{ asset('images/mandir-goshala.jpg') }}" alt="Goshala Morning" class="w-full h-auto rounded-xl object-cover group-hover:scale-105 transition-transform duration-700">
-                    <div class="pt-3 px-1 text-center">
-                        <span class="text-[10px] uppercase font-marcellus tracking-widest text-[#912003] font-bold">Ashram Peace</span>
-                        <h4 class="font-cinzel text-base font-bold text-[#1C120C] group-hover:text-[#912003] transition-colors">Morning Grass Feeding</h4>
-                    </div>
-                </div>
-
+                @empty
+                    <div class="col-span-3 text-center py-12 text-gray-500 parchment-scroll rounded-3xl p-8">No photos published in gallery yet.</div>
+                @endforelse
             </div>
+
         </div>
     </section>
 
-    <!-- Lightbox Modal -->
-    <div id="lightbox-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4 transition-all">
-        <button onclick="closeLightbox()" class="absolute top-6 right-6 text-white text-3xl font-bold w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center cursor-pointer transition-transform hover:rotate-90">✕</button>
-        <div class="max-w-5xl w-full text-center space-y-4 modal-unfold">
-            <img id="lightbox-img" src="" alt="Fullscreen Darshan" class="max-h-[80vh] mx-auto rounded-2xl shadow-2xl border-2 border-[#A16207]/40 object-contain">
-            <h4 id="lightbox-caption" class="font-cinzel text-xl font-bold text-[#F4EBD9]"></h4>
+    <!-- Lightbox Modal with Parchment Border -->
+    <div id="lightbox-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4" onclick="closeLightbox(event)">
+        <div class="parchment-scroll p-4 rounded-3xl antique-border max-w-3xl w-full shadow-2xl relative" onclick="event.stopPropagation()">
+            <button onclick="closeLightbox()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#912003] text-white flex items-center justify-center text-sm font-bold shadow hover:bg-[#6C1802] transition-colors cursor-pointer z-10">✕</button>
+            <img id="lightbox-img" src="" alt="Darshan Full View" class="w-full max-h-[70vh] object-contain rounded-2xl mb-3">
+            <p id="lightbox-caption" class="font-cinzel text-sm text-center text-[#1C120C] font-bold"></p>
         </div>
     </div>
 
     <x-footer />
+
+    <script>
+        function filterGallery(category) {
+            document.querySelectorAll('.gal-tab').forEach(tab => {
+                tab.classList.remove('bg-[#912003]', 'text-[#FFFDF9]');
+                tab.classList.add('bg-[#FAF6EC]', 'text-[#422B1E]');
+            });
+            event.target.classList.remove('bg-[#FAF6EC]', 'text-[#422B1E]');
+            event.target.classList.add('bg-[#912003]', 'text-[#FFFDF9]');
+
+            document.querySelectorAll('.gal-item').forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        function openLightbox(src, caption) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox-caption').innerText = caption;
+            document.getElementById('lightbox-modal').classList.remove('hidden');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox-modal').classList.add('hidden');
+        }
+    </script>
 </x-layout>

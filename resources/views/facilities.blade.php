@@ -37,68 +37,34 @@
 
             <div class="parchment-scroll p-6 sm:p-10 rounded-3xl antique-border shadow-xl space-y-8 stagger-parent hover-lift">
                 
-                <!-- Room 1 -->
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-8 border-b border-[#DEC7A2] group hover:bg-[#FFFDF9]/80 p-3 rounded-2xl transition-all">
-                    <div class="space-y-2 max-w-xl">
-                        <div class="flex items-center gap-3">
-                            <span class="text-[10px] uppercase font-marcellus tracking-widest text-[#912003] font-bold bg-[#FAF6EC] px-2.5 py-0.5 rounded border border-[#DEC7A2]">Standard Non-AC</span>
-                            <h3 class="font-cinzel text-xl font-bold text-[#1C120C] group-hover:text-[#912003] transition-colors">Vedic Double Room</h3>
+                @forelse ($facilities as $f)
+                    @php
+                        $facImg = $f->image ? (str_starts_with($f->image, 'http') ? $f->image : asset('storage/' . $f->image)) : null;
+                    @endphp
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-8 {{ !$loop->last ? 'border-b border-[#DEC7A2]' : '' }} group hover:bg-[#FFFDF9]/80 p-3 rounded-2xl transition-all">
+                        <div class="space-y-2 max-w-xl">
+                            <div class="flex items-center gap-3">
+                                <span class="text-[10px] uppercase font-marcellus tracking-widest text-[#912003] font-bold bg-[#FAF6EC] px-2.5 py-0.5 rounded border border-[#DEC7A2]">{{ $f->type }}</span>
+                                <h3 class="font-cinzel text-xl font-bold text-[#1C120C] group-hover:text-[#912003] transition-colors">{{ $f->name }}</h3>
+                            </div>
+                            <p class="text-xs sm:text-sm text-[#422B1E] font-normal leading-relaxed">
+                                {{ $f->description ?: 'Trust managed infrastructure for pilgrim convenience.' }}
+                            </p>
+                            <p class="text-xs text-[#782606] font-medium font-mono">
+                                ✓ Capacity: {{ $f->capacity }} • In-charge: {{ $f->incharge }}
+                            </p>
                         </div>
-                        <p class="text-xs sm:text-sm text-[#422B1E] font-normal leading-relaxed">
-                            Simple, peaceful room overlooking the ashram gardens. Attached clean bathroom with 24-hour hot water and morning herbal tea.
-                        </p>
-                        <p class="text-xs text-[#782606] font-medium">✓ 2 Beds • Attached Bath • Clean Linens</p>
-                    </div>
 
-                    <div class="shrink-0 text-left md:text-right w-full md:w-auto">
-                        <span class="font-cinzel text-2xl font-bold text-[#912003] block mb-2 group-hover:scale-105 transition-transform">₹ 800 <span class="text-xs font-sans text-[#5C3C2A] font-normal">/ Night</span></span>
-                        <button onclick="handleModalSubmit(event, 'Yatri Niwas availability request received!')" class="shimmer-btn hover-lift px-5 py-2 rounded-full bg-[#912003] hover:bg-[#6C1802] text-[#FFFDF9] font-cinzel font-bold text-xs uppercase tracking-wider shadow-sm transition-all cursor-pointer">
-                            Book Room
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Room 2 -->
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-8 border-b border-[#DEC7A2] group hover:bg-[#FFFDF9]/80 p-3 rounded-2xl transition-all">
-                    <div class="space-y-2 max-w-xl">
-                        <div class="flex items-center gap-3">
-                            <span class="text-[10px] uppercase font-marcellus tracking-widest text-[#912003] font-bold bg-[#FAF6EC] px-2.5 py-0.5 rounded border border-[#DEC7A2]">Deluxe AC Suite</span>
-                            <h3 class="font-cinzel text-xl font-bold text-[#1C120C] group-hover:text-[#912003] transition-colors">Devotee Family Suite (4 Bed)</h3>
+                        <div class="shrink-0 text-left md:text-right w-full md:w-auto">
+                            <span class="font-cinzel text-lg font-bold text-emerald-800 block mb-2">{{ $f->occupancy }}</span>
+                            <a href="{{ route('donate') }}" class="shimmer-btn hover-lift inline-block px-5 py-2 rounded-full bg-[#912003] hover:bg-[#6C1802] text-[#FFFDF9] font-cinzel font-bold text-xs uppercase tracking-wider shadow-sm transition-all cursor-pointer">
+                                Inquire / Seva 🙏
+                            </a>
                         </div>
-                        <p class="text-xs sm:text-sm text-[#422B1E] font-normal leading-relaxed">
-                            Spacious air-conditioned room accommodating family of 4 with direct view of the temple shikhar and priority darshan pass.
-                        </p>
-                        <p class="text-xs text-[#782606] font-medium">✓ 1 King + 2 Beds • AC • Hot Water • Priority Darshan</p>
                     </div>
-
-                    <div class="shrink-0 text-left md:text-right w-full md:w-auto">
-                        <span class="font-cinzel text-2xl font-bold text-[#912003] block mb-2 group-hover:scale-105 transition-transform">₹ 1,500 <span class="text-xs font-sans text-[#5C3C2A] font-normal">/ Night</span></span>
-                        <button onclick="handleModalSubmit(event, 'Yatri Niwas availability request received!')" class="shimmer-btn hover-lift px-5 py-2 rounded-full bg-[#912003] hover:bg-[#6C1802] text-[#FFFDF9] font-cinzel font-bold text-xs uppercase tracking-wider shadow-sm transition-all cursor-pointer">
-                            Book Suite 🙏
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Room 3 -->
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 group hover:bg-[#FFFDF9]/80 p-3 rounded-2xl transition-all">
-                    <div class="space-y-2 max-w-xl">
-                        <div class="flex items-center gap-3">
-                            <span class="text-[10px] uppercase font-marcellus tracking-widest text-[#912003] font-bold bg-[#FAF6EC] px-2.5 py-0.5 rounded border border-[#DEC7A2]">Dormitory</span>
-                            <h3 class="font-cinzel text-xl font-bold text-[#1C120C] group-hover:text-[#912003] transition-colors">Sadhu & Pilgrim Hall</h3>
-                        </div>
-                        <p class="text-xs sm:text-sm text-[#422B1E] font-normal leading-relaxed">
-                            Clean communal hall with individual lockers and hygienic washrooms. Provided completely free of cost for traveling sadhus.
-                        </p>
-                        <p class="text-xs text-[#782606] font-medium">✓ Clean Bedding • Locker • Free for Sadhus</p>
-                    </div>
-
-                    <div class="shrink-0 text-left md:text-right w-full md:w-auto">
-                        <span class="font-cinzel text-2xl font-bold text-[#912003] block mb-2 group-hover:scale-105 transition-transform">₹ 200 <span class="text-xs font-sans text-[#5C3C2A] font-normal">/ Bed</span></span>
-                        <button onclick="handleModalSubmit(event, 'Yatri Niwas availability request received!')" class="shimmer-btn hover-lift px-5 py-2 rounded-full bg-[#912003] hover:bg-[#6C1802] text-[#FFFDF9] font-cinzel font-bold text-xs uppercase tracking-wider shadow-sm transition-all cursor-pointer">
-                            Book Bed
-                        </button>
-                    </div>
-                </div>
+                @empty
+                    <div class="text-center py-8 text-gray-500">No facilities registered in database yet.</div>
+                @endforelse
 
             </div>
         </div>

@@ -2,7 +2,7 @@
     
     <!-- 1. Background Mandir Sanctuary (100% Unobstructed, Crisp & High Definition) -->
     <div class="absolute inset-0 w-full h-full -z-10 overflow-hidden">
-        <img id="hero-mandir-bg" src="{{ asset('images/hero-mandir.jpg') }}" alt="Grand Mandir Sanctuary" class="w-full h-full object-cover object-center ken-burns will-change-transform filter brightness-100 contrast-105">
+        <img id="hero-mandir-bg" src="{{ \App\Models\SiteSetting::getImageUrl('hero_mandir_image', 'images/hero-mandir.jpg') }}" alt="Grand Mandir Sanctuary" class="w-full h-full object-cover object-center ken-burns will-change-transform filter brightness-100 contrast-105">
         
         <!-- Subtle atmospheric lighting for contrast -->
         <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-transparent to-black/65 pointer-events-none"></div>

@@ -35,6 +35,60 @@
         </div>
     </div>
 
+    <!-- ================= YOGA-STYLE QUICK ACTIONS ================= -->
+    <div>
+        <div class="flex items-center justify-between mb-2.5">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-[#A16207] font-cinzel">Quick Management Portals</h3>
+            <span class="text-[11px] text-[#6C1802] font-sans">Direct Module Shortcuts</span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
+            <!-- Devotees -->
+            <a href="{{ route('admin.devotees.index') }}" class="bg-white rounded-2xl p-4 border border-[#E5DCD0] hover:border-[#CA8A04] hover:shadow-md transition-all group flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-orange-50 text-[#912003] flex items-center justify-center text-lg group-hover:scale-110 transition-transform shrink-0 border border-orange-100">
+                    👥
+                </div>
+                <div class="overflow-hidden">
+                    <span class="text-xs font-bold text-[#1C120C] font-cinzel block truncate">Devotees</span>
+                    <span class="text-[10px] text-[#6C1802] truncate block">10-Field Records</span>
+                </div>
+            </a>
+
+            <!-- Poojas -->
+            <a href="{{ route('admin.poojas.index') }}" class="bg-white rounded-2xl p-4 border border-[#E5DCD0] hover:border-[#CA8A04] hover:shadow-md transition-all group flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center text-lg group-hover:scale-110 transition-transform shrink-0 border border-amber-100">
+                    🪔
+                </div>
+                <div class="overflow-hidden">
+                    <span class="text-xs font-bold text-[#1C120C] font-cinzel block truncate">Poojas & Sevas</span>
+                    <span class="text-[10px] text-[#6C1802] truncate block">Offerings & Rituals</span>
+                </div>
+            </a>
+
+            <!-- Daan -->
+            <a href="{{ route('admin.donations.index') }}" class="bg-white rounded-2xl p-4 border border-[#E5DCD0] hover:border-[#CA8A04] hover:shadow-md transition-all group flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-lg group-hover:scale-110 transition-transform shrink-0 border border-emerald-100">
+                    💰
+                </div>
+                <div class="overflow-hidden">
+                    <span class="text-xs font-bold text-[#1C120C] font-cinzel block truncate">Donations</span>
+                    <span class="text-[10px] text-[#6C1802] truncate block">Receipts & Daan</span>
+                </div>
+            </a>
+
+            <!-- Settings -->
+            <a href="{{ route('admin.settings') }}" class="bg-white rounded-2xl p-4 border border-[#E5DCD0] hover:border-[#CA8A04] hover:shadow-md transition-all group flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-stone-100 text-stone-700 flex items-center justify-center text-lg group-hover:scale-110 transition-transform shrink-0 border border-stone-200">
+                    ⚙️
+                </div>
+                <div class="overflow-hidden">
+                    <span class="text-xs font-bold text-[#1C120C] font-cinzel block truncate">Settings</span>
+                    <span class="text-[10px] text-[#6C1802] truncate block">Password & Security</span>
+                </div>
+            </a>
+        </div>
+    </div>
+
     <!-- ================= 2. KPI METRICS OVERVIEW ================= -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
         

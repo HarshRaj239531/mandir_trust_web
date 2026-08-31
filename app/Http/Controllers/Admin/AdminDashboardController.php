@@ -207,4 +207,380 @@ class AdminDashboardController extends Controller
 
         return redirect()->route('admin.devotees.index')->with('success', "Devotee record removed successfully.");
     }
+
+    /**
+     * Display Poojas & Sevas admin overview (from MySQL).
+     */
+    public function poojas()
+    {
+        $poojas = \App\Models\Pooja::withCount('bookings')->latest()->get();
+        $totalBookings = \App\Models\PoojaBooking::count();
+        $activePoojasCount = \App\Models\Pooja::where('is_active', true)->count();
+        $recentBookings = \App\Models\PoojaBooking::latest()->take(10)->get();
+
+        return view('admin.poojas', compact('poojas', 'totalBookings', 'activePoojasCount', 'recentBookings'));
+    }
+
+    /**
+     * Store a newly created Pooja in MySQL.
+     */
+    public function storePooja(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'deity' => ['required', 'string', 'max:255'],
+            'category' => ['required', 'string', 'max:100'],
+            'dakshina' => ['required', 'numeric', 'min:0'],
+            'duration' => ['required', 'string', 'max:100'],
+            'timing' => ['required', 'string', 'max:100'],
+            'priest' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'inclusions' => ['nullable', 'string'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+        ]);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('poojas', 'public');
+            $validated['image'] = $path;
+        }
+
+        \App\Models\Pooja::create($validated);
+
+        return back()->with('success', 'Pooja offering created and published to MySQL database.');
+    }
+
+    /**
+     * Delete a Pooja from MySQL.
+     */
+    public function deletePooja($id)
+    {
+        $pooja = \App\Models\Pooja::findOrFail($id);
+        if ($pooja->image && Storage::disk('public')->exists($pooja->image)) {
+            Storage::disk('public')->delete($pooja->image);
+        }
+        $pooja->delete();
+
+        return back()->with('success', 'Pooja deleted successfully.');
+    }
+
+    /**
+     * Display Daan & Donations admin overview (from MySQL).
+     */
+    public function donations()
+    {
+        $donations = \App\Models\Donation::latest()->paginate(15);
+        $totalDonationAmount = \App\Models\Donation::sum('amount');
+        $totalDonationsCount = \App\Models\Donation::count();
+        $annakshetraDonations = \App\Models\Donation::where('seva_cause', 'like', '%Annadanam%')->sum('amount');
+        $gaushalaDonations = \App\Models\Donation::where('seva_cause', 'like', '%Gau%')->sum('amount');
+
+        return view('admin.donations', compact(
+            'donations',
+            'totalDonationAmount',
+            'totalDonationsCount',
+            'annakshetraDonations',
+            'gaushalaDonations'
+        ));
+    }
+
+    /**
+     * Store manual Donation receipt in MySQL.
+     */
+    public function storeDonation(Request $request)
+    {
+        $validated = $request->validate([
+            'donor_name' => ['required', 'string', 'max:255'],
+            'pan_number' => ['nullable', 'string', 'max:20'],
+            'email' => ['required', 'email'],
+            'mobile_number' => ['required', 'string'],
+            'seva_cause' => ['required', 'string'],
+            'amount' => ['required', 'numeric', 'min:1'],
+            'payment_mode' => ['required', 'string'],
+            'notes' => ['nullable', 'string'],
+        ]);
+
+        $receipt = 'DON-' . date('Y') . '-' . str_pad(\App\Models\Donation::count() + 1, 4, '0', STR_PAD_LEFT);
+        $validated['receipt_number'] = $receipt;
+        $validated['payment_status'] = 'verified';
+
+        \App\Models\Donation::create($validated);
+
+        return back()->with('success', "Donation record #{$receipt} registered successfully in MySQL.");
+    }
+
+    /**
+     * Delete Donation record.
+     */
+    public function deleteDonation($id)
+    {
+        $donation = \App\Models\Donation::findOrFail($id);
+        $donation->delete();
+
+        return back()->with('success', 'Donation record deleted from database.');
+    }
+
+    /**
+     * Display Events & Utsavs admin overview (from MySQL).
+     */
+    public function events()
+    {
+        $events = \App\Models\TempleEvent::latest()->get();
+        return view('admin.events', compact('events'));
+    }
+
+    /**
+     * Store a new Temple Event in MySQL.
+     */
+    public function storeEvent(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'category' => ['required', 'string', 'max:100'],
+            'event_date' => ['required', 'string', 'max:100'],
+            'timings' => ['nullable', 'string', 'max:100'],
+            'expected_crowd' => ['required', 'string', 'max:100'],
+            'coordinator' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'status' => ['required', 'string'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+        ]);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('events', 'public');
+            $validated['image'] = $path;
+        }
+
+        \App\Models\TempleEvent::create($validated);
+
+        return back()->with('success', 'Event added and published to MySQL database.');
+    }
+
+    /**
+     * Delete an event.
+     */
+    public function deleteEvent($id)
+    {
+        $event = \App\Models\TempleEvent::findOrFail($id);
+        if ($event->image && Storage::disk('public')->exists($event->image)) {
+            Storage::disk('public')->delete($event->image);
+        }
+        $event->delete();
+
+        return back()->with('success', 'Event deleted from database.');
+    }
+
+    /**
+     * Display Temple Facilities admin overview (from MySQL).
+     */
+    public function facilities()
+    {
+        $facilities = \App\Models\Facility::latest()->get();
+        return view('admin.facilities', compact('facilities'));
+    }
+
+    /**
+     * Store a new Temple Facility in MySQL.
+     */
+    public function storeFacility(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'type' => ['required', 'string', 'max:255'],
+            'capacity' => ['required', 'string', 'max:255'],
+            'occupancy' => ['required', 'string', 'max:255'],
+            'incharge' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
+            'status' => ['required', 'string'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+        ]);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('facilities', 'public');
+            $validated['image'] = $path;
+        }
+
+        \App\Models\Facility::create($validated);
+
+        return back()->with('success', 'Facility registered in MySQL database.');
+    }
+
+    /**
+     * Delete a facility.
+     */
+    public function deleteFacility($id)
+    {
+        $facility = \App\Models\Facility::findOrFail($id);
+        if ($facility->image && Storage::disk('public')->exists($facility->image)) {
+            Storage::disk('public')->delete($facility->image);
+        }
+        $facility->delete();
+
+        return back()->with('success', 'Facility removed from database.');
+    }
+
+    /**
+     * Display Gallery & Media admin overview (from MySQL).
+     */
+    public function gallery()
+    {
+        $galleries = \App\Models\Gallery::latest()->get();
+        return view('admin.gallery', compact('galleries'));
+    }
+
+    /**
+     * Upload and store a new photo in MySQL Gallery.
+     */
+    public function storeGallery(Request $request)
+    {
+        $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'category' => ['required', 'string', 'max:100'],
+            'caption' => ['nullable', 'string'],
+            'photo' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
+        ]);
+
+        $path = $request->file('photo')->store('gallery', 'public');
+
+        \App\Models\Gallery::create([
+            'title' => $request->title,
+            'category' => $request->category,
+            'caption' => $request->caption,
+            'image_path' => $path,
+            'is_published' => true,
+        ]);
+
+        return back()->with('success', 'New Darshan Photo uploaded and stored in MySQL database.');
+    }
+
+    /**
+     * Update an existing gallery photo in MySQL.
+     */
+    public function updateGallery(Request $request, $id)
+    {
+        $item = \App\Models\Gallery::findOrFail($id);
+
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'category' => ['required', 'string', 'max:100'],
+            'caption' => ['nullable', 'string'],
+            'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
+        ]);
+
+        if ($request->hasFile('photo')) {
+            // Delete old file if stored locally
+            if ($item->image_path && Storage::disk('public')->exists($item->image_path)) {
+                Storage::disk('public')->delete($item->image_path);
+            }
+            $item->image_path = $request->file('photo')->store('gallery', 'public');
+        }
+
+        $item->title = $validated['title'];
+        $item->category = $validated['category'];
+        $item->caption = $validated['caption'];
+        $item->save();
+
+        return back()->with('success', 'Gallery photo details updated successfully.');
+    }
+
+    /**
+     * Delete a gallery photo.
+     */
+    public function deleteGallery($id)
+    {
+        $item = \App\Models\Gallery::findOrFail($id);
+        if ($item->image_path && Storage::disk('public')->exists($item->image_path)) {
+            Storage::disk('public')->delete($item->image_path);
+        }
+        $item->delete();
+
+        return back()->with('success', 'Photo removed from MySQL database.');
+    }
+
+    /**
+     * Display Admin Account Security & Settings page.
+     */
+    public function settings()
+    {
+        $admin = auth()->user();
+        $homepageSettings = \App\Models\SiteSetting::where('group', 'homepage')->get()->keyBy('key');
+        return view('admin.settings', compact('admin', 'homepageSettings'));
+    }
+
+    /**
+     * Update Homepage Media Images (Hero & section photos) from Admin Settings.
+     */
+    public function updateHomepageMedia(Request $request)
+    {
+        $request->validate([
+            'hero_mandir_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
+            'about_history_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
+            'live_darshan_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
+            'goshala_seva_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
+        ]);
+
+        $imageKeys = [
+            'hero_mandir_image',
+            'about_history_image',
+            'live_darshan_image',
+            'goshala_seva_image',
+        ];
+
+        foreach ($imageKeys as $key) {
+            if ($request->hasFile($key)) {
+                $setting = \App\Models\SiteSetting::where('key', $key)->first();
+                if ($setting && $setting->value && Storage::disk('public')->exists($setting->value)) {
+                    Storage::disk('public')->delete($setting->value);
+                }
+                $path = $request->file($key)->store('settings', 'public');
+                \App\Models\SiteSetting::updateOrCreate(
+                    ['key' => $key],
+                    ['value' => $path, 'type' => 'image', 'group' => 'homepage']
+                );
+            }
+        }
+
+        return back()->with('success', 'Home page images updated dynamically and published to database.');
+    }
+
+    /**
+     * Update Admin Password.
+     */
+    public function updatePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => ['required', 'string'],
+            'new_password' => ['required', 'string', 'min:6', 'confirmed'],
+        ]);
+
+        $admin = auth()->user();
+
+        if (!Hash::check($request->current_password, $admin->password)) {
+            return back()->withErrors(['current_password' => 'The provided current password does not match our records.']);
+        }
+
+        $admin->password = Hash::make($request->new_password);
+        $admin->save();
+
+        return back()->with('success', 'Admin Password has been updated securely.');
+    }
+
+    /**
+     * Update Admin Profile details.
+     */
+    public function updateProfile(Request $request)
+    {
+        $admin = auth()->user();
+
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'nickname' => ['required', 'string', 'max:100'],
+            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($admin->id)],
+            'mobile_number' => ['required', 'string', 'regex:/^[0-9]{10,15}$/'],
+        ]);
+
+        $admin->update($validated);
+
+        return back()->with('success', 'Admin Profile details updated successfully.');
+    }
 }
+
