@@ -195,7 +195,7 @@
                     <span class="inline-block font-mono font-bold text-xs bg-[#FAF6EC] px-3 py-1.5 rounded-lg border border-[#DEC7A2] text-[#912003] hover:border-[#912003] transition-colors">
                         mandirtrust@sbi
                     </span>
-                    <p class="text-[11px] text-[#5C3C2A]">Email transfer screenshot to <a href="mailto:seva@mandirtrust.org" class="text-[#912003] underline font-bold">seva@mandirtrust.org</a> for 80G receipt.</p>
+                    <p class="text-[11px] text-[#5C3C2A]">Email transfer screenshot to <a href="mailto:ashabhidsccbs@gmail.com" class="text-[#912003] underline font-bold">ashabhidsccbs@gmail.com</a> for 80G receipt.</p>
                 </div>
             </div>
         </div>

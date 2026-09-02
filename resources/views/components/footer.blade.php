@@ -119,11 +119,11 @@
                     </p>
                     <p class="flex items-center gap-2.5">
                         <span class="text-[#CA8A04] text-sm">📞</span>
-                        <a href="tel:+919876543210" class="hover:text-[#CA8A04] font-bold text-white transition-colors">+91 98765 43210 / 11</a>
+                        <a href="tel:+919876543210" class="hover:text-[#CA8A04] font-bold text-white transition-colors">+91 7520383694</a>
                     </p>
                     <p class="flex items-center gap-2.5">
                         <span class="text-[#CA8A04] text-sm">✉️</span>
-                        <a href="mailto:seva@mandirtrust.org" class="hover:text-[#CA8A04] font-bold text-white transition-colors">seva@mandirtrust.org</a>
+                        <a href="mailto:ashabhidsccbs@gmail.com" class="hover:text-[#CA8A04] font-bold text-white transition-colors">ashabhidsccbs@gmail.com</a>
                     </p>
                     <div class="pt-2">
                         <a href="https://maps.google.com" target="_blank" class="inline-flex items-center gap-1.5 text-xs text-[#CA8A04] hover:text-white font-bold underline underline-offset-4 transition-colors">
