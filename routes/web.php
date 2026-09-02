@@ -106,3 +106,17 @@ Route::middleware(['auth', 'admin'])->prefix('mandiradmin')->name('admin.')->gro
     Route::post('/settings/homepage-media', [AdminDashboardController::class, 'updateHomepageMedia'])->name('settings.homepage-media');
 });
 
+/*
+|--------------------------------------------------------------------------
+| Public Storage Media Fallback (Guaranteed to work on Hostinger/cPanel)
+|--------------------------------------------------------------------------
+*/
+Route::get('/storage/{path}', function ($path) {
+    $filePath = storage_path('app/public/' . $path);
+    if (!file_exists($filePath)) {
+        abort(404);
+    }
+    return response()->file($filePath);
+})->where('path', '.*')->name('storage.fallback');
+
+
