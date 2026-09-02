@@ -108,15 +108,44 @@ Route::middleware(['auth', 'admin'])->prefix('mandiradmin')->name('admin.')->gro
 
 /*
 |--------------------------------------------------------------------------
-| Public Storage Media Fallback (Guaranteed to work on Hostinger/cPanel)
+| Dynamic Media & Storage Routes (Guaranteed to work on Hostinger/cPanel)
 |--------------------------------------------------------------------------
 */
-Route::get('/storage/{path}', function ($path) {
-    $filePath = storage_path('app/public/' . $path);
-    if (!file_exists($filePath)) {
-        abort(404);
+Route::get('/media-file/{path}', function ($path) {
+    // 1. Check in public/uploads/
+    $uploadPath = public_path('uploads/' . $path);
+    if (file_exists($uploadPath) && is_file($uploadPath)) {
+        return response()->file($uploadPath);
     }
-    return response()->file($filePath);
+
+    // 2. Check in storage/app/public/
+    $storagePath = storage_path('app/public/' . $path);
+    if (file_exists($storagePath) && is_file($storagePath)) {
+        return response()->file($storagePath);
+    }
+
+    // 3. Check in public/
+    $publicPath = public_path($path);
+    if (file_exists($publicPath) && is_file($publicPath)) {
+        return response()->file($publicPath);
+    }
+
+    abort(404);
+})->where('path', '.*')->name('media.file');
+
+Route::get('/storage/{path}', function ($path) {
+    $storagePath = storage_path('app/public/' . $path);
+    if (file_exists($storagePath) && is_file($storagePath)) {
+        return response()->file($storagePath);
+    }
+
+    $uploadPath = public_path('uploads/' . $path);
+    if (file_exists($uploadPath) && is_file($uploadPath)) {
+        return response()->file($uploadPath);
+    }
+
+    abort(404);
 })->where('path', '.*')->name('storage.fallback');
+
 
 

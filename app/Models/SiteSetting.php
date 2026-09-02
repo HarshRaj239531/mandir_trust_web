@@ -42,27 +42,50 @@ class SiteSetting extends Model
             return $val;
         }
 
-        // If stored in public storage disk (e.g., 'settings/xyz.jpg' or 'storage/settings/xyz.jpg')
+        // Direct static public file in public/uploads/ or public/images/
+        if (str_starts_with($val, 'uploads/') || str_starts_with($val, 'images/')) {
+            return asset($val);
+        }
+
+        // Check if file exists directly in public folder
+        if (file_exists(public_path($val)) && is_file(public_path($val))) {
+            return asset($val);
+        }
+
+        // Check if file exists in public/uploads/
+        if (file_exists(public_path('uploads/' . $val)) && is_file(public_path('uploads/' . $val))) {
+            return asset('uploads/' . $val);
+        }
+
+        // Try syncing from storage/app/public/ to public/uploads/
+        $storageFile = storage_path('app/public/' . $val);
+        if (file_exists($storageFile) && is_file($storageFile)) {
+            try {
+                $targetDir = public_path('uploads/' . dirname($val));
+                if (!file_exists($targetDir)) {
+                    @mkdir($targetDir, 0755, true);
+                }
+                @copy($storageFile, public_path('uploads/' . $val));
+                if (file_exists(public_path('uploads/' . $val))) {
+                    return asset('uploads/' . $val);
+                }
+            } catch (\Throwable $e) {
+                // Continue to media route
+            }
+
+            // Check if public/storage symlink exists and works
+            if (file_exists(public_path('storage/' . $val))) {
+                return asset('storage/' . $val);
+            }
+
+            return route('media.file', ['path' => $val]);
+        }
+
         if (str_starts_with($val, 'storage/')) {
             return asset($val);
         }
 
-        if (
-            str_starts_with($val, 'settings/') ||
-            str_starts_with($val, 'gallery/') ||
-            str_starts_with($val, 'events/') ||
-            str_starts_with($val, 'facilities/') ||
-            str_starts_with($val, 'poojas/') ||
-            str_starts_with($val, 'devotees/')
-        ) {
-            return asset('storage/' . $val);
-        }
-
-        if (Storage::disk('public')->exists($val)) {
-            return asset('storage/' . $val);
-        }
-
-        return asset($val);
+        return route('media.file', ['path' => $val]);
     }
 }
 

@@ -241,6 +241,13 @@ class AdminDashboardController extends Controller
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('poojas', 'public');
+            try {
+                $uploadDir = public_path('uploads/' . dirname($path));
+                if (!file_exists($uploadDir)) {
+                    @mkdir($uploadDir, 0755, true);
+                }
+                @copy(storage_path('app/public/' . $path), public_path('uploads/' . $path));
+            } catch (\Throwable $e) {}
             $validated['image'] = $path;
         }
 
@@ -255,8 +262,13 @@ class AdminDashboardController extends Controller
     public function deletePooja($id)
     {
         $pooja = \App\Models\Pooja::findOrFail($id);
-        if ($pooja->image && Storage::disk('public')->exists($pooja->image)) {
-            Storage::disk('public')->delete($pooja->image);
+        if ($pooja->image) {
+            if (Storage::disk('public')->exists($pooja->image)) {
+                Storage::disk('public')->delete($pooja->image);
+            }
+            if (file_exists(public_path('uploads/' . $pooja->image))) {
+                @unlink(public_path('uploads/' . $pooja->image));
+            }
         }
         $pooja->delete();
 
@@ -290,26 +302,28 @@ class AdminDashboardController extends Controller
     {
         $validated = $request->validate([
             'donor_name' => ['required', 'string', 'max:255'],
-            'pan_number' => ['nullable', 'string', 'max:20'],
-            'email' => ['required', 'email'],
-            'mobile_number' => ['required', 'string'],
-            'seva_cause' => ['required', 'string'],
+            'donor_mobile' => ['required', 'string', 'regex:/^[0-9]{10,15}$/'],
+            'donor_email' => ['nullable', 'email'],
+            'donor_pan' => ['nullable', 'string', 'max:20'],
+            'cause' => ['required', 'string'],
             'amount' => ['required', 'numeric', 'min:1'],
             'payment_mode' => ['required', 'string'],
-            'notes' => ['nullable', 'string'],
+            'transaction_id' => ['nullable', 'string'],
+            'address' => ['nullable', 'string'],
+            'status' => ['required', 'string'],
         ]);
 
-        $receipt = 'DON-' . date('Y') . '-' . str_pad(\App\Models\Donation::count() + 1, 4, '0', STR_PAD_LEFT);
-        $validated['receipt_number'] = $receipt;
-        $validated['payment_status'] = 'verified';
+        if (empty($validated['transaction_id'])) {
+            $validated['transaction_id'] = 'TXN-' . strtoupper(uniqid());
+        }
 
         \App\Models\Donation::create($validated);
 
-        return back()->with('success', "Donation record #{$receipt} registered successfully in MySQL.");
+        return back()->with('success', 'Donation receipt recorded successfully in database.');
     }
 
     /**
-     * Delete Donation record.
+     * Delete a donation record from database.
      */
     public function deleteDonation($id)
     {
@@ -320,7 +334,7 @@ class AdminDashboardController extends Controller
     }
 
     /**
-     * Display Events & Utsavs admin overview (from MySQL).
+     * Display Temple Events admin overview (from MySQL).
      */
     public function events()
     {
@@ -329,7 +343,7 @@ class AdminDashboardController extends Controller
     }
 
     /**
-     * Store a new Temple Event in MySQL.
+     * Store a new Temple Festival / Utsav in MySQL.
      */
     public function storeEvent(Request $request)
     {
@@ -347,8 +361,17 @@ class AdminDashboardController extends Controller
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('events', 'public');
+            try {
+                $uploadDir = public_path('uploads/' . dirname($path));
+                if (!file_exists($uploadDir)) {
+                    @mkdir($uploadDir, 0755, true);
+                }
+                @copy(storage_path('app/public/' . $path), public_path('uploads/' . $path));
+            } catch (\Throwable $e) {}
             $validated['image'] = $path;
         }
+
+        $validated['slug'] = \Illuminate\Support\Str::slug($validated['title']) . '-' . rand(100, 999);
 
         \App\Models\TempleEvent::create($validated);
 
@@ -361,8 +384,13 @@ class AdminDashboardController extends Controller
     public function deleteEvent($id)
     {
         $event = \App\Models\TempleEvent::findOrFail($id);
-        if ($event->image && Storage::disk('public')->exists($event->image)) {
-            Storage::disk('public')->delete($event->image);
+        if ($event->image) {
+            if (Storage::disk('public')->exists($event->image)) {
+                Storage::disk('public')->delete($event->image);
+            }
+            if (file_exists(public_path('uploads/' . $event->image))) {
+                @unlink(public_path('uploads/' . $event->image));
+            }
         }
         $event->delete();
 
@@ -396,6 +424,13 @@ class AdminDashboardController extends Controller
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('facilities', 'public');
+            try {
+                $uploadDir = public_path('uploads/' . dirname($path));
+                if (!file_exists($uploadDir)) {
+                    @mkdir($uploadDir, 0755, true);
+                }
+                @copy(storage_path('app/public/' . $path), public_path('uploads/' . $path));
+            } catch (\Throwable $e) {}
             $validated['image'] = $path;
         }
 
@@ -410,8 +445,13 @@ class AdminDashboardController extends Controller
     public function deleteFacility($id)
     {
         $facility = \App\Models\Facility::findOrFail($id);
-        if ($facility->image && Storage::disk('public')->exists($facility->image)) {
-            Storage::disk('public')->delete($facility->image);
+        if ($facility->image) {
+            if (Storage::disk('public')->exists($facility->image)) {
+                Storage::disk('public')->delete($facility->image);
+            }
+            if (file_exists(public_path('uploads/' . $facility->image))) {
+                @unlink(public_path('uploads/' . $facility->image));
+            }
         }
         $facility->delete();
 
@@ -440,6 +480,13 @@ class AdminDashboardController extends Controller
         ]);
 
         $path = $request->file('photo')->store('gallery', 'public');
+        try {
+            $uploadDir = public_path('uploads/' . dirname($path));
+            if (!file_exists($uploadDir)) {
+                @mkdir($uploadDir, 0755, true);
+            }
+            @copy(storage_path('app/public/' . $path), public_path('uploads/' . $path));
+        } catch (\Throwable $e) {}
 
         \App\Models\Gallery::create([
             'title' => $request->title,
@@ -468,10 +515,22 @@ class AdminDashboardController extends Controller
 
         if ($request->hasFile('photo')) {
             // Delete old file if stored locally
-            if ($item->image_path && Storage::disk('public')->exists($item->image_path)) {
-                Storage::disk('public')->delete($item->image_path);
+            if ($item->image_path) {
+                if (Storage::disk('public')->exists($item->image_path)) {
+                    Storage::disk('public')->delete($item->image_path);
+                }
+                if (file_exists(public_path('uploads/' . $item->image_path))) {
+                    @unlink(public_path('uploads/' . $item->image_path));
+                }
             }
             $item->image_path = $request->file('photo')->store('gallery', 'public');
+            try {
+                $uploadDir = public_path('uploads/' . dirname($item->image_path));
+                if (!file_exists($uploadDir)) {
+                    @mkdir($uploadDir, 0755, true);
+                }
+                @copy(storage_path('app/public/' . $item->image_path), public_path('uploads/' . $item->image_path));
+            } catch (\Throwable $e) {}
         }
 
         $item->title = $validated['title'];
@@ -512,10 +571,10 @@ class AdminDashboardController extends Controller
     public function updateHomepageMedia(Request $request)
     {
         $request->validate([
-            'hero_mandir_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
-            'about_history_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
-            'live_darshan_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
-            'goshala_seva_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
+            'hero_mandir_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,jfif,avif,gif', 'max:12288'],
+            'about_history_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,jfif,avif,gif', 'max:12288'],
+            'live_darshan_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,jfif,avif,gif', 'max:12288'],
+            'goshala_seva_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,jfif,avif,gif', 'max:12288'],
         ]);
 
         $imageKeys = [
@@ -528,10 +587,28 @@ class AdminDashboardController extends Controller
         foreach ($imageKeys as $key) {
             if ($request->hasFile($key)) {
                 $setting = \App\Models\SiteSetting::where('key', $key)->first();
-                if ($setting && $setting->value && Storage::disk('public')->exists($setting->value)) {
-                    Storage::disk('public')->delete($setting->value);
+                if ($setting && $setting->value) {
+                    if (Storage::disk('public')->exists($setting->value)) {
+                        Storage::disk('public')->delete($setting->value);
+                    }
+                    if (file_exists(public_path('uploads/' . $setting->value))) {
+                        @unlink(public_path('uploads/' . $setting->value));
+                    }
                 }
+
                 $path = $request->file($key)->store('settings', 'public');
+
+                // Also copy directly to public/uploads/
+                try {
+                    $uploadDir = public_path('uploads/' . dirname($path));
+                    if (!file_exists($uploadDir)) {
+                        @mkdir($uploadDir, 0755, true);
+                    }
+                    @copy(storage_path('app/public/' . $path), public_path('uploads/' . $path));
+                } catch (\Throwable $e) {
+                    // Ignore copy restriction
+                }
+
                 \App\Models\SiteSetting::updateOrCreate(
                     ['key' => $key],
                     ['value' => $path, 'type' => 'image', 'group' => 'homepage']
