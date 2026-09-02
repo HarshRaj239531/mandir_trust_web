@@ -3,7 +3,7 @@
 
     <!-- Page Header (Ancient Scroll Inscription) -->
     <section class="relative pt-8 sm:pt-12 pb-12 sm:pb-16 overflow-hidden">
-        <div class="container mx-auto px-6 relative z-10 text-center max-w-4xl reveal-fade-up">
+        <div class="container mx-auto px-4 sm:px-8 relative z-10 text-center max-w-5xl reveal-fade-up">
             <div class="parchment-scroll p-8 sm:p-12 rounded-3xl antique-border shadow-xl hover-lift relative overflow-hidden group">
                 <!-- User Provided Vintage Floral Corner Ornaments -->
                 <x-vintage-corner position="top-right" size="w-20 h-20 sm:w-28 sm:h-28" />
@@ -27,7 +27,7 @@
 
     <!-- Gallery Section (Masonry Parchment Grid) -->
     <section class="py-16 bg-[#FAF6EC] border-y border-[#DEC7A2]/60 min-h-screen">
-        <div class="container mx-auto px-6 md:px-12 max-w-6xl">
+        <div class="container mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 max-w-[1380px]">
             
             <!-- Category Filter Tabs with Active Indicators -->
             <div class="flex flex-wrap items-center justify-center gap-2.5 mb-12 reveal-fade-up">

@@ -1,8 +1,8 @@
 <footer class="bg-[#2C1D14] text-[#EADBC0] pt-20 pb-12 border-t-4 border-[#912003] relative overflow-hidden">
-    <div class="container mx-auto px-6 md:px-12 relative z-10">
+    <div class="container mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10 max-w-[1380px]">
         
         <!-- Top Row: Trust Identity & Daily Blessings Signup -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 pb-16 border-b border-[#A16207]/40 items-center reveal-fade-up">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 pb-16 border-b border-[#A16207]/40 items-center reveal-fade-up">
             <div class="lg:col-span-6 space-y-4">
                 <a href="{{ route('home') }}" class="flex items-center gap-3.5 group">
                     <div class="w-12 h-12 rounded-full bg-[#1C120C] border-2 border-[#CA8A04] flex items-center justify-center text-[#CA8A04] font-cinzel text-2xl font-bold shadow-md group-hover:scale-110 transition-transform duration-500">
@@ -37,7 +37,7 @@
         </div>
 
         <!-- Middle Row: Navigation, Darshan Timings & Bank Details -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 py-16 border-b border-[#A16207]/40 text-sm stagger-parent">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 py-16 border-b border-[#A16207]/40 text-sm stagger-parent">
             
             <!-- Quick Links -->
             <div class="reveal-fade-up">

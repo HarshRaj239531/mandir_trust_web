@@ -10,7 +10,7 @@
     </div>
 
     <!-- 2. Minimalist Grand Content (Kam se Kam, Clean & Elegant) -->
-    <div class="container mx-auto px-6 md:px-12 my-auto relative z-10 text-center max-w-4xl">
+    <div class="container mx-auto px-4 sm:px-8 lg:px-12 my-auto relative z-10 text-center max-w-5xl">
         
         <!-- Small Sacred Badge -->
         <div class="mb-3 reveal-fade-up">

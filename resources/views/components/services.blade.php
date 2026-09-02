@@ -1,8 +1,8 @@
-<section id="services" class="py-24 bg-[#FAF6EC] relative overflow-hidden border-b border-[#DEC7A2]/60">
-    <div class="container mx-auto px-6 md:px-12 relative z-10 max-w-5xl">
+<section id="services" class="py-20 md:py-24 bg-[#FAF6EC] relative overflow-hidden border-b border-[#DEC7A2]/60">
+    <div class="container mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10 max-w-[1380px]">
         
         <!-- Sacred Chapter Header -->
-        <div class="text-center max-w-3xl mx-auto mb-16 reveal-fade-up relative">
+        <div class="text-center max-w-4xl mx-auto mb-14 md:mb-16 reveal-fade-up relative">
             <!-- Rising Floral Vine Flourishes on Left and Right -->
             <div class="hidden md:block absolute -left-12 -top-6">
                 <x-vertical-vine position="left" size="w-16 h-36" opacity="opacity-60" />

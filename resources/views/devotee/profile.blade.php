@@ -1,8 +1,8 @@
 <x-layout title="My Account | भक्त विवरण | Shringi Rishi Mandir Trust">
     <x-navbar />
 
-    <div class="min-h-[85vh] py-8 sm:py-12 px-3 sm:px-6 relative">
-        <div class="max-w-5xl mx-auto space-y-8">
+    <div class="min-h-[85vh] py-8 sm:py-12 px-4 sm:px-8 relative">
+        <div class="max-w-[1380px] mx-auto space-y-8">
             
             <!-- Welcome Devotee Banner -->
             <div class="parchment-scroll royal-gold-frame rounded-3xl p-6 sm:p-8 border-2 border-[#CA8A04] shadow-md relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">

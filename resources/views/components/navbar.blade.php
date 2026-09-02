@@ -3,8 +3,8 @@
 @endphp
 
 <!-- Royal Vedic Parchment Scroll Header -->
-<header id="navbar-header" class="relative z-40 w-full pt-1 sm:pt-1.5 px-3 sm:px-6 md:px-8">
-    <div class="max-w-7xl mx-auto relative flex items-center justify-center">
+<header id="navbar-header" class="relative z-40 w-full pt-1 sm:pt-1.5 px-3 sm:px-6 md:px-8 xl:px-12">
+    <div class="max-w-[1380px] mx-auto relative flex items-center justify-center">
         
         <!-- Central Opened Parchment Scroll Banner (विस्तृत राजसी पट्टिका) -->
         <div class="w-full parchment-scroll royal-gold-frame rounded-2xl md:rounded-3xl px-4 sm:px-8 py-2 sm:py-2.5 border-2 border-[#CA8A04] shadow-[0_10px_35px_rgba(44,29,20,0.18)] flex items-center justify-between relative overflow-hidden backdrop-blur-md">

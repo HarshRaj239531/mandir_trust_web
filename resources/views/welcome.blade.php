@@ -11,10 +11,10 @@
     <x-services />
 
     <!-- Chapter 3: Live Darshan & Daily Aarti (Garbhagriha Broadcast) -->
-    <section class="py-24 bg-[#F8F3E8] relative overflow-hidden border-b border-[#DEC7A2]/60">
-        <div class="container mx-auto px-6 md:px-12 relative z-10 max-w-6xl">
+    <section class="py-20 md:py-24 bg-[#F8F3E8] relative overflow-hidden border-b border-[#DEC7A2]/60">
+        <div class="container mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10 max-w-[1380px]">
             
-            <div class="text-center max-w-3xl mx-auto mb-16 reveal-fade-up relative">
+            <div class="text-center max-w-4xl mx-auto mb-14 md:mb-16 reveal-fade-up relative">
                 <!-- Rising Floral Vine Flourishes on Left and Right -->
                 <div class="hidden md:block absolute -left-12 -top-6">
                     <x-vertical-vine position="left" size="w-16 h-36" opacity="opacity-60" />
@@ -35,25 +35,32 @@
             </div>
 
             <!-- Parchment Live Broadcast Frame -->
-            <div class="parchment-scroll p-4 sm:p-8 rounded-3xl antique-border shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center hover-lift reveal-scale-in">
+            @php
+                $liveDarshanUrl = \App\Models\SiteSetting::getImageUrl('live_darshan_image', 'images/mandir-aarti.jpg');
+            @endphp
+            <div class="parchment-scroll p-4 sm:p-8 rounded-3xl antique-border shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center hover-lift reveal-scale-in">
                 
                 <!-- Live Stream Video Window (7 cols) -->
-                <div class="lg:col-span-7 relative bg-black rounded-2xl overflow-hidden aspect-video shadow-md group reveal-fade-left">
-                    <img src="{{ \App\Models\SiteSetting::getImageUrl('live_darshan_image', 'images/mandir-aarti.jpg') }}" alt="Live Aarti Broadcast" class="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-1000">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+                <div class="lg:col-span-7 relative bg-[#140C08] rounded-2xl overflow-hidden min-h-[320px] sm:min-h-[380px] md:min-h-[420px] aspect-[4/3] sm:aspect-video shadow-2xl group reveal-fade-left flex items-center justify-center">
+                    <!-- Ambient Blurred Glow Backdrop (fills frame without black bars) -->
+                    <img src="{{ $liveDarshanUrl }}" alt="" class="absolute inset-0 w-full h-full object-cover filter blur-xl scale-110 opacity-40 pointer-events-none">
                     
-                    <div class="absolute top-4 left-4 flex items-center gap-2 px-3 py-1 rounded-full bg-[#912003] text-white font-bold text-xs uppercase tracking-widest shadow animate-live-glow">
+                    <!-- Crisp Main Deity Image (Never Cut Off - Full Head & Body Visible) -->
+                    <img src="{{ $liveDarshanUrl }}" alt="Live Aarti Broadcast" class="relative z-10 w-full h-full max-h-[460px] object-contain sm:object-cover sm:object-top opacity-95 group-hover:scale-[1.02] transition-transform duration-1000">
+                    <div class="absolute inset-0 z-15 bg-gradient-to-t from-black/85 via-black/20 to-black/30 pointer-events-none"></div>
+                    
+                    <div class="absolute top-4 left-4 z-20 flex items-center gap-2 px-3 py-1 rounded-full bg-[#912003] text-white font-bold text-xs uppercase tracking-widest shadow animate-live-glow">
                         <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
                         <span>Live Aarti Broadcast</span>
                     </div>
 
-                    <button onclick="playTempleBell()" class="shimmer-btn absolute inset-0 m-auto w-16 h-16 rounded-full bg-[#912003] hover:bg-[#6C1802] text-white flex items-center justify-center text-2xl shadow-[0_0_30px_rgba(145,32,3,0.8)] transition-transform hover:scale-110 cursor-pointer">
+                    <button onclick="playTempleBell()" class="shimmer-btn absolute inset-0 z-20 m-auto w-16 h-16 rounded-full bg-[#912003] hover:bg-[#6C1802] text-white flex items-center justify-center text-2xl shadow-[0_0_30px_rgba(145,32,3,0.8)] transition-transform hover:scale-110 cursor-pointer">
                         <span class="ml-1">▶</span>
                     </button>
                     
-                    <div class="absolute bottom-4 left-4 right-4 flex justify-between text-xs text-[#F4EBD9] font-marcellus">
+                    <div class="absolute bottom-4 left-4 right-4 z-20 flex justify-between text-xs text-[#F4EBD9] font-marcellus">
                         <span>Sanctum Sanctorum (Garbhagriha)</span>
-                        <span class="bg-black/60 px-2.5 py-0.5 rounded border border-[#A16207]/40 flex items-center gap-1.5">
+                        <span class="bg-black/60 px-2.5 py-0.5 rounded border border-[#A16207]/40 flex items-center gap-1.5 backdrop-blur-xs">
                             <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
                             <span data-counter-target="1420" data-counter-suffix=" Devotees Present">1,420 Devotees Present</span>
                         </span>
@@ -102,9 +109,9 @@
     </section>
 
     <!-- Chapter 4: Surabhi Goshala Seva -->
-    <section class="py-24 bg-[#FAF6EC] relative overflow-hidden border-b border-[#DEC7A2]/60">
-        <div class="container mx-auto px-6 md:px-12 relative z-10 max-w-6xl">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    <section class="py-20 md:py-24 bg-[#FAF6EC] relative overflow-hidden border-b border-[#DEC7A2]/60">
+        <div class="container mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10 max-w-[1380px]">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
                 
                 <div class="lg:col-span-6 space-y-6 reveal-fade-left">
                     <div class="text-xs uppercase tracking-[0.3em] font-marcellus text-[#912003] font-bold">
@@ -137,8 +144,8 @@
                 </div>
 
                 <div class="lg:col-span-6 relative reveal-fade-right">
-                    <div class="parchment-scroll p-3 rounded-3xl antique-border shadow-xl aspect-[4/3] group overflow-hidden hover-lift">
-                        <img src="{{ \App\Models\SiteSetting::getImageUrl('goshala_seva_image', 'images/mandir-goshala.jpg') }}" alt="Temple Goshala" class="w-full h-full object-cover rounded-2xl transition-transform duration-1000 group-hover:scale-105">
+                    <div class="parchment-scroll p-3 sm:p-4 rounded-3xl antique-border shadow-xl aspect-[4/3] group overflow-hidden hover-lift bg-[#FAF6EC]">
+                        <img src="{{ \App\Models\SiteSetting::getImageUrl('goshala_seva_image', 'images/mandir-goshala.jpg') }}" alt="Temple Goshala" class="w-full h-full object-cover object-top rounded-2xl transition-transform duration-1000 group-hover:scale-105">
                     </div>
                     <div class="text-center mt-3 text-xs font-marcellus text-[#6C1802] italic">
                         ॥ सुरभि गोशाला आश्रम • नित्य गोपूजन ॥
@@ -150,10 +157,10 @@
     </section>
 
     <!-- Chapter 5: Sanatan Panchang & Upcoming Festivals -->
-    <section class="py-24 bg-[#F8F3E8] relative overflow-hidden">
-        <div class="container mx-auto px-6 md:px-12 relative z-10 max-w-5xl">
+    <section class="py-20 md:py-24 bg-[#F8F3E8] relative overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10 max-w-[1380px]">
             
-            <div class="text-center max-w-3xl mx-auto mb-16 reveal-fade-up relative">
+            <div class="text-center max-w-4xl mx-auto mb-14 md:mb-16 reveal-fade-up relative">
                 <!-- Rising Floral Vine Flourishes on Left and Right -->
                 <div class="hidden md:block absolute -left-12 -top-6">
                     <x-vertical-vine position="left" size="w-16 h-36" opacity="opacity-60" />

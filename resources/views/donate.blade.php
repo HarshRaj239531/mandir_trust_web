@@ -3,7 +3,7 @@
 
     <!-- Page Header (Ancient Scroll Inscription) -->
     <section class="relative pt-8 sm:pt-12 pb-12 sm:pb-16 overflow-hidden">
-        <div class="container mx-auto px-6 relative z-10 text-center max-w-4xl reveal-fade-up">
+        <div class="container mx-auto px-4 sm:px-8 relative z-10 text-center max-w-5xl reveal-fade-up">
             <div class="parchment-scroll p-8 sm:p-12 rounded-3xl antique-border shadow-xl hover-lift relative overflow-hidden group">
                 <!-- User Provided Vintage Floral Corner Ornaments -->
                 <x-vintage-corner position="top-right" size="w-20 h-20 sm:w-28 sm:h-28" />
@@ -28,7 +28,7 @@
 
     <!-- Main Donation Interactive Engine (Parchment Charter) -->
     <section class="py-16 bg-[#FAF6EC] border-y border-[#DEC7A2]/60">
-        <div class="container mx-auto px-6 md:px-12 max-w-5xl">
+        <div class="container mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 max-w-[1380px]">
             
             <div class="parchment-scroll p-6 sm:p-10 md:p-12 rounded-3xl antique-border shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-10 hover-lift reveal-scale-in">
                 
@@ -180,7 +180,7 @@
 
     <!-- Bank Details & UPI (Parchment Box) -->
     <section class="py-16 bg-[#F8F3E8]">
-        <div class="container mx-auto px-6 max-w-4xl reveal-fade-up">
+        <div class="container mx-auto px-4 sm:px-8 max-w-5xl reveal-fade-up">
             <div class="parchment-scroll p-6 sm:p-8 rounded-3xl antique-border shadow-lg grid grid-cols-1 sm:grid-cols-2 gap-8 items-center hover-lift">
                 <div class="space-y-2 text-xs text-[#2C1D14] font-mono">
                     <h4 class="font-cinzel text-lg font-bold text-[#912003] font-sans">🏛️ Official Bank Account</h4>

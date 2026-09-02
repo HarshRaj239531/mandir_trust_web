@@ -1,8 +1,8 @@
-<section id="about" class="py-24 bg-[#F8F3E8] relative overflow-hidden border-b border-[#DEC7A2]/60">
-    <div class="container mx-auto px-6 md:px-12 relative z-10 max-w-6xl">
+<section id="about" class="py-20 md:py-24 bg-[#F8F3E8] relative overflow-hidden border-b border-[#DEC7A2]/60">
+    <div class="container mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 relative z-10 max-w-[1380px]">
         
         <!-- Sacred Chapter Header -->
-        <div class="text-center max-w-3xl mx-auto mb-16 reveal-fade-up relative">
+        <div class="text-center max-w-4xl mx-auto mb-14 md:mb-16 reveal-fade-up relative">
             <!-- Rising Floral Vine Flourishes on Left and Right -->
             <div class="hidden md:block absolute -left-12 -top-6">
                 <x-vertical-vine position="left" size="w-16 h-36" opacity="opacity-60" />
@@ -22,12 +22,12 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
             
             <!-- Left: Ancient Inscription Visual (5 cols) -->
             <div class="lg:col-span-5 relative reveal-fade-left">
-                <div class="parchment-scroll p-3 rounded-3xl antique-border shadow-xl aspect-[4/3] group overflow-hidden hover-lift">
-                    <img src="{{ \App\Models\SiteSetting::getImageUrl('about_history_image', 'images/mandir-aarti.jpg') }}" alt="Maha Aarti Ceremony" class="w-full h-full object-cover rounded-2xl transition-transform duration-1000 group-hover:scale-105">
+                <div class="parchment-scroll p-3 sm:p-4 rounded-3xl antique-border shadow-xl aspect-[4/3] group overflow-hidden hover-lift bg-[#FAF6EC]">
+                    <img src="{{ \App\Models\SiteSetting::getImageUrl('about_history_image', 'images/mandir-aarti.jpg') }}" alt="Maha Aarti Ceremony" class="w-full h-full object-cover object-top rounded-2xl transition-transform duration-1000 group-hover:scale-105">
                 </div>
                 <div class="text-center mt-3 text-xs font-marcellus text-[#6C1802] italic">
                     ॥ नित्य संध्या महाआरती • अखण्ड दीप दर्शन ॥

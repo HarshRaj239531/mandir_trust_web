@@ -3,7 +3,7 @@
 
     <!-- Page Header (Ancient Scroll Inscription) -->
     <section class="relative pt-8 sm:pt-12 pb-12 sm:pb-16 overflow-hidden">
-        <div class="container mx-auto px-6 relative z-10 text-center max-w-4xl reveal-fade-up">
+        <div class="container mx-auto px-4 sm:px-8 relative z-10 text-center max-w-5xl reveal-fade-up">
             <div class="parchment-scroll p-8 sm:p-12 rounded-3xl antique-border shadow-xl hover-lift relative overflow-hidden group">
                 <!-- User Provided Vintage Floral Corner Ornaments -->
                 <x-vintage-corner position="top-right" size="w-20 h-20 sm:w-28 sm:h-28" />
@@ -27,7 +27,7 @@
 
     <!-- 1. Yatri Niwas (Accommodation Parchment List) -->
     <section class="py-16 bg-[#FAF6EC] border-y border-[#DEC7A2]/60">
-        <div class="container mx-auto px-6 md:px-12 max-w-5xl space-y-12">
+        <div class="container mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 max-w-[1380px] space-y-12">
             
             <div class="text-center max-w-2xl mx-auto reveal-fade-up">
                 <span class="text-xs uppercase font-marcellus tracking-widest text-[#912003] font-bold">आश्रम आवास</span>
@@ -72,7 +72,7 @@
 
     <!-- 2. Maha Annapurna Hall & Goshala Narrative -->
     <section class="py-16 bg-[#F8F3E8]">
-        <div class="container mx-auto px-6 md:px-12 max-w-5xl space-y-16">
+        <div class="container mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 max-w-[1380px] space-y-16">
             
             <!-- Annapurna -->
             <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">

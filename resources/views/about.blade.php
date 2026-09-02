@@ -3,7 +3,7 @@
 
     <!-- Page Header (Ancient Scroll Inscription) -->
     <section class="relative pt-8 sm:pt-12 pb-12 sm:pb-16 overflow-hidden">
-        <div class="container mx-auto px-6 relative z-10 text-center max-w-4xl reveal-fade-up">
+        <div class="container mx-auto px-4 sm:px-8 relative z-10 text-center max-w-5xl reveal-fade-up">
             <div class="parchment-scroll p-8 sm:p-12 rounded-3xl antique-border shadow-xl hover-lift relative overflow-hidden group">
                 <!-- User Provided Vintage Floral Corner Ornaments -->
                 <x-vintage-corner position="top-right" size="w-20 h-20 sm:w-28 sm:h-28" />
@@ -27,8 +27,8 @@
 
     <!-- Narrative Section with Drop Caps & Flowing Manuscript Style -->
     <section class="py-16 bg-[#FAF6EC] border-y border-[#DEC7A2]/60">
-        <div class="container mx-auto px-6 md:px-12 max-w-4xl space-y-8 reveal-fade-up">
-            <div class="space-y-4">
+        <div class="container mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 max-w-[1380px] space-y-8 reveal-fade-up">
+            <div class="space-y-4 max-w-5xl mx-auto">
                 <span class="text-xs uppercase font-marcellus tracking-widest text-[#912003] font-bold">खण्ड १ • मन्दिर स्थापना रहस्य</span>
                 <h2 class="font-cinzel text-3xl font-bold text-[#1C120C]">The Sacred Consecration of 1924</h2>
                 <p class="drop-cap text-base sm:text-lg text-[#2C1D14] leading-relaxed font-normal">
@@ -43,14 +43,14 @@
 
     <!-- 100-Year Timeline as an Ancient Manuscript Chronicle -->
     <section class="py-20 bg-[#F8F3E8] border-b border-[#DEC7A2]/60">
-        <div class="container mx-auto px-6 md:px-12 max-w-4xl">
-            <div class="text-center mb-16 reveal-fade-up">
+        <div class="container mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 max-w-[1380px]">
+            <div class="text-center mb-16 reveal-fade-up max-w-4xl mx-auto">
                 <span class="text-xs uppercase font-marcellus tracking-widest text-[#912003] font-bold">खण्ड २ • कालक्रम यात्रा</span>
                 <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-[#1C120C] mt-1">100 Years of Sacred Milestones</h2>
                 <div class="sacred-divider"><span class="animate-float-gentle">📜</span></div>
             </div>
 
-            <div class="parchment-scroll p-6 sm:p-10 rounded-3xl antique-border shadow-xl space-y-8 hover-lift relative overflow-hidden group">
+            <div class="parchment-scroll p-6 sm:p-10 rounded-3xl antique-border shadow-xl space-y-8 hover-lift relative overflow-hidden group max-w-5xl mx-auto">
                 <!-- Vintage Corner Flourish on Timeline Card -->
                 <x-vintage-corner position="top-right" size="w-20 h-20 sm:w-28 sm:h-28" />
                 
@@ -100,7 +100,7 @@
 
     <!-- Board of Trustees Styled as Sacred Seal Signatures -->
     <section class="py-20 bg-[#FAF6EC]">
-        <div class="container mx-auto px-6 md:px-12 max-w-5xl">
+        <div class="container mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 max-w-[1380px]">
             <div class="text-center mb-16 reveal-fade-up">
                 <span class="text-xs uppercase font-marcellus tracking-widest text-[#912003] font-bold">खण्ड ३ • न्यास मण्डल</span>
                 <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-[#1C120C] mt-1">Board of Trustees & Acharyas</h2>
