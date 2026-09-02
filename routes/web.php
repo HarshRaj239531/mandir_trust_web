@@ -58,6 +58,15 @@ Route::middleware('auth')->group(function () {
 |--------------------------------------------------------------------------
 */
 
+Route::get('/mandiradmin', function () {
+    if (auth()->check() && auth()->user()->is_admin) {
+        return redirect()->route('admin.dashboard');
+    }
+    return view('auth.login');
+})->name('admin.login');
+
+Route::post('/mandiradmin/login', [AuthController::class, 'login']);
+
 Route::middleware(['auth', 'admin'])->prefix('mandiradmin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'dashboard'])->name('dashboard');
     

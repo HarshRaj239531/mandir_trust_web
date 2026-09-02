@@ -42,6 +42,22 @@ class SiteSetting extends Model
             return $val;
         }
 
+        // If stored in public storage disk (e.g., 'settings/xyz.jpg' or 'storage/settings/xyz.jpg')
+        if (str_starts_with($val, 'storage/')) {
+            return asset($val);
+        }
+
+        if (
+            str_starts_with($val, 'settings/') ||
+            str_starts_with($val, 'gallery/') ||
+            str_starts_with($val, 'events/') ||
+            str_starts_with($val, 'facilities/') ||
+            str_starts_with($val, 'poojas/') ||
+            str_starts_with($val, 'devotees/')
+        ) {
+            return asset('storage/' . $val);
+        }
+
         if (Storage::disk('public')->exists($val)) {
             return asset('storage/' . $val);
         }

@@ -87,7 +87,7 @@
                 <!-- Admin Access Note -->
                 <div class="p-3 rounded-2xl bg-[#FAF6EC] border border-[#DEC7A2] text-left text-xs font-sans">
                     <div class="flex items-center justify-between text-[#912003] font-cinzel font-bold mb-1">
-                        <span>🛡️ Admin Portal Login Demo:</span>
+                        <span>🛡️ Mandir Trust Admin Portal (प्रशासनिक संकुल):</span>
                         <span class="text-[10px] bg-[#912003]/10 px-2 py-0.5 rounded-full">Administrator</span>
                     </div>
                     <div class="text-[#422B1E] space-y-0.5 font-mono text-[11px]">

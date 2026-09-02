@@ -132,6 +132,9 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        $loginInput = $request->input('login') ?? $request->input('email') ?? $request->input('mobile_number');
+        $request->merge(['login' => $loginInput]);
+
         $credentials = $request->validate([
             'login' => ['required', 'string'],
             'password' => ['required', 'string'],
