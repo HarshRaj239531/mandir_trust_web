@@ -48,7 +48,7 @@
                     <li><a href="{{ route('home') }}" class="hover:text-[#CA8A04] transition-all hover:translate-x-1 inline-block">Temple Home</a></li>
                     <li><a href="{{ route('register') }}" class="text-[#CA8A04] font-bold hover:text-white transition-all hover:translate-x-1 inline-block">🪔 भक्त पंजीकरण (Devotee Registration)</a></li>
                     @auth
-                        <li><a href="{{ route('devotee.profile') }}" class="text-white font-bold hover:text-[#CA8A04] transition-all hover:translate-x-1 inline-block">👤 Mera Khata ({{ auth()->user()->nickname }})</a></li>
+                        <!-- <li><a href="{{ route('devotee.profile') }}" class="text-white font-bold hover:text-[#CA8A04] transition-all hover:translate-x-1 inline-block">👤 Mera Khata ({{ auth()->user()->nickname }})</a></li> -->
                     @else
                         <li><a href="{{ route('login') }}" class="hover:text-[#CA8A04] transition-all hover:translate-x-1 inline-block">🔑 भक्त लॉगिन (Devotee Login)</a></li>
                     @endauth
@@ -56,12 +56,12 @@
                     <li><a href="{{ route('poojas') }}" class="hover:text-[#CA8A04] transition-all hover:translate-x-1 inline-block">Book Online Pooja & Sankalp</a></li>
                     <li><a href="{{ route('events') }}" class="hover:text-[#CA8A04] transition-all hover:translate-x-1 inline-block">Upcoming Festivals Calendar</a></li>
                     <li><a href="{{ route('donate') }}" class="hover:text-[#CA8A04] transition-all hover:translate-x-1 inline-block">Online Seva & Daan Portal</a></li>
-                    <li><a href="{{ url('/mandiradmin') }}" class="text-[#A16207] hover:text-[#CA8A04] text-xs font-cinzel transition-all hover:translate-x-1 inline-block">🛡️ Mandir Admin Portal</a></li>
+                    <!-- <li><a href="{{ url('/mandiradmin') }}" class="text-[#A16207] hover:text-[#CA8A04] text-xs font-cinzel transition-all hover:translate-x-1 inline-block">🛡️ Mandir Admin Portal</a></li> -->
                 </ul>
             </div>
 
             <!-- Daily Aarti & Darshan Timings -->
-            <div class="reveal-fade-up">
+            <!-- <div class="reveal-fade-up">
                 <h4 class="font-cinzel font-bold text-[#FFFDF9] text-base mb-5 tracking-wider uppercase flex items-center gap-2">
                     <span class="text-[#CA8A04] animate-spin-slow">⏰</span> Darshan Timetable
                 </h4>
@@ -91,7 +91,7 @@
                         <span class="font-bold text-[#CA8A04]">08:45 PM</span>
                     </li>
                 </ul>
-            </div>
+            </div> -->
 
             <!-- Direct Bank Donation Info -->
             <div class="reveal-fade-up">
