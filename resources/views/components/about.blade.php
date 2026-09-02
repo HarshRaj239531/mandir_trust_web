@@ -26,8 +26,8 @@
             
             <!-- Left: Ancient Inscription Visual (5 cols) -->
             <div class="lg:col-span-5 relative reveal-fade-left">
-                <div class="parchment-scroll p-3 rounded-3xl antique-border shadow-xl aspect-[4/3] group overflow-hidden hover-lift bg-[#FAF6EC]">
-                    <img src="{{ \App\Models\SiteSetting::getImageUrl('about_history_image', 'images/mandir-aarti.jpg') }}" alt="Maha Aarti Ceremony" class="w-full h-full object-cover object-top rounded-2xl transition-transform duration-1000 group-hover:scale-105">
+                <div class="parchment-scroll p-3 rounded-3xl antique-border shadow-xl aspect-[4/3] group overflow-hidden hover-lift">
+                    <img src="{{ \App\Models\SiteSetting::getImageUrl('about_history_image', 'images/mandir-aarti.jpg') }}" alt="Maha Aarti Ceremony" class="w-full h-full object-cover rounded-2xl transition-transform duration-1000 group-hover:scale-105">
                 </div>
                 <div class="text-center mt-3 text-xs font-marcellus text-[#6C1802] italic">
                     ॥ नित्य संध्या महाआरती • अखण्ड दीप दर्शन ॥

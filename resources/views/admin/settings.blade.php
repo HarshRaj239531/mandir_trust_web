@@ -209,10 +209,9 @@
                     </div>
 
                     <!-- Thumbnail Preview -->
-                    <div class="relative h-48 rounded-xl overflow-hidden border border-[#DEC7A2] group bg-[#1C120C] flex items-center justify-center">
-                        <img src="{{ $heroImg }}" alt="" class="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-35 pointer-events-none">
-                        <img src="{{ $heroImg }}" alt="Hero Mandir Background" class="relative z-10 w-full h-full object-contain sm:object-cover sm:object-top group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute inset-0 z-20 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-3 pointer-events-none">
+                    <div class="relative h-44 rounded-xl overflow-hidden border border-[#DEC7A2] group">
+                        <img src="{{ $heroImg }}" alt="Hero Mandir Background" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-3">
                             <span class="text-[11px] text-white font-cinzel font-bold">Current Active Hero Background</span>
                         </div>
                     </div>
@@ -223,7 +222,7 @@
                         </label>
                         <input type="file" name="hero_mandir_image" accept="image/*"
                             class="w-full bg-white border border-[#E5DCD0] rounded-xl px-3.5 py-2 text-xs text-[#1C120C] file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-[#912003] file:text-white hover:file:bg-[#6C1802] file:cursor-pointer">
-                        <span class="text-[11px] text-gray-500 italic mt-1 block font-sans">Recommended size: 1920x1080px (JPG, WebP, PNG max 12MB).</span>
+                        <span class="text-[11px] text-gray-500 italic mt-1 block font-sans">Recommended size: 1920x1080px (JPG, WebP, PNG max 8MB).</span>
                     </div>
                 </div>
 
@@ -238,10 +237,9 @@
                     </div>
 
                     <!-- Thumbnail Preview -->
-                    <div class="relative h-48 rounded-xl overflow-hidden border border-[#DEC7A2] group bg-[#1C120C] flex items-center justify-center">
-                        <img src="{{ $aboutImg }}" alt="" class="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-35 pointer-events-none">
-                        <img src="{{ $aboutImg }}" alt="Mandir Heritage Photo" class="relative z-10 w-full h-full object-contain sm:object-cover sm:object-top group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute inset-0 z-20 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-3 pointer-events-none">
+                    <div class="relative h-44 rounded-xl overflow-hidden border border-[#DEC7A2] group">
+                        <img src="{{ $aboutImg }}" alt="Mandir Heritage Photo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-3">
                             <span class="text-[11px] text-white font-cinzel font-bold">Current Active Heritage Photo</span>
                         </div>
                     </div>
@@ -267,10 +265,9 @@
                     </div>
 
                     <!-- Thumbnail Preview -->
-                    <div class="relative h-48 rounded-xl overflow-hidden border border-[#DEC7A2] group bg-[#1C120C] flex items-center justify-center">
-                        <img src="{{ $darshanImg }}" alt="" class="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-35 pointer-events-none">
-                        <img src="{{ $darshanImg }}" alt="Live Aarti Window Photo" class="relative z-10 w-full h-full object-contain sm:object-cover sm:object-top group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute inset-0 z-20 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-3 pointer-events-none">
+                    <div class="relative h-44 rounded-xl overflow-hidden border border-[#DEC7A2] group">
+                        <img src="{{ $darshanImg }}" alt="Live Aarti Window Photo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-3">
                             <span class="text-[11px] text-white font-cinzel font-bold">Current Active Live Broadcast Photo</span>
                         </div>
                     </div>
@@ -296,10 +293,9 @@
                     </div>
 
                     <!-- Thumbnail Preview -->
-                    <div class="relative h-48 rounded-xl overflow-hidden border border-[#DEC7A2] group bg-[#1C120C] flex items-center justify-center">
-                        <img src="{{ $goshalaImg }}" alt="" class="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-35 pointer-events-none">
-                        <img src="{{ $goshalaImg }}" alt="Goshala Seva Photo" class="relative z-10 w-full h-full object-contain sm:object-cover sm:object-top group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute inset-0 z-20 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-3 pointer-events-none">
+                    <div class="relative h-44 rounded-xl overflow-hidden border border-[#DEC7A2] group">
+                        <img src="{{ $goshalaImg }}" alt="Goshala Seva Photo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-3">
                             <span class="text-[11px] text-white font-cinzel font-bold">Current Active Goshala Photo</span>
                         </div>
                     </div>
