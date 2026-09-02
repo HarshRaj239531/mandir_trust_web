@@ -115,7 +115,7 @@
                 <div class="space-y-3 text-xs text-[#DEC7A2]">
                     <p class="flex items-start gap-2.5">
                         <span class="text-[#CA8A04] text-sm">🏛️</span>
-                        <span>Shringi Rishi Mandir Complex, Divine Parikrama Marg, Vedic Dham, Pin - 281121</span>
+                        <span>Budhauli Bankar, near Kiul and Suryagarha in the Lakhisarai district of Bihar, India.</span>
                     </p>
                     <p class="flex items-center gap-2.5">
                         <span class="text-[#CA8A04] text-sm">📞</span>
