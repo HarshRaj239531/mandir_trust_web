@@ -1,8 +1,8 @@
 <section id="hero-section" class="relative -mt-16 sm:-mt-20 min-h-screen flex flex-col justify-between pt-20 sm:pt-24 pb-0 overflow-hidden">
     
     <!-- 1. Background Mandir Sanctuary (100% Unobstructed, Crisp & High Definition) -->
-    <div class="absolute inset-0 w-full h-full -z-10 overflow-hidden">
-        <img id="hero-mandir-bg" src="{{ \App\Models\SiteSetting::getImageUrl('hero_mandir_image', 'images/hero-mandir.jpg') }}" alt="Grand Mandir Sanctuary" class="w-full h-full object-cover object-center ken-burns will-change-transform filter brightness-100 contrast-105">
+    <div class="absolute inset-0 w-full h-full -z-10 overflow-hidden bg-[#1C120C]">
+        <img id="hero-mandir-bg" src="{{ \App\Models\SiteSetting::getImageUrl('hero_mandir_image', 'images/hero-mandir.jpg') }}" alt="Grand Mandir Sanctuary" class="w-full h-full object-cover object-top sm:object-center ken-burns will-change-transform filter brightness-100 contrast-105">
         
         <!-- Subtle atmospheric lighting for contrast -->
         <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-transparent to-black/65 pointer-events-none"></div>
