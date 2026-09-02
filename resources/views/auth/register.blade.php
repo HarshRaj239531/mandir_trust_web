@@ -51,7 +51,7 @@
                         <!-- 1. Real / Legal Name -->
                         <div>
                             <label for="name" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1">
-                                1. Full Name (वास्तविक नाम) <span class="text-[#912003]">*</span>
+                                1. Full Name  <span class="text-[#912003]">*</span>
                             </label>
                             <input type="text" id="name" name="name" value="{{ old('name') }}" required
                                 placeholder="e.g. Ramesh Chandra Sharma"
@@ -61,7 +61,7 @@
                         <!-- 2. Nick Name (Public Screen Name) -->
                         <div>
                             <label for="nickname" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1">
-                                2. Nick Name (भक्त नाम / Display Name) <span class="text-[#912003]">*</span>
+                                2. Nick Name (Display Name) <span class="text-[#912003]">*</span>
                             </label>
                             <input type="text" id="nickname" name="nickname" value="{{ old('nickname') }}" required
                                 placeholder="e.g. ShivBhakt_Ramesh"
@@ -83,7 +83,7 @@
                         <!-- 3. Mother's Name -->
                         <div class="sm:col-span-2">
                             <label for="mother_name" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1">
-                                3. Mother's Name (माता का नाम) <span class="text-[#912003]">*</span>
+                                3. Mother's Name <span class="text-[#912003]">*</span>
                             </label>
                             <input type="text" id="mother_name" name="mother_name" value="{{ old('mother_name') }}" required
                                 placeholder="e.g. Smt. Shanti Devi"
@@ -93,21 +93,21 @@
                         <!-- 4. Gender -->
                         <div>
                             <label for="gender" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1">
-                                4. Gender (लिंग) <span class="text-[#912003]">*</span>
+                                4. Gender <span class="text-[#912003]">*</span>
                             </label>
                             <select id="gender" name="gender" required
                                 class="w-full bg-[#FFFDF9] border border-[#DEC7A2] rounded-xl px-3 py-2.5 text-sm text-[#1C120C] focus:outline-none focus:border-[#912003] transition-all">
                                 <option value="" disabled {{ old('gender') ? '' : 'selected' }}>Select...</option>
-                                <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male (पुरुष)</option>
-                                <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female (महिला)</option>
-                                <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other (अन्य)</option>
+                                <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male </option>
+                                <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female </option>
+                                <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
                             </select>
                         </div>
 
                         <!-- 5. D.O.B -->
                         <div>
                             <label for="dob" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1">
-                                5. D.O.B (जन्मतिथि) <span class="text-[#912003]">*</span>
+                                5. D.O.B <span class="text-[#912003]">*</span>
                             </label>
                             <input type="date" id="dob" name="dob" value="{{ old('dob') }}" required max="{{ date('Y-m-d') }}"
                                 class="w-full bg-[#FFFDF9] border border-[#DEC7A2] rounded-xl px-3 py-2.5 text-sm text-[#1C120C] focus:outline-none focus:border-[#912003] transition-all">
@@ -116,7 +116,7 @@
                         <!-- 6. Gmail / Email -->
                         <div class="sm:col-span-2 md:col-span-4">
                             <label for="email" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1">
-                                6. Gmail / Email Address (ईमेल) <span class="text-[#912003]">*</span>
+                                6. Gmail / Email Address <span class="text-[#912003]">*</span>
                             </label>
                             <input type="email" id="email" name="email" value="{{ old('email') }}" required
                                 placeholder="e.g. yourname@gmail.com"
@@ -138,7 +138,7 @@
                         <!-- 7. Mobile Number -->
                         <div>
                             <label for="mobile_number" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1">
-                                7. Mobile Number (मोबाइल) <span class="text-[#912003]">*</span>
+                                7. Mobile Number <span class="text-[#912003]">*</span>
                             </label>
                             <input type="tel" id="mobile_number" name="mobile_number" value="{{ old('mobile_number') }}" required
                                 placeholder="10-digit Mobile Number" pattern="[0-9]{10,15}"
@@ -163,7 +163,7 @@
                         <!-- 9. Pincode -->
                         <div>
                             <label for="pincode" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1">
-                                9. Pincode (पिन कोड) <span class="text-[#912003]">*</span>
+                                9. Pincode <span class="text-[#912003]">*</span>
                             </label>
                             <input type="text" id="pincode" name="pincode" value="{{ old('pincode') }}" required
                                 placeholder="6-digit Pincode" maxlength="6" pattern="[0-9]{6}"
@@ -177,14 +177,14 @@
                     <div class="flex items-center justify-between border-b border-[#DEC7A2]/60 pb-2.5 mb-4">
                         <div class="flex items-center gap-2">
                             <span class="w-6 h-6 rounded-full bg-[#912003] text-white flex items-center justify-center text-xs font-bold font-mono">4</span>
-                            <h2 class="font-cinzel text-sm sm:text-base font-bold text-[#1C120C]">Selfie / Picture & Password</h2>
+                            <h2 class="font-cinzel text-sm sm:text-base font-bold text-[#1C120C]">Profile / Picture & Password</h2>
                         </div>
                     </div>
 
                     <!-- 10. Selfie / Profile Photo -->
                     <div class="mb-6">
                         <label class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-2">
-                            10. Selfie / File Picture (आपकी फोटो / सेल्फी)
+                            10. Profile / File Picture
                         </label>
                         
                         <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 bg-[#FFFDF9] border border-dashed border-[#DEC7A2] rounded-2xl p-4">
@@ -200,7 +200,7 @@
                                 <input type="file" id="profile_photo" name="profile_photo" accept="image/*" onchange="previewImage(event)" class="hidden">
                                 <label for="profile_photo" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#912003] hover:bg-[#6C1802] text-[#FFFDF9] font-cinzel font-semibold text-xs cursor-pointer shadow-sm transition-all hover:scale-105">
                                     <span>📷</span>
-                                    <span>Upload Selfie / Photo</span>
+                                    <span>Upload Profile / Photo</span>
                                 </label>
                                 <span id="file-name" class="block text-xs text-[#6C1802] mt-1.5 font-medium">JPG, PNG, WEBP (Max 5MB)</span>
                             </div>
@@ -211,7 +211,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label for="password" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1">
-                                Create Password (पासवर्ड) <span class="text-[#912003]">*</span>
+                                Create Password <span class="text-[#912003]">*</span>
                             </label>
                             <input type="password" id="password" name="password" required minlength="6"
                                 placeholder="Minimum 6 characters"
@@ -220,7 +220,7 @@
 
                         <div>
                             <label for="password_confirmation" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1">
-                                Confirm Password (पासवर्ड दोबारा लिखें) <span class="text-[#912003]">*</span>
+                                Confirm Password <span class="text-[#912003]">*</span>
                             </label>
                             <input type="password" id="password_confirmation" name="password_confirmation" required minlength="6"
                                 placeholder="Re-enter password"
@@ -238,7 +238,7 @@
                     <p class="text-xs text-[#6C1802] font-marcellus mt-4">
                         Already registered with Shringi Rishi Mandir? 
                         <a href="{{ route('login') }}" class="text-[#912003] font-bold underline hover:text-black">
-                            भक्त लॉगिन (Devotee Login)
+                            Devotee Login
                         </a>
                     </p>
                 </div>

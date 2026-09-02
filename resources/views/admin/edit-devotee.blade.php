@@ -1,4 +1,4 @@
-<x-admin.layout title="Edit Devotee Records" subtitle="Modify Devotee Information">
+    <x-admin.layout title="Edit Devotee Records" subtitle="Modify Devotee Information">
     
     <div class="max-w-4xl mx-auto space-y-6">
         
@@ -54,7 +54,7 @@
                 <!-- 10. Photo / Selfie Upload & Preview -->
                 <div class="bg-[#FAF7F2] border border-[#E5DCD0] rounded-xl p-4">
                     <label class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-2 font-cinzel">
-                        10. Selfie / Profile Photo (फोटो बदलें)
+                        10. Profile Photo
                     </label>
                     <div class="flex flex-col sm:flex-row items-center gap-4">
                         <div class="w-16 h-16 rounded-xl bg-white border border-[#DEC7A2] overflow-hidden shrink-0 shadow-2xs">
@@ -71,7 +71,7 @@
                     <!-- 1. Real Name -->
                     <div>
                         <label for="name" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1">
-                            1. Full Name (वास्तविक नाम) <span class="text-[#912003]">*</span>
+                            1. Full Name  <span class="text-[#912003]">*</span>
                         </label>
                         <input type="text" id="name" name="name" value="{{ old('name', $devotee->name) }}" required
                             class="w-full bg-[#FAF7F2] border border-[#E5DCD0] rounded-xl px-4 py-2.5 text-sm text-[#1C120C] focus:outline-none focus:border-[#912003]">
@@ -80,7 +80,7 @@
                     <!-- 2. Nick Name (Public Screen Name) -->
                     <div>
                         <label for="nickname" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1">
-                            2. Nick Name (भक्त नाम / Public Screen Name) <span class="text-[#912003]">*</span>
+                            2. Nick Name (Public Screen Name) <span class="text-[#912003]">*</span>
                         </label>
                         <input type="text" id="nickname" name="nickname" value="{{ old('nickname', $devotee->nickname) }}" required
                             class="w-full bg-[#FAF7F2] border border-[#E5DCD0] rounded-xl px-4 py-2.5 text-sm text-[#1C120C] focus:outline-none focus:border-[#912003]">
@@ -89,7 +89,7 @@
                     <!-- 3. Mother's Name -->
                     <div>
                         <label for="mother_name" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1">
-                            3. Mother's Name (माता का नाम) <span class="text-[#912003]">*</span>
+                            3. Mother's Name<span class="text-[#912003]">*</span>
                         </label>
                         <input type="text" id="mother_name" name="mother_name" value="{{ old('mother_name', $devotee->mother_name) }}" required
                             class="w-full bg-[#FAF7F2] border border-[#E5DCD0] rounded-xl px-4 py-2.5 text-sm text-[#1C120C] focus:outline-none focus:border-[#912003]">
@@ -98,7 +98,7 @@
                     <!-- 4. Gender -->
                     <div>
                         <label for="gender" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1">
-                            4. Gender (लिंग) <span class="text-[#912003]">*</span>
+                            4. Gender <span class="text-[#912003]">*</span>
                         </label>
                         <select id="gender" name="gender" required class="w-full bg-[#FAF7F2] border border-[#E5DCD0] rounded-xl px-3 py-2.5 text-sm text-[#1C120C]">
                             <option value="male" {{ old('gender', $devotee->gender) === 'male' ? 'selected' : '' }}>Male (पुरुष)</option>
@@ -110,7 +110,7 @@
                     <!-- 5. D.O.B -->
                     <div>
                         <label for="dob" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1">
-                            5. D.O.B (जन्मतिथि) <span class="text-[#912003]">*</span>
+                            5. D.O.B <span class="text-[#912003]">*</span>
                         </label>
                         <input type="date" id="dob" name="dob" value="{{ old('dob', $devotee->dob ? $devotee->dob->format('Y-m-d') : '') }}" required max="{{ date('Y-m-d') }}"
                             class="w-full bg-[#FAF7F2] border border-[#E5DCD0] rounded-xl px-3 py-2.5 text-sm text-[#1C120C]">
@@ -146,7 +146,7 @@
                     <!-- 9. Pincode -->
                     <div>
                         <label for="pincode" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1">
-                            9. Pincode (पिन कोड) <span class="text-[#912003]">*</span>
+                            9. Pincode <span class="text-[#912003]">*</span>
                         </label>
                         <input type="text" id="pincode" name="pincode" value="{{ old('pincode', $devotee->pincode) }}" required maxlength="6"
                             class="w-full bg-[#FAF7F2] border border-[#E5DCD0] rounded-xl px-4 py-2.5 text-sm text-[#1C120C]">
