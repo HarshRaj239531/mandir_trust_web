@@ -68,14 +68,27 @@
                         <span class="truncate sidebar-text">Pooja & Sevas</span>
                     </a>
 
-                    <!-- 4. Daan & Donations -->
+                    <!-- 4. Pavitra Daan Setup & Sevas -->
+                    <a href="{{ route('admin.pavitra-daan.index') }}" 
+                       title="Pavitra Daan Setup & Sacred Sevas"
+                       class="flex items-center justify-between px-3.5 py-3 rounded-xl transition-all {{ request()->routeIs('admin.pavitra-daan.*') ? 'bg-gradient-to-r from-[#912003] to-[#B93815] text-[#FFFDF9] shadow-lg shadow-[#912003]/25 font-bold border border-[#DEC7A2]/30' : 'text-[#E5DCD0] hover:bg-white/5 hover:text-white' }}">
+                        <div class="flex items-center gap-3 overflow-hidden">
+                            <svg class="w-5 h-5 shrink-0 text-[#DEC7A2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                            <span class="truncate sidebar-text">Pavitra Daan Setup</span>
+                        </div>
+                        <span class="text-[9px] bg-[#CA8A04]/20 border border-[#CA8A04]/40 px-1.5 py-0.5 rounded font-mono text-[#CA8A04] sidebar-expanded-only">पवित्र दान</span>
+                    </a>
+
+                    <!-- 5. Daan & Donations Receipts -->
                     <a href="{{ route('admin.donations.index') }}" 
                        title="Donations & Daan"
                        class="flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all {{ request()->routeIs('admin.donations.*') ? 'bg-gradient-to-r from-[#912003] to-[#B93815] text-[#FFFDF9] shadow-lg shadow-[#912003]/25 font-bold border border-[#DEC7A2]/30' : 'text-[#E5DCD0] hover:bg-white/5 hover:text-white' }}">
                         <svg class="w-5 h-5 shrink-0 text-[#DEC7A2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        <span class="truncate sidebar-text">Daan & Donations</span>
+                        <span class="truncate sidebar-text">Donation Receipts</span>
                     </a>
                 </nav>
             </div>

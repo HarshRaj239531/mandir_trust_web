@@ -35,85 +35,93 @@
                 <!-- Left: Cause Selection & Seva Vow (5 cols) -->
                 <div class="lg:col-span-5 space-y-6 reveal-fade-left">
                     <div>
-                        <span class="text-xs uppercase font-marcellus tracking-widest text-[#912003] font-bold block mb-1">प्रथम चरण</span>
-                        <h3 class="font-cinzel text-2xl font-bold text-[#1C120C]">Choose Sacred Seva</h3>
+                        <span class="text-xs uppercase font-marcellus tracking-widest text-[#912003] font-bold block mb-1">
+                            {{ $daanSettings['daan_step1_badge']->value ?? 'प्रथम चरण' }}
+                        </span>
+                        <h3 class="font-cinzel text-2xl font-bold text-[#1C120C]">
+                            {{ $daanSettings['daan_step1_title']->value ?? 'Choose Sacred Seva' }}
+                        </h3>
                     </div>
 
+                    @php
+                        $activeSevasList = $sacredSevas ?? \App\Models\SacredSeva::active()->ordered()->get();
+                        $defaultSeva = $activeSevasList->firstWhere('is_default', true) ?? $activeSevasList->first();
+                        $defaultImpact = $defaultSeva ? $defaultSeva->impact_description : 'Feeds 5,000+ daily pilgrims with fresh, hot sattvic Mahaprasadam.';
+                    @endphp
+
                     <div class="space-y-3 text-xs sm:text-sm">
-                        <label onclick="updateImpact('Feeds 5,000+ daily pilgrims with fresh, hot sattvic Mahaprasadam.')" class="seva-option flex items-start gap-3 p-3.5 rounded-2xl border border-[#912003] bg-[#FAF6EC] cursor-pointer transition-all hover:scale-[1.02]">
-                            <input type="radio" name="seva_cause" value="Annadanam" checked class="mt-1 text-[#912003] focus:ring-[#912003]">
-                            <div>
-                                <h4 class="font-cinzel font-bold text-[#1C120C]">Maha Annadanam</h4>
-                                <p class="text-xs text-[#5C3C2A] mt-0.5 font-normal">Sponsor daily free food for devotees.</p>
+                        @forelse ($activeSevasList as $seva)
+                            @php
+                                $isSelected = ($defaultSeva && $defaultSeva->id === $seva->id);
+                            @endphp
+                            <label onclick="updateImpact('{{ addslashes($seva->impact_description) }}', this)" 
+                                   class="seva-option flex items-start gap-3 p-3.5 rounded-2xl border {{ $isSelected ? 'border-[#912003] bg-[#FAF6EC] shadow-xs' : 'border-[#DEC7A2] hover:border-[#912003] bg-[#FFFDF9]' }} cursor-pointer transition-all hover:scale-[1.02]">
+                                <input type="radio" name="seva_cause" value="{{ $seva->title }}" {{ $isSelected ? 'checked' : '' }} class="mt-1 text-[#912003] focus:ring-[#912003]">
+                                <div class="flex-grow">
+                                    <div class="flex items-center gap-1.5">
+                                        <span class="text-sm">{{ $seva->icon ?: '🕉️' }}</span>
+                                        <h4 class="font-cinzel font-bold text-[#1C120C]">{{ $seva->title }}</h4>
+                                    </div>
+                                    <p class="text-xs text-[#5C3C2A] mt-0.5 font-normal">{{ $seva->tagline }}</p>
+                                </div>
+                            </label>
+                        @empty
+                            <div class="p-4 rounded-xl border border-dashed border-[#DEC7A2] text-center text-xs text-[#6C1802]">
+                                No active sacred sevas configured yet.
                             </div>
-                        </label>
-
-                        <label onclick="updateImpact('Provides green fodder, jaggery, and veterinary care to 500+ Gir cows.')" class="seva-option flex items-start gap-3 p-3.5 rounded-2xl border border-[#DEC7A2] hover:border-[#912003] bg-[#FFFDF9] cursor-pointer transition-all hover:scale-[1.02]">
-                            <input type="radio" name="seva_cause" value="Gau Seva" class="mt-1 text-[#912003] focus:ring-[#912003]">
-                            <div>
-                                <h4 class="font-cinzel font-bold text-[#1C120C]">Surabhi Gau Seva</h4>
-                                <p class="text-xs text-[#5C3C2A] mt-0.5 font-normal">Fodder & healthcare for sacred indigenous cows.</p>
-                            </div>
-                        </label>
-
-                        <label onclick="updateImpact('Funds Sanskrit scriptures, boarding, and books for young Vedic students.')" class="seva-option flex items-start gap-3 p-3.5 rounded-2xl border border-[#DEC7A2] hover:border-[#912003] bg-[#FFFDF9] cursor-pointer transition-all hover:scale-[1.02]">
-                            <input type="radio" name="seva_cause" value="Vidyadaan" class="mt-1 text-[#912003] focus:ring-[#912003]">
-                            <div>
-                                <h4 class="font-cinzel font-bold text-[#1C120C]">Veda Vidyapeeth & Gurukula</h4>
-                                <p class="text-xs text-[#5C3C2A] mt-0.5 font-normal">Sponsor traditional Sanskrit Vedic schooling.</p>
-                            </div>
-                        </label>
-
-                        <label onclick="updateImpact('Maintains temple Akhand Diya pure ghee supply and heritage sandstone upkeep.')" class="seva-option flex items-start gap-3 p-3.5 rounded-2xl border border-[#DEC7A2] hover:border-[#912003] bg-[#FFFDF9] cursor-pointer transition-all hover:scale-[1.02]">
-                            <input type="radio" name="seva_cause" value="Nirman" class="mt-1 text-[#912003] focus:ring-[#912003]">
-                            <div>
-                                <h4 class="font-cinzel font-bold text-[#1C120C]">Akhand Jyoti & Mandir Preservation</h4>
-                                <p class="text-xs text-[#5C3C2A] mt-0.5 font-normal">Pure cow ghee for perpetual lamp & stone care.</p>
-                            </div>
-                        </label>
+                        @endforelse
                     </div>
 
                     <div class="bg-[#FAF6EC] p-4 rounded-2xl border border-[#DEC7A2] transition-all hover:border-[#912003]">
                         <span class="text-[10px] uppercase tracking-widest text-[#912003] font-bold block mb-1">Divine Impact:</span>
                         <p id="impact-description" class="text-xs text-[#422B1E] font-medium leading-relaxed transition-all duration-300">
-                            Feeds 5,000+ daily pilgrims with fresh, hot sattvic Mahaprasadam.
+                            {{ $defaultImpact }}
                         </p>
                     </div>
 
                     <div class="text-[11px] text-[#5C3C2A] space-y-1">
-                        <p class="font-bold text-[#912003]">📜 80G Tax Exemption Certificate emailed immediately.</p>
-                        <p>🔒 100% Encrypted & Govt Compliant Charitable Account.</p>
+                        <p class="font-bold text-[#912003]">{{ $daanSettings['daan_80g_note']->value ?? '📜 80G Tax Exemption Certificate emailed immediately.' }}</p>
+                        <p>{{ $daanSettings['daan_security_note']->value ?? '🔒 100% Encrypted & Govt Compliant Charitable Account.' }}</p>
                     </div>
                 </div>
 
                 <!-- Right: Offering Amount & Donor Details (7 cols) -->
                 <div class="lg:col-span-7 space-y-6 reveal-fade-right">
                     <div>
-                        <span class="text-xs uppercase font-marcellus tracking-widest text-[#912003] font-bold block mb-1">द्वितीय चरण</span>
-                        <h3 class="font-cinzel text-2xl font-bold text-[#1C120C]">Select Daan Offering</h3>
+                        <span class="text-xs uppercase font-marcellus tracking-widest text-[#912003] font-bold block mb-1">
+                            {{ $daanSettings['daan_step2_badge']->value ?? 'द्वितीय चरण' }}
+                        </span>
+                        <h3 class="font-cinzel text-2xl font-bold text-[#1C120C]">
+                            {{ $daanSettings['daan_step2_title']->value ?? 'Select Daan Offering' }}
+                        </h3>
                     </div>
 
-                    <!-- Preset Amount Grid -->
+                    @php
+                        $presetAmountsList = $presetAmounts ?? [501, 1100, 2100, 5100];
+                        $defaultAmt = (int)($defaultAmount ?? ($daanSettings['daan_default_amount']->value ?? 1100));
+                    @endphp
+
+                    <!-- Dynamic Preset Amount Grid -->
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                        <button type="button" onclick="selectPresetAmt(501)" class="amt-btn py-3 rounded-xl border border-[#DEC7A2] bg-[#FAF6EC] hover:bg-[#912003] text-[#422B1E] hover:text-white font-cinzel font-bold text-sm transition-all hover:scale-105 cursor-pointer">
-                            ₹ 501
-                        </button>
-                        <button type="button" onclick="selectPresetAmt(1100)" class="amt-btn py-3 rounded-xl border border-[#912003] bg-[#912003] text-white font-cinzel font-bold text-sm transition-all scale-105 cursor-pointer shadow-sm">
-                            ₹ 1,100
-                        </button>
-                        <button type="button" onclick="selectPresetAmt(2100)" class="amt-btn py-3 rounded-xl border border-[#DEC7A2] bg-[#FAF6EC] hover:bg-[#912003] text-[#422B1E] hover:text-white font-cinzel font-bold text-sm transition-all hover:scale-105 cursor-pointer">
-                            ₹ 2,100
-                        </button>
-                        <button type="button" onclick="selectPresetAmt(5100)" class="amt-btn py-3 rounded-xl border border-[#DEC7A2] bg-[#FAF6EC] hover:bg-[#912003] text-[#422B1E] hover:text-white font-cinzel font-bold text-sm transition-all hover:scale-105 cursor-pointer">
-                            ₹ 5,100
-                        </button>
+                        @foreach ($presetAmountsList as $amt)
+                            @php
+                                $amtVal = (int)trim($amt);
+                                $isActive = ($amtVal === $defaultAmt);
+                            @endphp
+                            <button type="button" onclick="selectPresetAmt({{ $amtVal }}, this)" 
+                                    class="amt-btn py-3 rounded-xl border {{ $isActive ? 'border-[#912003] bg-[#912003] text-white scale-105 shadow-sm' : 'border-[#DEC7A2] bg-[#FAF6EC] hover:bg-[#912003] text-[#422B1E] hover:text-white' }} font-cinzel font-bold text-sm transition-all hover:scale-105 cursor-pointer">
+                                ₹ {{ number_format($amtVal) }}
+                            </button>
+                        @endforeach
                     </div>
 
                     <div>
-                        <label class="block text-xs uppercase tracking-wider font-bold text-[#422B1E] mb-1">Or Enter Custom Amount (₹)</label>
+                        <label class="block text-xs uppercase tracking-wider font-bold text-[#422B1E] mb-1">
+                            {{ $daanSettings['daan_custom_amount_label']->value ?? 'Or Enter Custom Amount (₹)' }}
+                        </label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-[#912003] font-cinzel font-bold text-lg">₹</span>
-                            <input id="custom-amt-input" type="number" value="1100" class="w-full bg-[#FAF6EC] border border-[#DEC7A2] rounded-xl pl-10 pr-4 py-3 text-lg font-cinzel font-bold text-[#912003] focus:outline-none focus:border-[#912003] transition-colors">
+                            <input id="custom-amt-input" type="number" value="{{ $defaultAmt }}" class="w-full bg-[#FAF6EC] border border-[#DEC7A2] rounded-xl pl-10 pr-4 py-3 text-lg font-cinzel font-bold text-[#912003] focus:outline-none focus:border-[#912003] transition-colors">
                         </div>
                     </div>
 
@@ -133,8 +141,8 @@
 
                     <form action="{{ route('donate.process') }}" method="POST" class="space-y-4 pt-2">
                         @csrf
-                        <input type="hidden" name="seva_cause" id="form-seva-cause" value="Maha Annadanam">
-                        <input type="hidden" name="amount" id="form-final-amount" value="1100">
+                        <input type="hidden" name="seva_cause" id="form-seva-cause" value="{{ $defaultSeva->title ?? 'Maha Annadanam' }}">
+                        <input type="hidden" name="amount" id="form-final-amount" value="{{ $defaultAmt }}">
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                             <div>
@@ -225,7 +233,7 @@
             });
         });
 
-        function updateImpact(text) {
+        function updateImpact(text, labelEl) {
             const desc = document.getElementById('impact-description');
             if (desc) {
                 desc.style.opacity = '0';
@@ -235,6 +243,21 @@
                     desc.style.opacity = '1';
                     desc.style.transform = 'translateY(0)';
                 }, 150);
+            }
+
+            if (labelEl) {
+                document.querySelectorAll('.seva-option').forEach(el => {
+                    el.classList.remove('border-[#912003]', 'bg-[#FAF6EC]', 'shadow-xs');
+                    el.classList.add('border-[#DEC7A2]', 'bg-[#FFFDF9]');
+                });
+                labelEl.classList.remove('border-[#DEC7A2]', 'bg-[#FFFDF9]');
+                labelEl.classList.add('border-[#912003]', 'bg-[#FAF6EC]', 'shadow-xs');
+
+                const radio = labelEl.querySelector('input[type="radio"]');
+                if (radio) {
+                    radio.checked = true;
+                    document.getElementById('form-seva-cause').value = radio.value;
+                }
             }
         }
     </script>

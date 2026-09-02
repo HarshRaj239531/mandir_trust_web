@@ -7,6 +7,8 @@ use App\Models\Facility;
 use App\Models\Gallery;
 use App\Models\Pooja;
 use App\Models\PoojaBooking;
+use App\Models\SacredSeva;
+use App\Models\SiteSetting;
 use App\Models\TempleEvent;
 use Illuminate\Http\Request;
 
@@ -66,11 +68,18 @@ class TemplePublicController extends Controller
     }
 
     /**
-     * Donate Page
+     * Donate Page - Dynamic from MySQL
      */
     public function donate()
     {
-        return view('donate');
+        $sacredSevas = SacredSeva::active()->ordered()->get();
+        $daanSettings = SiteSetting::where('group', 'pavitra_daan')->get()->keyBy('key');
+
+        $presetAmountsRaw = $daanSettings['daan_preset_amounts']->value ?? '501, 1100, 2100, 5100';
+        $presetAmounts = array_filter(array_map('trim', explode(',', $presetAmountsRaw)));
+        $defaultAmount = $daanSettings['daan_default_amount']->value ?? '1100';
+
+        return view('donate', compact('sacredSevas', 'daanSettings', 'presetAmounts', 'defaultAmount'));
     }
 
     /**

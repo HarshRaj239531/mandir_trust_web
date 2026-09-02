@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\PavitraDaanController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Devotee\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -107,6 +108,14 @@ Route::middleware(['auth', 'admin'])->prefix('mandiradmin')->name('admin.')->gro
     Route::put('/gallery/{id}', [AdminDashboardController::class, 'updateGallery'])->name('gallery.update');
     Route::delete('/gallery/{id}', [AdminDashboardController::class, 'deleteGallery'])->name('gallery.delete');
     
+    // Pavitra Daan Configuration & Seva Causes Management
+    Route::get('/pavitra-daan', [PavitraDaanController::class, 'index'])->name('pavitra-daan.index');
+    Route::post('/pavitra-daan/sevas', [PavitraDaanController::class, 'storeSeva'])->name('pavitra-daan.sevas.store');
+    Route::put('/pavitra-daan/sevas/{id}', [PavitraDaanController::class, 'updateSeva'])->name('pavitra-daan.sevas.update');
+    Route::post('/pavitra-daan/sevas/{id}/toggle-status', [PavitraDaanController::class, 'toggleSevaStatus'])->name('pavitra-daan.sevas.toggle-status');
+    Route::delete('/pavitra-daan/sevas/{id}', [PavitraDaanController::class, 'deleteSeva'])->name('pavitra-daan.sevas.delete');
+    Route::post('/pavitra-daan/settings', [PavitraDaanController::class, 'updateSettings'])->name('pavitra-daan.settings.update');
+
     // Security & Settings (Credentials, Profile, & Dynamic Homepage Media)
     Route::get('/settings', [AdminDashboardController::class, 'settings'])->name('settings');
     Route::post('/settings/password', [AdminDashboardController::class, 'updatePassword'])->name('settings.password');
@@ -117,6 +126,12 @@ Route::middleware(['auth', 'admin'])->prefix('mandiradmin')->name('admin.')->gro
 // Secondary route prefix alias so /admin/... URLs also work seamlessly
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'dashboard']);
+    Route::get('/pavitra-daan', [PavitraDaanController::class, 'index']);
+    Route::post('/pavitra-daan/sevas', [PavitraDaanController::class, 'storeSeva']);
+    Route::put('/pavitra-daan/sevas/{id}', [PavitraDaanController::class, 'updateSeva']);
+    Route::post('/pavitra-daan/sevas/{id}/toggle-status', [PavitraDaanController::class, 'toggleSevaStatus']);
+    Route::delete('/pavitra-daan/sevas/{id}', [PavitraDaanController::class, 'deleteSeva']);
+    Route::post('/pavitra-daan/settings', [PavitraDaanController::class, 'updateSettings']);
     Route::get('/gallery', [AdminDashboardController::class, 'gallery']);
     Route::post('/gallery', [AdminDashboardController::class, 'storeGallery']);
     Route::put('/gallery/{id}', [AdminDashboardController::class, 'updateGallery']);
