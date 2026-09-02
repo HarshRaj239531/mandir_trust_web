@@ -211,6 +211,7 @@
                                     </div>
                                     <div class="flex-grow text-center sm:text-left">
                                         <input type="file" id="update_profile_photo" name="profile_photo" accept="image/*" onchange="previewUpdateImage(event)" class="hidden">
+                                        <input type="hidden" name="profile_photo_base64" id="update_profile_photo_base64">
                                         <label for="update_profile_photo" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#912003] hover:bg-[#6C1802] text-[#FFFDF9] font-cinzel font-semibold text-xs cursor-pointer shadow-xs transition-all">
                                             <span>📷</span>
                                             <span>Choose New Selfie</span>
@@ -297,12 +298,41 @@
         function previewUpdateImage(event) {
             const input = event.target;
             if (input.files && input.files[0]) {
+                const file = input.files[0];
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     document.getElementById('update-photo-preview').src = e.target.result;
                 };
-                reader.readAsDataURL(input.files[0]);
-                document.getElementById('update-file-name').innerText = 'Selected: ' + input.files[0].name;
+                reader.readAsDataURL(file);
+
+                const img = new Image();
+                img.src = URL.createObjectURL(file);
+                img.onload = function() {
+                    URL.revokeObjectURL(img.src);
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    const maxDim = 1200;
+                    if (width > maxDim || height > maxDim) {
+                        if (width > height) {
+                            height = Math.round((height * maxDim) / width);
+                            width = maxDim;
+                        } else {
+                            width = Math.round((width * maxDim) / height);
+                            height = maxDim;
+                        }
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    const base64Data = canvas.toDataURL('image/jpeg', 0.82);
+                    const base64Input = document.getElementById('update_profile_photo_base64');
+                    if (base64Input) {
+                        base64Input.value = base64Data;
+                    }
+                };
             }
         }
     </script>

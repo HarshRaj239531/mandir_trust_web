@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class DevoteeRegistrationAndAdminTest extends TestCase
 {
-    use RefreshDatabase;
+    use DatabaseTransactions;
 
     /**
      * 1. Registration screen can be rendered with all 10 fields.
@@ -31,7 +31,7 @@ class DevoteeRegistrationAndAdminTest extends TestCase
         $response->assertSee('Mobile Number');
         $response->assertSee('WhatsApp Number');
         $response->assertSee('Pincode');
-        $response->assertSee('Selfie / File Picture');
+        $response->assertSee('Profile / File Picture');
     }
 
     /**
@@ -39,6 +39,7 @@ class DevoteeRegistrationAndAdminTest extends TestCase
      */
     public function test_new_devotee_can_register_with_all_10_fields(): void
     {
+        $this->withoutMiddleware();
         Storage::fake('public');
 
         $file = UploadedFile::fake()->image('selfie.jpg');
@@ -72,6 +73,66 @@ class DevoteeRegistrationAndAdminTest extends TestCase
             'pincode' => '201001',
             'is_admin' => false,
         ]);
+    }
+
+    /**
+     * 2b. New Devotee registers with Base64 compressed photo and photo is visible in admin.
+     */
+    public function test_new_devotee_can_register_with_base64_compressed_photo_and_visible_in_admin(): void
+    {
+        $this->withoutMiddleware();
+
+        $im = imagecreatetruecolor(60, 60);
+        $color = imagecolorallocate($im, 145, 32, 3);
+        imagefill($im, 0, 0, $color);
+        ob_start();
+        imagejpeg($im);
+        $base64 = 'data:image/jpeg;base64,' . base64_encode(ob_get_clean());
+        imagedestroy($im);
+
+        $response = $this->post('/register', [
+            'name' => 'Bhanu Pratap Singh',
+            'nickname' => 'BhanuBhakt',
+            'mother_name' => 'Smt. Sarita Devi',
+            'gender' => 'male',
+            'dob' => '1995-04-12',
+            'email' => 'bhanu.bhakt@gmail.com',
+            'mobile_number' => '9876543233',
+            'whatsapp_number' => '9876543233',
+            'pincode' => '800001',
+            'profile_photo_base64' => $base64,
+            'password' => 'Password@123',
+            'password_confirmation' => 'Password@123',
+        ]);
+
+        $response->assertRedirect('/my-account');
+
+        $devotee = User::where('email', 'bhanu.bhakt@gmail.com')->first();
+        $this->assertNotNull($devotee);
+        $this->assertNotNull($devotee->profile_photo);
+        $this->assertStringStartsWith('devotees/', $devotee->profile_photo);
+
+        // Admin checks devotees table
+        $admin = User::create([
+            'name' => 'Admin Head',
+            'nickname' => 'Admin',
+            'mother_name' => 'Maa',
+            'gender' => 'male',
+            'dob' => '1980-01-01',
+            'email' => 'superadmin@gmail.com',
+            'mobile_number' => '9999999999',
+            'pincode' => '110001',
+            'password' => \Illuminate\Support\Facades\Hash::make('password'),
+            'is_admin' => true,
+        ]);
+
+        $adminResponse = $this->actingAs($admin)->get('/mandiradmin/devotees');
+        $adminResponse->assertStatus(200);
+        $adminResponse->assertSee($devotee->nickname);
+        $adminResponse->assertSee($devotee->profile_photo_url);
+
+        // Cleanup
+        \App\Helpers\ImageHelper::delete($devotee->profile_photo);
     }
 
     /**

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\ImageHelper;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
@@ -58,7 +58,8 @@ class AuthController extends Controller
             'pincode' => ['required', 'string', 'regex:/^[0-9]{6}$/'],
             
             // 10. Selfie / Profile Picture (Devotee updatable anytime)
-            'profile_photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
+            'profile_photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,jfif,avif,gif', 'max:5120'],
+            'profile_photo_base64' => ['nullable', 'string'],
             
             // Password
             'password' => ['required', 'string', 'min:6', 'confirmed'],
@@ -76,17 +77,20 @@ class AuthController extends Controller
             'whatsapp_number.regex' => 'Please enter a valid 10-15 digit WhatsApp number.',
             'pincode.required' => '6-digit Area Pincode is mandatory.',
             'pincode.regex' => 'Pincode must be exactly 6 digits.',
-            'profile_photo.image' => 'Selfie / File must be an image file (JPG, PNG, WEBP).',
-            'profile_photo.max' => 'Selfie photo size must not exceed 5MB.',
+            'profile_photo.uploaded' => 'Profile photo failed to upload. The selected image might exceed server upload size. Please choose an image under 10MB.',
+            'profile_photo.image' => 'Profile photo must be a valid image file (JPG, PNG, WEBP).',
+            'profile_photo.max' => 'Profile photo size must not exceed 5MB.',
             'password.required' => 'Please create a secure password.',
             'password.min' => 'Password must be at least 6 characters long.',
             'password.confirmed' => 'Password confirmation does not match.',
         ]);
 
-        // Handle Profile Photo / Selfie Upload
+        // Handle Profile Photo / Selfie Upload (Base64 canvas compressed or multipart file)
         $photoPath = null;
-        if ($request->hasFile('profile_photo')) {
-            $photoPath = $request->file('profile_photo')->store('devotees', 'public');
+        if ($request->filled('profile_photo_base64')) {
+            $photoPath = ImageHelper::processAndStoreBase64($request->input('profile_photo_base64'), 'devotees');
+        } elseif ($request->hasFile('profile_photo')) {
+            $photoPath = ImageHelper::processAndStore($request->file('profile_photo'), 'devotees');
         }
 
         // If WhatsApp number wasn't specified, default to mobile number if user desires or leave as provided

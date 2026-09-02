@@ -41,7 +41,7 @@
                 <!-- Login Identifier (Email or Mobile) -->
                 <div>
                     <label for="login" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1">
-                        Gmail or Mobile Number (ईमेल अथवा मोबाइल)
+                        Gmail or Mobile Number
                     </label>
                     <input type="text" id="login" name="login" value="{{ old('login') }}" required autofocus
                         placeholder="yourname@gmail.com or 10-digit mobile"
@@ -52,7 +52,7 @@
                 <div>
                     <div class="flex items-center justify-between mb-1">
                         <label for="password" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14]">
-                            Password (पासवर्ड)
+                            Password
                         </label>
                     </div>
                     <input type="password" id="password" name="password" required
@@ -85,7 +85,7 @@
                 </p>
 
                 <!-- Admin Access Note -->
-                <div class="p-3 rounded-2xl bg-[#FAF6EC] border border-[#DEC7A2] text-left text-xs font-sans">
+                <!-- <div class="p-3 rounded-2xl bg-[#FAF6EC] border border-[#DEC7A2] text-left text-xs font-sans">
                     <div class="flex items-center justify-between text-[#912003] font-cinzel font-bold mb-1">
                         <span>🛡️ Mandir Trust Admin Portal (प्रशासनिक संकुल):</span>
                         <span class="text-[10px] bg-[#912003]/10 px-2 py-0.5 rounded-full">Administrator</span>
@@ -94,7 +94,7 @@
                         <div>ID: <strong class="text-[#1C120C]">mandiradmin@gmail.com</strong></div>
                         <div>Password: <strong class="text-[#1C120C]">Admin@12345</strong></div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

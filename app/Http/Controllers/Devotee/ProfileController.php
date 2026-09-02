@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Devotee;
 
+use App\Helpers\ImageHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
@@ -43,7 +43,8 @@ class ProfileController extends Controller
             'pincode' => ['required', 'string', 'regex:/^[0-9]{6}$/'],
             
             // 10. Selfie / Profile Picture (Time to time updatable)
-            'profile_photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
+            'profile_photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,jfif,avif,gif', 'max:5120'],
+            'profile_photo_base64' => ['nullable', 'string'],
             
             // Optional Password Update
             'current_password' => ['nullable', 'required_with:new_password', 'string'],
@@ -55,8 +56,9 @@ class ProfileController extends Controller
             'whatsapp_number.regex' => 'Please enter a valid 10-15 digit WhatsApp number.',
             'pincode.required' => 'Pincode is required.',
             'pincode.regex' => 'Pincode must be exactly 6 digits.',
-            'profile_photo.image' => 'Selfie must be a valid image file.',
-            'profile_photo.max' => 'Selfie file size must not exceed 5MB.',
+            'profile_photo.uploaded' => 'Profile photo could not be uploaded. Please choose an image under 10MB.',
+            'profile_photo.image' => 'Profile photo must be a valid image file.',
+            'profile_photo.max' => 'Profile photo file size must not exceed 5MB.',
             'new_password.min' => 'New password must be at least 6 characters long.',
             'new_password.confirmed' => 'New password confirmation does not match.',
         ]);
@@ -69,13 +71,18 @@ class ProfileController extends Controller
             $user->password = Hash::make($request->new_password);
         }
 
-        // Handle Profile Photo / Selfie Update
-        if ($request->hasFile('profile_photo')) {
-            // Delete old photo if it exists and was locally stored
-            if ($user->profile_photo && Storage::disk('public')->exists($user->profile_photo)) {
-                Storage::disk('public')->delete($user->profile_photo);
+        // Handle Profile Photo / Selfie Update (Base64 canvas compressed or multipart file)
+        if ($request->filled('profile_photo_base64')) {
+            if ($user->profile_photo) {
+                ImageHelper::delete($user->profile_photo);
             }
-            $user->profile_photo = $request->file('profile_photo')->store('devotees', 'public');
+            $user->profile_photo = ImageHelper::processAndStoreBase64($request->input('profile_photo_base64'), 'devotees');
+        } elseif ($request->hasFile('profile_photo')) {
+            // Delete old photo
+            if ($user->profile_photo) {
+                ImageHelper::delete($user->profile_photo);
+            }
+            $user->profile_photo = ImageHelper::processAndStore($request->file('profile_photo'), 'devotees');
         }
 
         // Update ONLY allowed fields

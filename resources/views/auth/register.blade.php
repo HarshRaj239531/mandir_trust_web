@@ -198,6 +198,7 @@
 
                             <div class="flex-grow text-center sm:text-left">
                                 <input type="file" id="profile_photo" name="profile_photo" accept="image/*" onchange="previewImage(event)" class="hidden">
+                                <input type="hidden" name="profile_photo_base64" id="profile_photo_base64">
                                 <label for="profile_photo" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#912003] hover:bg-[#6C1802] text-[#FFFDF9] font-cinzel font-semibold text-xs cursor-pointer shadow-sm transition-all hover:scale-105">
                                     <span>📷</span>
                                     <span>Upload Profile / Photo</span>
@@ -251,12 +252,50 @@
         function previewImage(event) {
             const input = event.target;
             if (input.files && input.files[0]) {
+                const file = input.files[0];
+                
+                // 1. Instant preview via FileReader
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     document.getElementById('photo-preview').src = e.target.result;
                 };
-                reader.readAsDataURL(input.files[0]);
-                document.getElementById('file-name').innerText = 'Selected: ' + input.files[0].name;
+                reader.readAsDataURL(file);
+
+                // 2. High-speed Canvas compression to Base64 (immunizes against all PHP file upload size limits)
+                const img = new Image();
+                img.src = URL.createObjectURL(file);
+                img.onload = function() {
+                    URL.revokeObjectURL(img.src);
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    const maxDim = 1200;
+                    if (width > maxDim || height > maxDim) {
+                        if (width > height) {
+                            height = Math.round((height * maxDim) / width);
+                            width = maxDim;
+                        } else {
+                            width = Math.round((width * maxDim) / height);
+                            height = maxDim;
+                        }
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    const base64Data = canvas.toDataURL('image/jpeg', 0.82);
+                    const base64Input = document.getElementById('profile_photo_base64');
+                    if (base64Input) {
+                        base64Input.value = base64Data;
+                    }
+
+                    const sizeKb = Math.round((base64Data.length * 0.75) / 1024);
+                    document.getElementById('file-name').innerText = 'Selected: ' + file.name + ' (~' + sizeKb + ' KB ✓ Ready)';
+                };
+                img.onerror = function() {
+                    document.getElementById('file-name').innerText = 'Selected: ' + file.name;
+                };
             }
         }
 

@@ -66,14 +66,48 @@ class User extends Authenticatable
     public function getProfilePhotoUrlAttribute(): string
     {
         if ($this->profile_photo) {
-            if (str_starts_with($this->profile_photo, 'http://') || str_starts_with($this->profile_photo, 'https://')) {
-                return $this->profile_photo;
+            $val = $this->profile_photo;
+            if (str_starts_with($val, 'http://') || str_starts_with($val, 'https://')) {
+                return $val;
             }
-            return asset('storage/' . $this->profile_photo);
+
+            $cleanPath = ltrim($val, '/');
+            $cleanPath = preg_replace('#^(public/|storage/)#', '', $cleanPath);
+
+            // 1. Check in public/uploads/
+            if (file_exists(public_path('uploads/' . $cleanPath))) {
+                return asset('uploads/' . $cleanPath);
+            }
+
+            // 2. Check in public/storage/
+            if (file_exists(public_path('storage/' . $cleanPath))) {
+                return asset('storage/' . $cleanPath);
+            }
+
+            // 3. Check in public/
+            if (file_exists(public_path($cleanPath))) {
+                return asset($cleanPath);
+            }
+
+            // 4. storage/app/public/ check with auto-sync
+            $storagePath = storage_path('app/public/' . $cleanPath);
+            if (file_exists($storagePath)) {
+                try {
+                    $targetDir = public_path('uploads/' . dirname($cleanPath));
+                    if (!file_exists($targetDir)) {
+                        @mkdir($targetDir, 0755, true);
+                    }
+                    @copy($storagePath, public_path('uploads/' . $cleanPath));
+                    if (file_exists(public_path('uploads/' . $cleanPath))) {
+                        return asset('uploads/' . $cleanPath);
+                    }
+                } catch (\Throwable $e) {}
+
+                return route('media.file', ['path' => $cleanPath]);
+            }
         }
 
         // Return a default divine avatar based on gender/initials
-        $initial = strtoupper(substr($this->nickname ?: $this->name, 0, 1));
         return "https://ui-avatars.com/api/?name=" . urlencode($this->nickname ?: $this->name) . "&background=912003&color=FFFDF9&bold=true&size=256";
     }
 }

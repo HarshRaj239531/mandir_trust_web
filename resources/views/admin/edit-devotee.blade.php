@@ -62,6 +62,7 @@
                         </div>
                         <div>
                             <input type="file" id="profile_photo" name="profile_photo" accept="image/*" onchange="previewAdminPhoto(event)" class="text-xs text-[#2C1D14]">
+                            <input type="hidden" name="profile_photo_base64" id="admin_profile_photo_base64">
                         </div>
                     </div>
                 </div>
@@ -201,11 +202,41 @@
         function previewAdminPhoto(event) {
             const input = event.target;
             if (input.files && input.files[0]) {
+                const file = input.files[0];
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     document.getElementById('admin-photo-preview').src = e.target.result;
                 };
-                reader.readAsDataURL(input.files[0]);
+                reader.readAsDataURL(file);
+
+                const img = new Image();
+                img.src = URL.createObjectURL(file);
+                img.onload = function() {
+                    URL.revokeObjectURL(img.src);
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    const maxDim = 1200;
+                    if (width > maxDim || height > maxDim) {
+                        if (width > height) {
+                            height = Math.round((height * maxDim) / width);
+                            width = maxDim;
+                        } else {
+                            width = Math.round((width * maxDim) / height);
+                            height = maxDim;
+                        }
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    const base64Data = canvas.toDataURL('image/jpeg', 0.82);
+                    const base64Input = document.getElementById('admin_profile_photo_base64');
+                    if (base64Input) {
+                        base64Input.value = base64Data;
+                    }
+                };
             }
         }
     </script>
