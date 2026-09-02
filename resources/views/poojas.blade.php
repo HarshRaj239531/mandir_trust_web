@@ -1,4 +1,4 @@
-<x-layout title="Vedic Poojas & Sankalpam Patrika | Shri Mandir Trust">
+<x-layout title="Vedic Poojas & Sankalpam Patrika | Shringi Rishi Mandir Trust">
     <x-navbar />
 
     <!-- Page Header (Ancient Scroll Inscription) -->

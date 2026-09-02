@@ -70,7 +70,7 @@ class AuthController extends Controller
             'dob.required' => 'Date of Birth is mandatory.',
             'dob.before' => 'Date of Birth must be in the past.',
             'email.required' => 'Gmail / Email address is mandatory.',
-            'email.unique' => 'This Gmail / Email is already registered with Shri Mandir.',
+            'email.unique' => 'This Gmail / Email is already registered with Shringi Rishi Mandir.',
             'mobile_number.required' => '10-digit Mobile number is mandatory.',
             'mobile_number.regex' => 'Please enter a valid 10-15 digit mobile number.',
             'whatsapp_number.regex' => 'Please enter a valid 10-15 digit WhatsApp number.',
@@ -112,7 +112,7 @@ class AuthController extends Controller
         // Log the devotee in
         Auth::login($user);
 
-        return redirect()->route('devotee.profile')->with('success', '॥ हर हर महादेव ॥ Welcome to Shri Mandir Trust! Your Devotee Registration has been completed successfully.');
+        return redirect()->route('devotee.profile')->with('success', '॥ हर हर महादेव ॥ Welcome to Shringi Rishi Mandir Trust! Your Devotee Registration has been completed successfully.');
     }
 
     /**
@@ -181,6 +181,6 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('home')->with('success', 'You have been successfully logged out from Shri Mandir Trust.');
+        return redirect()->route('home')->with('success', 'You have been successfully logged out from Shringi Rishi Mandir Trust.');
     }
 }

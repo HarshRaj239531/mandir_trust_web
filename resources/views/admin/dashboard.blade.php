@@ -15,7 +15,7 @@
     <div class="bg-gradient-to-r from-white via-[#FAF7F2] to-white rounded-3xl p-6 sm:p-8 border border-[#E5DCD0] shadow-[0_2px_14px_rgba(44,29,20,0.03)] flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
         <div class="space-y-1 text-center md:text-left">
             <span class="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#912003] bg-[#912003]/10 px-3 py-1 rounded-full font-cinzel">
-                <span>ॐ</span> <span>Shri Mandir Trust Sanctum</span>
+                <span>ॐ</span> <span>Shringi Rishi Mandir Trust Sanctum</span>
             </span>
             <h2 class="font-cinzel text-2xl sm:text-3xl font-black text-[#1C120C]">
                 Welcome back, {{ auth()->user()->nickname ?: auth()->user()->name }}!

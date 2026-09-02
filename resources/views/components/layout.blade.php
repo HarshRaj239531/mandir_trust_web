@@ -3,9 +3,9 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="Shri Mandir Trust - Divine Sanatan Temple & Spiritual Sanctuary. Experience Daily Aarti, Sacred Poojas, Gau Seva, and Annadanam.">
+        <meta name="description" content="Shringi Rishi Mandir Trust - Divine Sanatan Temple & Spiritual Sanctuary. Experience Daily Aarti, Sacred Poojas, Gau Seva, and Annadanam.">
         
-        <title>{{ $title ?? 'Shri Mandir Trust | Ancient Sanatan Heritage & Sacred Sanctuary' }}</title>
+        <title>{{ $title ?? 'Shringi Rishi Mandir Trust | Ancient Sanatan Heritage & Sacred Sanctuary' }}</title>
 
         <!-- Preconnect & Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">

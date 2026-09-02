@@ -12,7 +12,7 @@
                 </div>
                 <div class="overflow-hidden transition-all duration-300 sidebar-text">
                     <span class="font-cinzel text-sm font-black tracking-widest text-[#FFFDF9] block leading-none whitespace-nowrap">
-                        SHRI MANDIR
+                        Shringi Rishi Mandir
                     </span>
                     <span class="text-[10px] tracking-widest text-[#DEC7A2] font-bold uppercase mt-1 block font-sans whitespace-nowrap">
                         Admin Sanctum

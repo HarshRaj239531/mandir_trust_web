@@ -94,7 +94,7 @@
 
         <!-- 5. Admin Footer -->
         <footer class="bg-white border-t border-[#E5DCD0] py-4 px-6 text-center text-xs text-[#6C1802] font-marcellus mt-8 flex flex-col sm:flex-row items-center justify-between gap-2">
-            <span>॥ ॐ नमः शिवाय ॥ Shri Mandir Trust Management Core</span>
+            <span>॥ ॐ नमः शिवाय ॥ Shringi Rishi Mandir Trust Management Core</span>
             <span class="text-[11px] text-[#A16207]">Administrative Sanctum Portal</span>
         </footer>
     </div>

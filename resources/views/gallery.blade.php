@@ -1,4 +1,4 @@
-<x-layout title="Divine Darshan & Photo Gallery | Shri Mandir Trust">
+<x-layout title="Divine Darshan & Photo Gallery | Shringi Rishi Mandir Trust">
     <x-navbar />
 
     <!-- Page Header (Ancient Scroll Inscription) -->

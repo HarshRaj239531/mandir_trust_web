@@ -1,4 +1,4 @@
-<x-layout title="Shri Mandir Trust | Ancient Sanatan Sanctuary & Centenary Heritage">
+<x-layout title="Shringi Rishi Mandir Trust | Ancient Sanatan Sanctuary & Centenary Heritage">
     <x-navbar />
     
     <!-- Hero Section (Ancient Opened Sacred Scroll) -->

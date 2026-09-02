@@ -21,7 +21,7 @@
                 </div>
                 <div>
                     <span class="font-cinzel text-base sm:text-lg font-black tracking-wider text-[#1C120C] block leading-none transition-colors group-hover:text-[#912003]">
-                        SHRI MANDIR
+                        Shringi Rishi Mandir
                     </span>
                     <span class="text-[9px] sm:text-[10px] tracking-[0.25em] text-[#912003] uppercase font-bold flex items-center gap-1 mt-0.5">
                         <span>॥</span> Sanatan Trust <span>॥</span>

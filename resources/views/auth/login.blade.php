@@ -1,4 +1,4 @@
-<x-layout title="Devotee Login | भक्त लॉगिन | Shri Mandir Trust">
+<x-layout title="Devotee Login | भक्त लॉगिन | Shringi Rishi Mandir Trust">
     <x-navbar />
 
     <div class="min-h-[80vh] py-10 sm:py-16 px-3 sm:px-6 relative flex items-center justify-center">

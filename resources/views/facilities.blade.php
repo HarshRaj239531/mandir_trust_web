@@ -1,4 +1,4 @@
-<x-layout title="Pilgrim Facilities & Ashram Lodging | Shri Mandir Trust">
+<x-layout title="Pilgrim Facilities & Ashram Lodging | Shringi Rishi Mandir Trust">
     <x-navbar />
 
     <!-- Page Header (Ancient Scroll Inscription) -->

@@ -1,4 +1,4 @@
-<x-layout title="Sanatan Panchang & Sacred Festivals | Shri Mandir Trust">
+<x-layout title="Sanatan Panchang & Sacred Festivals | Shringi Rishi Mandir Trust">
     <x-navbar />
 
     <!-- Page Header (Ancient Scroll Inscription) -->

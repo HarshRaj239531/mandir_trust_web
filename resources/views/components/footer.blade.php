@@ -9,7 +9,7 @@
                         <span class="group-hover:rotate-180 transition-transform duration-700">ॐ</span>
                     </div>
                     <div>
-                        <span class="font-cinzel text-2xl font-bold text-[#FFFDF9] block group-hover:text-[#CA8A04] transition-colors">SHRI MANDIR TRUST</span>
+                        <span class="font-cinzel text-2xl font-bold text-[#FFFDF9] block group-hover:text-[#CA8A04] transition-colors">Shringi Rishi Mandir TRUST</span>
                         <span class="text-xs uppercase tracking-[0.25em] text-[#CA8A04] font-bold">Sanatan Dharma Religious & Charitable Trust</span>
                     </div>
                 </a>
@@ -99,7 +99,7 @@
                     <span class="text-[#CA8A04]">🏦</span> Direct Bank Transfer
                 </h4>
                 <div class="bg-[#1C120C] p-4 rounded-2xl border border-[#A16207]/50 shadow-sm text-xs space-y-2 text-[#DEC7A2] font-mono hover-lift">
-                    <p><strong class="text-white font-sans">Account:</strong> Shri Mandir Trust</p>
+                    <p><strong class="text-white font-sans">Account:</strong> Shringi Rishi Mandir Trust</p>
                     <p><strong class="text-white font-sans">Bank:</strong> State Bank of India</p>
                     <p><strong class="text-white font-sans">A/C No:</strong> 3982001928374</p>
                     <p><strong class="text-white font-sans">IFSC Code:</strong> SBIN0001234</p>
@@ -115,7 +115,7 @@
                 <div class="space-y-3 text-xs text-[#DEC7A2]">
                     <p class="flex items-start gap-2.5">
                         <span class="text-[#CA8A04] text-sm">🏛️</span>
-                        <span>Shri Mandir Complex, Divine Parikrama Marg, Vedic Dham, Pin - 281121</span>
+                        <span>Shringi Rishi Mandir Complex, Divine Parikrama Marg, Vedic Dham, Pin - 281121</span>
                     </p>
                     <p class="flex items-center gap-2.5">
                         <span class="text-[#CA8A04] text-sm">📞</span>
@@ -137,7 +137,7 @@
 
         <!-- Bottom Copyright & Shlokas -->
         <div class="pt-10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-[#DEC7A2]/70">
-            <p>© {{ date('Y') }} Shri Mandir Trust. All rights reserved. Registered under Public Charitable Trusts Act.</p>
+            <p>© {{ date('Y') }} Shringi Rishi Mandir Trust. All rights reserved. Registered under Public Charitable Trusts Act.</p>
             <div class="flex items-center gap-6">
                 <span class="font-marcellus text-[#CA8A04] text-sm italic font-bold animate-pulse">ॐ शान्तिः शान्तिः शान्तिः</span>
                 <a href="{{ route('about') }}" class="hover:text-white transition-colors">Privacy & Seva Policy</a>

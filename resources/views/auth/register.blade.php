@@ -1,4 +1,4 @@
-<x-layout title="Devotee Registration | भक्त पंजीकरण | Shri Mandir Trust">
+<x-layout title="Devotee Registration | भक्त पंजीकरण | Shringi Rishi Mandir Trust">
     <x-navbar />
 
     <div class="min-h-[85vh] py-8 sm:py-14 px-3 sm:px-6 relative flex items-center justify-center">
@@ -236,7 +236,7 @@
                     </button>
                     
                     <p class="text-xs text-[#6C1802] font-marcellus mt-4">
-                        Already registered with Shri Mandir? 
+                        Already registered with Shringi Rishi Mandir? 
                         <a href="{{ route('login') }}" class="text-[#912003] font-bold underline hover:text-black">
                             भक्त लॉगिन (Devotee Login)
                         </a>

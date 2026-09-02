@@ -37,7 +37,7 @@
             <!-- Right: Flowing Ancient Manuscript Narrative with Drop Cap (7 cols - NO generic cards) -->
             <div class="lg:col-span-7 space-y-6 reveal-fade-right">
                 <p class="drop-cap text-base sm:text-lg text-[#2C1D14] leading-relaxed font-normal">
-                    ounded in the holy year 1924, Shri Mandir Trust has stood through a century of devotion as an unshakeable pillar of Sanatan Dharma. The temple was hand-carved according to the sacred *Agama Shastras*, creating a cosmic alignment where the divine vibrations of daily Vedic chants bring profound stillness to the seeking mind.
+                    ounded in the holy year 1924, Shringi Rishi Mandir Trust has stood through a century of devotion as an unshakeable pillar of Sanatan Dharma. The temple was hand-carved according to the sacred *Agama Shastras*, creating a cosmic alignment where the divine vibrations of daily Vedic chants bring profound stillness to the seeking mind.
                 </p>
                 
                 <p class="text-base text-[#422B1E] leading-relaxed font-normal">

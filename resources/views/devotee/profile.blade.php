@@ -1,4 +1,4 @@
-<x-layout title="My Account | भक्त विवरण | Shri Mandir Trust">
+<x-layout title="My Account | भक्त विवरण | Shringi Rishi Mandir Trust">
     <x-navbar />
 
     <div class="min-h-[85vh] py-8 sm:py-12 px-3 sm:px-6 relative">
@@ -93,7 +93,7 @@
                             </p>
 
                             <div class="mt-3 pt-2.5 border-t border-[#DEC7A2] flex items-center justify-center gap-1.5 text-[10px] text-[#A16207] font-semibold">
-                                <span>🪔 Shri Mandir Devotee</span>
+                                <span>🪔 Shringi Rishi Mandir Devotee</span>
                             </div>
                         </div>
 

@@ -1,4 +1,4 @@
-<x-layout title="Sacred Heritage & Centenary Chronicles | Shri Mandir Trust">
+<x-layout title="Sacred Heritage & Centenary Chronicles | Shringi Rishi Mandir Trust">
     <x-navbar />
 
     <!-- Page Header (Ancient Scroll Inscription) -->

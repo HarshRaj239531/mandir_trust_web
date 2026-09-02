@@ -1,4 +1,4 @@
-<x-layout title="Pavitra Daan & Seva Sankalpa | 80G Tax Exempt | Shri Mandir Trust">
+<x-layout title="Pavitra Daan & Seva Sankalpa | 80G Tax Exempt | Shringi Rishi Mandir Trust">
     <x-navbar />
 
     <!-- Page Header (Ancient Scroll Inscription) -->
@@ -184,7 +184,7 @@
             <div class="parchment-scroll p-6 sm:p-8 rounded-3xl antique-border shadow-lg grid grid-cols-1 sm:grid-cols-2 gap-8 items-center hover-lift">
                 <div class="space-y-2 text-xs text-[#2C1D14] font-mono">
                     <h4 class="font-cinzel text-lg font-bold text-[#912003] font-sans">🏛️ Official Bank Account</h4>
-                    <p><strong class="font-sans">Trust Name:</strong> Shri Mandir Trust</p>
+                    <p><strong class="font-sans">Trust Name:</strong> Shringi Rishi Mandir Trust</p>
                     <p><strong class="font-sans">Bank:</strong> State Bank of India</p>
                     <p><strong class="font-sans">Account No:</strong> 3982001928374</p>
                     <p><strong class="font-sans">IFSC Code:</strong> SBIN0001234</p>

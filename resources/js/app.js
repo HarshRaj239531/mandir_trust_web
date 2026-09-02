@@ -1,5 +1,5 @@
 /**
- * Shri Mandir Trust - Divine Interactive Animation Engine
+ * Shringi Rishi Mandir Trust - Divine Interactive Animation Engine
  * GSAP ScrollTrigger, Vedic Audio Synthesis, Sacred Particles & Micro-Interactions
  */
 
