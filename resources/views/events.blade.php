@@ -31,7 +31,7 @@
             
             @forelse ($events as $e)
                 @php
-                    $eventImg = $e->image ? (str_starts_with($e->image, 'http') ? $e->image : asset('storage/' . $e->image)) : null;
+                    $eventImg = $e->image ? $e->image_url : null;
                 @endphp
                 <div class="parchment-scroll p-6 sm:p-10 rounded-3xl antique-border shadow-xl space-y-6 hover-lift group">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-4 border-b border-[#DEC7A2]">
@@ -45,8 +45,8 @@
                     </div>
 
                     @if ($eventImg)
-                        <div class="h-56 sm:h-72 rounded-2xl overflow-hidden shadow-inner border border-[#DEC7A2]">
-                            <img src="{{ $eventImg }}" alt="{{ $e->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="h-56 sm:h-72 rounded-2xl overflow-hidden shadow-inner border border-[#DEC7A2] bg-[#1C120C]">
+                            <img src="{{ $eventImg }}" alt="{{ $e->title }}" onerror="this.src='{{ asset('images/mandir-aarti.jpg') }}'" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700">
                         </div>
                     @endif
 

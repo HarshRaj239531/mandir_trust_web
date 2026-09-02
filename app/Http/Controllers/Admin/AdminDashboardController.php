@@ -476,7 +476,7 @@ class AdminDashboardController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'category' => ['required', 'string', 'max:100'],
             'caption' => ['nullable', 'string'],
-            'photo' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
+            'photo' => ['required', 'image', 'mimes:jpg,jpeg,png,webp,jfif,avif,gif', 'max:12288'],
         ]);
 
         $path = $request->file('photo')->store('gallery', 'public');
@@ -510,7 +510,7 @@ class AdminDashboardController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'category' => ['required', 'string', 'max:100'],
             'caption' => ['nullable', 'string'],
-            'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
+            'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,jfif,avif,gif', 'max:12288'],
         ]);
 
         if ($request->hasFile('photo')) {
@@ -547,8 +547,13 @@ class AdminDashboardController extends Controller
     public function deleteGallery($id)
     {
         $item = \App\Models\Gallery::findOrFail($id);
-        if ($item->image_path && Storage::disk('public')->exists($item->image_path)) {
-            Storage::disk('public')->delete($item->image_path);
+        if ($item->image_path) {
+            if (Storage::disk('public')->exists($item->image_path)) {
+                Storage::disk('public')->delete($item->image_path);
+            }
+            if (file_exists(public_path('uploads/' . $item->image_path))) {
+                @unlink(public_path('uploads/' . $item->image_path));
+            }
         }
         $item->delete();
 

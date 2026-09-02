@@ -49,10 +49,12 @@
             <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 stagger-parent">
                 @forelse ($galleries as $g)
                     @php
-                        $gImg = str_starts_with($g->image_path, 'http') ? $g->image_path : asset('storage/' . $g->image_path);
+                        $gImg = $g->image_url;
                     @endphp
                     <div class="gal-item {{ Str::slug($g->category) }} parchment-scroll p-3 rounded-2xl antique-border shadow-md break-inside-avoid cursor-pointer group hover-lift overflow-hidden" onclick="openLightbox('{{ $gImg }}', '{{ addslashes($g->caption ?: $g->title) }}')">
-                        <img src="{{ $gImg }}" alt="{{ $g->title }}" class="w-full h-auto rounded-xl object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="overflow-hidden rounded-xl bg-[#1C120C]">
+                            <img src="{{ $gImg }}" alt="{{ $g->title }}" onerror="this.src='{{ asset('images/mandir-aarti.jpg') }}'" class="w-full h-auto max-h-[500px] rounded-xl object-cover object-top group-hover:scale-105 transition-transform duration-700">
+                        </div>
                         <div class="pt-3 px-1 text-center">
                             <span class="text-[10px] uppercase font-marcellus tracking-widest text-[#912003] font-bold">{{ $g->category }}</span>
                             <h4 class="font-cinzel text-base font-bold text-[#1C120C] group-hover:text-[#912003] transition-colors">{{ $g->title }}</h4>

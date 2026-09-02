@@ -49,11 +49,11 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             @forelse ($galleries as $g)
                 @php
-                    $imgUrl = str_starts_with($g->image_path, 'http') ? $g->image_path : asset('storage/' . $g->image_path);
+                    $imgUrl = $g->image_url;
                 @endphp
                 <div class="bg-[#FAF7F2] rounded-2xl overflow-hidden border border-[#DEC7A2]/60 shadow-sm hover:shadow-md transition-all group">
-                    <div class="h-44 overflow-hidden relative">
-                        <img src="{{ $imgUrl }}" alt="{{ $g->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="h-44 overflow-hidden relative bg-[#1C120C]">
+                        <img src="{{ $imgUrl }}" alt="{{ $g->title }}" onerror="this.src='{{ asset('images/mandir-aarti.jpg') }}'" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
                         <span class="absolute bottom-2 left-3 text-[10px] uppercase tracking-wider font-bold bg-[#912003] text-white px-2 py-0.5 rounded-full font-cinzel">
                             {{ $g->category }}
@@ -205,7 +205,8 @@
     <script>
         function openEditGalleryModal(id, title, category, caption, imageUrl) {
             const form = document.getElementById('edit-gallery-form');
-            form.action = `/mandiradmin/gallery/${id}`;
+            const urlTemplate = "{{ route('admin.gallery.update', ['id' => ':id']) }}";
+            form.action = urlTemplate.replace(':id', id);
             document.getElementById('edit-title').value = title;
             document.getElementById('edit-category').value = category;
             document.getElementById('edit-caption').value = caption;

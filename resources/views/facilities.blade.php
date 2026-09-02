@@ -39,7 +39,7 @@
                 
                 @forelse ($facilities as $f)
                     @php
-                        $facImg = $f->image ? (str_starts_with($f->image, 'http') ? $f->image : asset('storage/' . $f->image)) : null;
+                        $facImg = $f->image ? $f->image_url : null;
                     @endphp
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-8 {{ !$loop->last ? 'border-b border-[#DEC7A2]' : '' }} group hover:bg-[#FFFDF9]/80 p-3 rounded-2xl transition-all">
                         <div class="space-y-2 max-w-xl">

@@ -58,6 +58,13 @@ Route::middleware('auth')->group(function () {
 |--------------------------------------------------------------------------
 */
 
+Route::get('/admin', function () {
+    if (auth()->check() && auth()->user()->is_admin) {
+        return redirect()->route('admin.dashboard');
+    }
+    return view('auth.login');
+});
+
 Route::get('/mandiradmin', function () {
     if (auth()->check() && auth()->user()->is_admin) {
         return redirect()->route('admin.dashboard');
@@ -66,6 +73,7 @@ Route::get('/mandiradmin', function () {
 })->name('admin.login');
 
 Route::post('/mandiradmin/login', [AuthController::class, 'login']);
+Route::post('/admin/login', [AuthController::class, 'login']);
 
 Route::middleware(['auth', 'admin'])->prefix('mandiradmin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'dashboard'])->name('dashboard');
@@ -104,6 +112,31 @@ Route::middleware(['auth', 'admin'])->prefix('mandiradmin')->name('admin.')->gro
     Route::post('/settings/password', [AdminDashboardController::class, 'updatePassword'])->name('settings.password');
     Route::post('/settings/profile', [AdminDashboardController::class, 'updateProfile'])->name('settings.profile');
     Route::post('/settings/homepage-media', [AdminDashboardController::class, 'updateHomepageMedia'])->name('settings.homepage-media');
+});
+
+// Secondary route prefix alias so /admin/... URLs also work seamlessly
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'dashboard']);
+    Route::get('/gallery', [AdminDashboardController::class, 'gallery']);
+    Route::post('/gallery', [AdminDashboardController::class, 'storeGallery']);
+    Route::put('/gallery/{id}', [AdminDashboardController::class, 'updateGallery']);
+    Route::delete('/gallery/{id}', [AdminDashboardController::class, 'deleteGallery']);
+    Route::get('/poojas', [AdminDashboardController::class, 'poojas']);
+    Route::post('/poojas', [AdminDashboardController::class, 'storePooja']);
+    Route::delete('/poojas/{id}', [AdminDashboardController::class, 'deletePooja']);
+    Route::get('/donations', [AdminDashboardController::class, 'donations']);
+    Route::post('/donations', [AdminDashboardController::class, 'storeDonation']);
+    Route::delete('/donations/{id}', [AdminDashboardController::class, 'deleteDonation']);
+    Route::get('/events', [AdminDashboardController::class, 'events']);
+    Route::post('/events', [AdminDashboardController::class, 'storeEvent']);
+    Route::delete('/events/{id}', [AdminDashboardController::class, 'deleteEvent']);
+    Route::get('/facilities', [AdminDashboardController::class, 'facilities']);
+    Route::post('/facilities', [AdminDashboardController::class, 'storeFacility']);
+    Route::delete('/facilities/{id}', [AdminDashboardController::class, 'deleteFacility']);
+    Route::get('/settings', [AdminDashboardController::class, 'settings']);
+    Route::post('/settings/password', [AdminDashboardController::class, 'updatePassword']);
+    Route::post('/settings/profile', [AdminDashboardController::class, 'updateProfile']);
+    Route::post('/settings/homepage-media', [AdminDashboardController::class, 'updateHomepageMedia']);
 });
 
 /*
