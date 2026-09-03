@@ -70,8 +70,8 @@
 
                 <!-- Submit Button -->
                 <div class="pt-2">
-                    <button type="submit" class="shimmer-btn hover-lift w-full py-3 rounded-full bg-gradient-to-r from-[#912003] via-[#B93815] to-[#912003] hover:from-[#6C1802] text-[#FFFDF9] font-cinzel font-bold text-sm uppercase tracking-widest shadow-md border border-[#DEC7A2]/60 transition-all duration-300 hover:scale-105 cursor-pointer">
-                        <span>॥ Devotee Sign In ॥</span>
+                    <button type="submit" class="shimmer-btn hover-lift w-full py-3 rounded-full font-cinzel font-bold text-sm uppercase tracking-widest shadow-md border border-[#DEC7A2]/60 transition-all duration-300 hover:scale-105 cursor-pointer" style="background: linear-gradient(135deg, #912003 0%, #B93815 50%, #912003 100%) !important; color: #FFFDF9 !important;">
+                        <span style="color: #FFFDF9 !important;">॥ Devotee Sign In ॥</span>
                     </button>
                 </div>
             </form>

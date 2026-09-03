@@ -123,8 +123,8 @@
                                 </div>
                             </div>
 
-                            <button type="button" onclick="confirmSponsor()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#15803D] to-[#166534] hover:from-[#166534] text-white font-cinzel font-bold text-xs uppercase tracking-wider shadow-sm transition-all hover:scale-105 cursor-pointer">
-                                <span>✓ Confirm Sponsor & Proceed</span>
+                            <button type="button" onclick="confirmSponsor()" class="w-full sm:w-auto px-6 py-3 rounded-xl font-cinzel font-bold text-xs sm:text-sm uppercase tracking-wider shadow-md hover:shadow-lg transition-all hover:scale-105 cursor-pointer flex items-center justify-center gap-2 border border-emerald-800" style="background: linear-gradient(135deg, #15803d 0%, #166534 100%) !important; color: #ffffff !important;">
+                                <span style="color: #ffffff !important;">✓ Confirm Sponsor &amp; Proceed</span>
                             </button>
                         </div>
                     </div>
@@ -345,8 +345,8 @@
 
                     <!-- Submit Button -->
                     <div class="text-center pt-2">
-                        <button type="submit" id="btn-submit-register" class="shimmer-btn hover-lift w-full sm:w-auto px-10 py-3.5 rounded-full bg-gradient-to-r from-[#912003] via-[#B93815] to-[#912003] hover:from-[#6C1802] text-[#FFFDF9] font-cinzel font-bold text-sm sm:text-base uppercase tracking-widest shadow-[0_10px_25px_rgba(108,24,2,0.3)] border border-[#DEC7A2]/60 transition-all duration-300 hover:scale-105 cursor-pointer">
-                            <span>॥ Submit Devotee Registration ॥</span>
+                        <button type="submit" id="btn-submit-register" class="shimmer-btn hover-lift w-full sm:w-auto px-10 py-3.5 rounded-full font-cinzel font-bold text-sm sm:text-base uppercase tracking-widest shadow-[0_10px_25px_rgba(108,24,2,0.3)] border border-[#DEC7A2]/60 transition-all duration-300 hover:scale-105 cursor-pointer" style="background: linear-gradient(135deg, #912003 0%, #B93815 50%, #912003 100%) !important; color: #FFFDF9 !important;">
+                            <span style="color: #FFFDF9 !important;">॥ Submit Devotee Registration ॥</span>
                         </button>
                         
                         <p class="text-xs text-[#6C1802] font-marcellus mt-4">
