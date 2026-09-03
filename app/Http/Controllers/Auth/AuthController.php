@@ -98,8 +98,8 @@ class AuthController extends Controller
             // 5. Date of Birth (Admin editable only later)
             'dob' => ['required', 'date', 'before:today'],
             
-            // 6. Gmail / Email (Admin editable only later)
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            // 6. Gmail / Email (Optional)
+            'email' => ['nullable', 'string', 'email', 'max:255', 'unique:users,email'],
             
             // 7. Mobile Number (Admin editable later)
             'mobile_number' => ['required', 'string', 'regex:/^[0-9]{10,15}$/'],
@@ -125,7 +125,6 @@ class AuthController extends Controller
             'gender.required' => 'Please select gender.',
             'dob.required' => 'Date of Birth is mandatory.',
             'dob.before' => 'Date of Birth must be in the past.',
-            'email.required' => 'Gmail / Email address is mandatory.',
             'email.unique' => 'This Gmail / Email is already registered with Shringi Rishi Mandir.',
             'mobile_number.required' => '10-digit Mobile number is mandatory.',
             'mobile_number.regex' => 'Please enter a valid 10-15 digit mobile number.',
@@ -169,7 +168,7 @@ class AuthController extends Controller
             'mother_name' => $validated['mother_name'],
             'gender' => $validated['gender'],
             'dob' => $validated['dob'],
-            'email' => $validated['email'],
+            'email' => !empty($validated['email']) ? $validated['email'] : null,
             'mobile_number' => $validated['mobile_number'],
             'whatsapp_number' => $whatsappNumber,
             'pincode' => $validated['pincode'],
@@ -182,7 +181,7 @@ class AuthController extends Controller
         // Log the devotee in
         Auth::login($user);
 
-        return redirect()->route('devotee.profile')->with('success', "॥ हर हर महादेव ॥ Welcome to Shringi Rishi Mandir Trust! Your Devotee Registration is complete. Your unique Member ID is: {$user->member_id}");
+        return redirect()->route('devotee.profile')->with('success', "॥ हर हर महादेव ॥ Registration successful! Your Login Member ID is: {$user->member_id}. Keep it safe for future login.");
     }
 
     /**
@@ -198,18 +197,18 @@ class AuthController extends Controller
     }
 
     /**
-     * Handle Devotee Login Request.
+     * Handle Devotee Login Request using Member ID (DS...) / Email / Mobile and password.
      */
     public function login(Request $request)
     {
-        $loginInput = $request->input('login') ?? $request->input('email') ?? $request->input('mobile_number');
+        $loginInput = trim((string) ($request->input('login') ?? $request->input('member_id') ?? $request->input('email') ?? $request->input('mobile_number') ?? ''));
         $request->merge(['login' => $loginInput]);
 
         $credentials = $request->validate([
             'login' => ['required', 'string'],
             'password' => ['required', 'string'],
         ], [
-            'login.required' => 'Please enter your registered Gmail/Email or Mobile Number.',
+            'login.required' => 'Please enter your Member ID (e.g. DS826730159463).',
             'password.required' => 'Please enter your password.',
         ]);
 
@@ -217,27 +216,30 @@ class AuthController extends Controller
         $password = $credentials['password'];
         $remember = $request->boolean('remember');
 
-        // Determine if login is email or mobile number
-        $fieldType = filter_var($loginInput, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile_number';
+        // Look up devotee by Member ID (case-insensitive e.g. DS...), email or mobile number
+        $user = User::where('member_id', strtoupper($loginInput))
+            ->orWhere('email', $loginInput)
+            ->orWhere('mobile_number', $loginInput)
+            ->first();
 
-        if (Auth::attempt([$fieldType => $loginInput, 'password' => $password], $remember)) {
-            $request->session()->regenerate();
-
-            if (Auth::user()->status !== 'active') {
-                Auth::logout();
+        if ($user && Hash::check($password, $user->password)) {
+            if ($user->status !== 'active') {
                 return back()->withErrors(['login' => 'Your account is deactivated. Please contact Mandir Trust Administration.'])->onlyInput('login');
             }
 
+            Auth::login($user, $remember);
+            $request->session()->regenerate();
+
             // If Admin, redirect straight to Mandir Admin Portal
-            if (Auth::user()->is_admin) {
-                return redirect()->intended(route('admin.dashboard'))->with('success', '॥ ॐ नमः शिवाय ॥ Welcome to Mandir Admin Portal, ' . (Auth::user()->nickname ?: Auth::user()->name) . '!');
+            if ($user->is_admin) {
+                return redirect()->intended(route('admin.dashboard'))->with('success', '॥ ॐ नमः शिवाय ॥ Welcome to Mandir Admin Portal, ' . ($user->nickname ?: $user->name) . '!');
             }
 
-            return redirect()->intended(route('devotee.profile'))->with('success', '॥ ॐ नमः शिवाय ॥ Welcome back, ' . Auth::user()->nickname . '!');
+            return redirect()->intended(route('devotee.profile'))->with('success', '॥ ॐ नमः शिवाय ॥ Welcome back, ' . $user->nickname . '!');
         }
 
         return back()->withErrors([
-            'login' => 'Invalid credentials. Please verify your Email/Mobile number and password.',
+            'login' => 'Invalid Member ID or password. Please verify your ID (e.g. DS826730159463) and password.',
         ])->onlyInput('login');
     }
 

@@ -433,4 +433,89 @@ class DevoteeRegistrationAndAdminTest extends TestCase
         $this->assertEquals('9876543299', $devotee->mobile_number);
         $this->assertEquals('201002', $devotee->pincode);
     }
+
+    /**
+     * 9. Devotee can register without providing email (email is optional).
+     */
+    public function test_devotee_can_register_without_email(): void
+    {
+        $this->withoutMiddleware();
+
+        $sponsor = User::create([
+            'member_id' => 'DS100010001000',
+            'name' => 'DS SWAMI JEE',
+            'nickname' => 'DS SWAMI JEE',
+            'mother_name' => 'Maa Jagadamba',
+            'gender' => 'other',
+            'dob' => '1975-01-01',
+            'email' => 'dsswamijee3@mandirtrust.org',
+            'mobile_number' => '9900010001',
+            'pincode' => '824231',
+            'password' => Hash::make('Swami@12345'),
+            'is_admin' => false,
+            'status' => 'active',
+        ]);
+
+        $response = $this->post('/register', [
+            'sponsor_member_id' => 'DS100010001000',
+            'name' => 'Chirag Sen',
+            'nickname' => 'ChiragBhakt',
+            'mother_name' => 'Smt. Geeta Sen',
+            'gender' => 'male',
+            'dob' => '2000-01-15',
+            'email' => '', // Empty email
+            'mobile_number' => '9811223344',
+            'pincode' => '110045',
+            'password' => 'Password@123',
+            'password_confirmation' => 'Password@123',
+        ]);
+
+        $response->assertRedirect('/my-account');
+        $this->assertAuthenticated();
+
+        $user = User::where('mobile_number', '9811223344')->first();
+        $this->assertNotNull($user);
+        $this->assertNull($user->email);
+        $this->assertStringStartsWith('DS', $user->member_id);
+    }
+
+    /**
+     * 10. Devotee can login using generated Member ID (e.g. DS826730159463) and password.
+     */
+    public function test_devotee_can_login_using_member_id_and_password(): void
+    {
+        $user = User::create([
+            'member_id' => 'DS826730159463',
+            'name' => 'Devotee Test',
+            'nickname' => 'TestBhakt',
+            'mother_name' => 'Test Mother',
+            'gender' => 'male',
+            'dob' => '1999-01-01',
+            'email' => null, // No email
+            'mobile_number' => '9800000001',
+            'pincode' => '110001',
+            'password' => Hash::make('SacredPass@123'),
+            'is_admin' => false,
+            'status' => 'active',
+        ]);
+
+        // 1. Login with exact Member ID
+        $response = $this->post('/login', [
+            'login' => 'DS826730159463',
+            'password' => 'SacredPass@123',
+        ]);
+
+        $response->assertRedirect('/my-account');
+        $this->assertAuthenticatedAs($user);
+
+        // 2. Logout and login with lowercase Member ID
+        auth()->logout();
+        $responseLower = $this->post('/login', [
+            'login' => 'ds826730159463',
+            'password' => 'SacredPass@123',
+        ]);
+
+        $responseLower->assertRedirect('/my-account');
+        $this->assertAuthenticatedAs($user);
+    }
 }

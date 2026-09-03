@@ -147,10 +147,11 @@
                     <!-- 6. Gmail / Email -->
                     <div>
                         <label for="email" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1">
-                            6. Gmail / Email <span class="text-[#912003]">*</span>
+                            6. Gmail / Email (Optional)
                         </label>
-                        <input type="email" id="email" name="email" value="{{ old('email', $devotee->email) }}" required
-                            class="w-full bg-[#FAF7F2] border border-[#E5DCD0] rounded-xl px-4 py-2.5 text-sm text-[#1C120C]">
+                        <input type="email" id="email" name="email" value="{{ old('email', $devotee->email) }}"
+                            placeholder="e.g. user@gmail.com (Optional)"
+                            class="w-full bg-[#FAF7F2] border border-[#E5DCD0] rounded-xl px-4 py-2.5 text-sm text-[#1C120C] focus:outline-none focus:border-[#912003]">
                     </div>
 
                     <!-- 7. Mobile Number -->

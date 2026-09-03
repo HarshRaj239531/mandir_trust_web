@@ -128,7 +128,7 @@ class AdminDashboardController extends Controller
             'dob' => ['required', 'date', 'before:today'],
             
             // 6. Gmail / Email (Admin editable)
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($devotee->id)],
+            'email' => ['nullable', 'string', 'email', 'max:255', Rule::unique('users')->ignore($devotee->id)],
             
             // 7. Mobile Number (Admin editable)
             'mobile_number' => ['required', 'string', 'regex:/^[0-9]{10,15}$/'],
@@ -181,7 +181,7 @@ class AdminDashboardController extends Controller
         $devotee->mother_name = $validated['mother_name'];
         $devotee->gender = $validated['gender'];
         $devotee->dob = $validated['dob'];
-        $devotee->email = $validated['email'];
+        $devotee->email = !empty($validated['email']) ? $validated['email'] : null;
         $devotee->mobile_number = $validated['mobile_number'];
         $devotee->whatsapp_number = $validated['whatsapp_number'] ?? $validated['mobile_number'];
         $devotee->pincode = $validated['pincode'];

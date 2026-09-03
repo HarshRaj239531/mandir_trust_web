@@ -343,7 +343,7 @@
                             <!-- 6. Gmail / Email (Locked) -->
                             <div class="sm:col-span-2 bg-[#FFFDF9] p-3.5 rounded-xl border border-[#DEC7A2]/60">
                                 <span class="block text-[10px] font-bold uppercase tracking-wider text-[#A16207]">6. Registered Gmail / Email</span>
-                                <span class="font-semibold text-sm text-[#1C120C] block mt-0.5 font-mono">{{ $user->email }}</span>
+                                <span class="font-semibold text-sm text-[#1C120C] block mt-0.5 font-mono">{{ $user->email ?: 'Not Provided (ऐच्छिक / खाली)' }}</span>
                                 <span class="text-[9px] text-[#6C1802] font-mono">🔒 Admin Only</span>
                             </div>
 

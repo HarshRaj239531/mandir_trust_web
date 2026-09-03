@@ -229,14 +229,15 @@
                                     class="w-full bg-[#FFFDF9] border border-[#DEC7A2] rounded-xl px-3 py-2.5 text-sm text-[#1C120C] focus:outline-none focus:border-[#912003] transition-all">
                             </div>
 
-                            <!-- 6. Gmail / Email -->
+                            <!-- 6. Gmail / Email (Optional) -->
                             <div class="sm:col-span-2 md:col-span-4">
                                 <label for="email" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1">
-                                    6. Gmail / Email Address <span class="text-[#912003]">*</span>
+                                    6. Gmail / Email Address <span class="text-[11px] font-normal text-[#6C1802]">(Optional / ऐच्छिक)</span>
                                 </label>
-                                <input type="email" id="email" name="email" value="{{ old('email') }}" required
-                                    placeholder="e.g. yourname@gmail.com"
+                                <input type="email" id="email" name="email" value="{{ old('email') }}"
+                                    placeholder="e.g. yourname@gmail.com (Optional)"
                                     class="w-full bg-[#FFFDF9] border border-[#DEC7A2] rounded-xl px-4 py-2.5 text-sm text-[#1C120C] focus:outline-none focus:border-[#912003] transition-all">
+                                <span class="text-[10px] text-[#6C1802] mt-0.5 block">Optional. You can leave this blank. You will receive a unique Member ID (e.g., DS826730159463) upon registration for login.</span>
                             </div>
                         </div>
                     </div>

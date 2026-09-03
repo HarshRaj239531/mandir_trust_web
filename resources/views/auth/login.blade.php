@@ -38,14 +38,15 @@
             <form action="{{ route('login') }}" method="POST" class="space-y-4">
                 @csrf
 
-                <!-- Login Identifier (Email or Mobile) -->
+                <!-- Devotee Member ID (DS...) -->
                 <div>
                     <label for="login" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1">
-                        Gmail or Mobile Number
+                        Member ID <span class="text-[#912003]">*</span>
                     </label>
                     <input type="text" id="login" name="login" value="{{ old('login') }}" required autofocus
-                        placeholder="yourname@gmail.com or 10-digit mobile"
-                        class="w-full bg-[#FAF6EC] border border-[#DEC7A2] rounded-xl px-4 py-2.5 text-sm text-[#1C120C] focus:outline-none focus:border-[#912003] focus:ring-1 focus:ring-[#912003] transition-all">
+                        placeholder="e.g. DS826730159463"
+                        class="w-full bg-[#FAF6EC] border border-[#DEC7A2] rounded-xl px-4 py-2.5 text-sm text-[#1C120C] font-mono tracking-wide focus:outline-none focus:border-[#912003] focus:ring-1 focus:ring-[#912003] transition-all">
+                    <span class="text-[11px] text-[#6C1802] mt-1 block">Enter your 12-digit Member ID received after registration (e.g., DS826730159463).</span>
                 </div>
 
                 <!-- Password -->
