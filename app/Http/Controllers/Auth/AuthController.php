@@ -15,21 +15,74 @@ class AuthController extends Controller
     /**
      * Show Devotee Registration Form.
      */
-    public function showRegisterForm()
+    public function showRegisterForm(Request $request)
     {
         if (Auth::check()) {
             return redirect()->route('devotee.profile');
         }
 
-        return view('auth.register');
+        $referralCode = strtoupper(trim((string) $request->query('ref', '')));
+        $initialSponsor = null;
+        if (!empty($referralCode)) {
+            $initialSponsor = User::where('member_id', $referralCode)->first();
+        }
+
+        return view('auth.register', compact('referralCode', 'initialSponsor'));
     }
 
     /**
-     * Handle Devotee Registration Request with all 10 fields.
+     * Verify Sponsor ID before registration (Live AJAX / JSON endpoint).
+     * Devotee enters only Sponsor ID -> system returns Sponsor Name.
+     */
+    public function verifySponsor(Request $request)
+    {
+        $sponsorCode = strtoupper(trim((string) $request->input('sponsor_id', $request->input('ref', ''))));
+
+        if (empty($sponsorCode)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Please enter a valid Sponsor ID (e.g. DS101010101010).',
+            ], 422);
+        }
+
+        $sponsor = User::where('member_id', $sponsorCode)->first();
+
+        if (!$sponsor) {
+            return response()->json([
+                'success' => false,
+                'message' => "Sponsor ID '{$sponsorCode}' not found. Please verify the ID with your sponsor.",
+            ], 404);
+        }
+
+        if ($sponsor->status !== 'active') {
+            return response()->json([
+                'success' => false,
+                'message' => "Sponsor account '{$sponsorCode}' is inactive. Please contact Mandir Administration.",
+            ], 422);
+        }
+
+        return response()->json([
+            'success' => true,
+            'sponsor' => [
+                'id' => $sponsor->id,
+                'member_id' => $sponsor->member_id,
+                'name' => $sponsor->name,
+                'nickname' => $sponsor->nickname,
+                'profile_photo_url' => $sponsor->profile_photo_url,
+            ],
+            'message' => "Sponsor verified: {$sponsor->name}",
+        ]);
+    }
+
+    /**
+     * Handle Devotee Registration Request with all 10 fields and Mandatory Sponsor.
      */
     public function register(Request $request)
     {
         $validated = $request->validate([
+            // Mandatory Sponsor ID
+            'sponsor_member_id' => ['required', 'string', 'exists:users,member_id'],
+
             // 1. Real Name (Private, only in user account & admin panel)
             'name' => ['required', 'string', 'max:255'],
             
@@ -48,13 +101,13 @@ class AuthController extends Controller
             // 6. Gmail / Email (Admin editable only later)
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             
-            // 7. Mobile Number (Devotee & Admin editable)
+            // 7. Mobile Number (Admin editable later)
             'mobile_number' => ['required', 'string', 'regex:/^[0-9]{10,15}$/'],
             
-            // 8. WhatsApp Number (Devotee & Admin editable)
+            // 8. WhatsApp Number (Admin editable later)
             'whatsapp_number' => ['nullable', 'string', 'regex:/^[0-9]{10,15}$/'],
             
-            // 9. Pincode (Devotee & Admin editable)
+            // 9. Pincode (Admin editable later)
             'pincode' => ['required', 'string', 'regex:/^[0-9]{6}$/'],
             
             // 10. Selfie / Profile Picture (Devotee updatable anytime)
@@ -64,8 +117,10 @@ class AuthController extends Controller
             // Password
             'password' => ['required', 'string', 'min:6', 'confirmed'],
         ], [
+            'sponsor_member_id.required' => 'Sponsor ID is mandatory before registration. Please enter and confirm your Sponsor.',
+            'sponsor_member_id.exists' => 'The entered Sponsor ID is invalid or does not exist.',
             'name.required' => 'Devotee Real Name is mandatory.',
-            'nickname.required' => 'Nick Name / Spiritual Handle is mandatory (visible to other devotees).',
+            'nickname.required' => 'Nick Name / Display Name is mandatory (visible to other devotees).',
             'mother_name.required' => "Mother's Name is mandatory for sacred records.",
             'gender.required' => 'Please select gender.',
             'dob.required' => 'Date of Birth is mandatory.',
@@ -85,6 +140,12 @@ class AuthController extends Controller
             'password.confirmed' => 'Password confirmation does not match.',
         ]);
 
+        // Find and verify sponsor
+        $sponsor = User::where('member_id', strtoupper(trim($validated['sponsor_member_id'])))->first();
+        if (!$sponsor || $sponsor->status !== 'active') {
+            return back()->withErrors(['sponsor_member_id' => 'The selected Sponsor account is not active or invalid.'])->withInput();
+        }
+
         // Handle Profile Photo / Selfie Upload (Base64 canvas compressed or multipart file)
         $photoPath = null;
         if ($request->filled('profile_photo_base64')) {
@@ -93,11 +154,16 @@ class AuthController extends Controller
             $photoPath = ImageHelper::processAndStore($request->file('profile_photo'), 'devotees');
         }
 
-        // If WhatsApp number wasn't specified, default to mobile number if user desires or leave as provided
+        // If WhatsApp number wasn't specified, default to mobile number
         $whatsappNumber = $validated['whatsapp_number'] ?? $validated['mobile_number'];
+
+        // Generate unique 12-digit Member ID with DS prefix (e.g. DS123456789012)
+        $memberId = User::generateMemberId();
 
         // Create User
         $user = User::create([
+            'member_id' => $memberId,
+            'sponsor_id' => $sponsor->id,
             'name' => $validated['name'],
             'nickname' => $validated['nickname'],
             'mother_name' => $validated['mother_name'],
@@ -116,7 +182,7 @@ class AuthController extends Controller
         // Log the devotee in
         Auth::login($user);
 
-        return redirect()->route('devotee.profile')->with('success', '॥ हर हर महादेव ॥ Welcome to Shringi Rishi Mandir Trust! Your Devotee Registration has been completed successfully.');
+        return redirect()->route('devotee.profile')->with('success', "॥ हर हर महादेव ॥ Welcome to Shringi Rishi Mandir Trust! Your Devotee Registration is complete. Your unique Member ID is: {$user->member_id}");
     }
 
     /**

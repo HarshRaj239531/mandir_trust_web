@@ -12,17 +12,24 @@ use Illuminate\Validation\Rule;
 class ProfileController extends Controller
 {
     /**
-     * Display Devotee Profile / Account Dashboard.
+     * Display Devotee Profile / Account Dashboard with MLM 3-Share Network.
      */
     public function show()
     {
+        /** @var \App\Models\User $user */
         $user = Auth::user();
-        return view('devotee.profile', compact('user'));
+        $user->load(['sponsor', 'referrals']);
+
+        $genealogyTree = $user->getGenealogyTree(3);
+        $directReferralsCount = $user->referrals->count();
+        $totalTeamCount = $user->total_team_count;
+
+        return view('devotee.profile', compact('user', 'genealogyTree', 'directReferralsCount', 'totalTeamCount'));
     }
 
     /**
-     * Update Devotee Editable Information (Nickname, Mobile, WhatsApp, Pincode, Selfie).
-     * Note: Real Name, Mother's Name, Gender, DOB, and Gmail CANNOT be updated by user.
+     * Update Devotee Editable Information (ONLY Nickname, Selfie/Profile Picture, and Password).
+     * Note: Real Name, Mother's Name, Gender, DOB, Gmail, Mobile, WhatsApp, and Pincode CANNOT be updated by user (Admin only).
      */
     public function update(Request $request)
     {
@@ -30,17 +37,8 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         $validated = $request->validate([
-            // 2. Nick Name (Devotee choice)
+            // 2. Nick Name (User display name)
             'nickname' => ['required', 'string', 'max:100'],
-            
-            // 7. Mobile Number
-            'mobile_number' => ['required', 'string', 'regex:/^[0-9]{10,15}$/'],
-            
-            // 8. WhatsApp Number
-            'whatsapp_number' => ['nullable', 'string', 'regex:/^[0-9]{10,15}$/'],
-            
-            // 9. Pincode
-            'pincode' => ['required', 'string', 'regex:/^[0-9]{6}$/'],
             
             // 10. Selfie / Profile Picture (Time to time updatable)
             'profile_photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,jfif,avif,gif', 'max:5120'],
@@ -51,11 +49,6 @@ class ProfileController extends Controller
             'new_password' => ['nullable', 'string', 'min:6', 'confirmed'],
         ], [
             'nickname.required' => 'Nick Name is required.',
-            'mobile_number.required' => 'Mobile number is required.',
-            'mobile_number.regex' => 'Please enter a valid 10-15 digit mobile number.',
-            'whatsapp_number.regex' => 'Please enter a valid 10-15 digit WhatsApp number.',
-            'pincode.required' => 'Pincode is required.',
-            'pincode.regex' => 'Pincode must be exactly 6 digits.',
             'profile_photo.uploaded' => 'Profile photo could not be uploaded. Please choose an image under 10MB.',
             'profile_photo.image' => 'Profile photo must be a valid image file.',
             'profile_photo.max' => 'Profile photo file size must not exceed 5MB.',
@@ -85,14 +78,10 @@ class ProfileController extends Controller
             $user->profile_photo = ImageHelper::processAndStore($request->file('profile_photo'), 'devotees');
         }
 
-        // Update ONLY allowed fields
+        // Update ONLY allowed fields (Nick Name)
         $user->nickname = $validated['nickname'];
-        $user->mobile_number = $validated['mobile_number'];
-        $user->whatsapp_number = $validated['whatsapp_number'] ?? $validated['mobile_number'];
-        $user->pincode = $validated['pincode'];
-        
         $user->save();
 
-        return redirect()->route('devotee.profile')->with('success', '॥ शुभम् ॥ Your Devotee Profile and Selfie have been updated successfully!');
+        return redirect()->route('devotee.profile')->with('success', '॥ शुभम् ॥ Your Devotee Nick Name and Profile Picture have been updated successfully!');
     }
 }

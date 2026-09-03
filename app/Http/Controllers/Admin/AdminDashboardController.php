@@ -45,17 +45,23 @@ class AdminDashboardController extends Controller
      */
     public function devotees(Request $request)
     {
-        $query = User::query();
+        $query = User::with('sponsor');
 
-        // Search filter (Name, Nickname, Email, Mobile, Pincode, Mother's Name)
+        // Search filter (Member ID, Real Name, Nickname, Email, Mobile, Pincode, Mother, Sponsor)
         if ($search = $request->input('search')) {
             $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
+                $q->where('member_id', 'like', "%{$search}%")
+                  ->orWhere('name', 'like', "%{$search}%")
                   ->orWhere('nickname', 'like', "%{$search}%")
                   ->orWhere('email', 'like', "%{$search}%")
                   ->orWhere('mobile_number', 'like', "%{$search}%")
                   ->orWhere('pincode', 'like', "%{$search}%")
-                  ->orWhere('mother_name', 'like', "%{$search}%");
+                  ->orWhere('mother_name', 'like', "%{$search}%")
+                  ->orWhereHas('sponsor', function ($sq) use ($search) {
+                      $sq->where('member_id', 'like', "%{$search}%")
+                         ->orWhere('name', 'like', "%{$search}%")
+                         ->orWhere('nickname', 'like', "%{$search}%");
+                  });
             });
         }
 
@@ -138,6 +144,8 @@ class AdminDashboardController extends Controller
             'profile_photo_base64' => ['nullable', 'string'],
             
             // Administrative fields
+            'member_id' => ['nullable', 'string', 'max:30', Rule::unique('users')->ignore($devotee->id)],
+            'sponsor_member_id' => ['nullable', 'string', 'exists:users,member_id'],
             'status' => ['required', 'string', Rule::in(['active', 'inactive'])],
             'is_admin' => ['nullable', 'boolean'],
             'new_password' => ['nullable', 'string', 'min:6'],
@@ -154,6 +162,17 @@ class AdminDashboardController extends Controller
                 ImageHelper::delete($devotee->profile_photo);
             }
             $devotee->profile_photo = ImageHelper::processAndStore($request->file('profile_photo'), 'devotees');
+        }
+
+        // Update Member ID & Sponsor if provided
+        if ($request->filled('member_id')) {
+            $devotee->member_id = strtoupper(trim($request->input('member_id')));
+        }
+        if ($request->filled('sponsor_member_id')) {
+            $sponsor = User::where('member_id', strtoupper(trim($request->input('sponsor_member_id'))))->first();
+            if ($sponsor && $sponsor->id !== $devotee->id) {
+                $devotee->sponsor_id = $sponsor->id;
+            }
         }
 
         // Update all 10 fields

@@ -70,10 +70,10 @@
                             @endif
                         @else
                             <a href="{{ route('register') }}" class="text-[#CA8A04] hover:text-[#FFFDF9] underline decoration-[#CA8A04]/50 underline-offset-2 transition-colors">
-                                भक्त पंजीकरण
+                                Register
                             </a>
                             <a href="{{ route('login') }}" class="text-[#EADBC0] hover:text-white transition-colors">
-                                लॉगिन
+                                Login
                             </a>
                         @endauth
                     </div>

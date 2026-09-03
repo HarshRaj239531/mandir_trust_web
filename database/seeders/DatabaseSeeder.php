@@ -62,5 +62,8 @@ class DatabaseSeeder extends Seeder
         ]);
         // 4. Seed Dynamic Mandir CMS (Poojas, Bookings, Donations, Events, Facilities, Galleries)
         $this->call(MandirCmsSeeder::class);
+
+        // 5. Seed MLM Master Root Accounts (DS101010101010, DS100100100100, DS100010001000)
+        $this->call(MlmRootAccountsSeeder::class);
     }
 }

@@ -20,6 +20,8 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'member_id',
+        'sponsor_id',
         'name',
         'nickname',
         'mother_name',
@@ -110,4 +112,86 @@ class User extends Authenticatable
         // Return a default divine avatar based on gender/initials
         return "https://ui-avatars.com/api/?name=" . urlencode($this->nickname ?: $this->name) . "&background=912003&color=FFFDF9&bold=true&size=256";
     }
+
+    /**
+     * Generate a unique 12-digit Member ID prefixed with capital "DS".
+     * Example format: DS123456789012 (DS + 12 digits = 14 chars total).
+     */
+    public static function generateMemberId(): string
+    {
+        do {
+            // Generate 12 random numeric digits
+            $part1 = str_pad((string) mt_rand(100000, 999999), 6, '0', STR_PAD_LEFT);
+            $part2 = str_pad((string) mt_rand(100000, 999999), 6, '0', STR_PAD_LEFT);
+            $code = 'DS' . $part1 . $part2;
+        } while (static::where('member_id', $code)->exists());
+
+        return $code;
+    }
+
+    /**
+     * Sponsor (the upline devotee who introduced this user).
+     */
+    public function sponsor()
+    {
+        return $this->belongsTo(User::class, 'sponsor_id');
+    }
+
+    /**
+     * Direct Referrals (the direct downline devotees sponsored by this user - 3-share model).
+     */
+    public function referrals()
+    {
+        return $this->hasMany(User::class, 'sponsor_id')->latest();
+    }
+
+    /**
+     * Get multi-level downline genealogy tree (Level 1, Level 2, Level 3).
+     * Level 1: Direct shares (target 3)
+     * Level 2: Downline from Level 1 (target 9)
+     * Level 3: Downline from Level 2 (target 27)
+     */
+    public function getGenealogyTree(int $maxLevel = 3): array
+    {
+        $levels = [];
+        $currentLevelUsers = $this->referrals()->with('referrals')->get();
+        $levels[1] = $currentLevelUsers;
+
+        if ($maxLevel >= 2) {
+            $level2 = collect();
+            foreach ($currentLevelUsers as $user) {
+                foreach ($user->referrals as $subUser) {
+                    $level2->push($subUser);
+                }
+            }
+            $levels[2] = $level2;
+
+            if ($maxLevel >= 3) {
+                $level3 = collect();
+                foreach ($level2 as $user) {
+                    $userReferrals = $user->referrals()->get();
+                    foreach ($userReferrals as $subUser) {
+                        $level3->push($subUser);
+                    }
+                }
+                $levels[3] = $level3;
+            }
+        }
+
+        return $levels;
+    }
+
+    /**
+     * Total count of all downline team members (Level 1 + Level 2 + Level 3).
+     */
+    public function getTotalTeamCountAttribute(): int
+    {
+        $tree = $this->getGenealogyTree(3);
+        $count = 0;
+        foreach ($tree as $levelUsers) {
+            $count += $levelUsers->count();
+        }
+        return $count;
+    }
 }
+

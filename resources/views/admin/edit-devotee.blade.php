@@ -33,14 +33,17 @@
                 <img src="{{ $devotee->profile_photo_url }}" alt="{{ $devotee->nickname }}" class="w-full h-full object-cover">
             </div>
             <div>
-                <span class="text-[10px] font-bold uppercase tracking-wider text-[#A16207] bg-[#FAF7F2] px-2.5 py-0.5 rounded-full border border-[#E5DCD0]">
-                    Member ID #{{ $devotee->id }}
+                <span class="text-[10px] font-bold uppercase tracking-wider text-[#912003] bg-[#FAF7F2] px-2.5 py-0.5 rounded-full border border-[#E5DCD0] font-mono">
+                    Member ID: {{ $devotee->member_id ?? '#' . $devotee->id }}
                 </span>
                 <h3 class="font-cinzel text-lg font-black text-[#1C120C] mt-0.5">
                     {{ $devotee->nickname }}
                 </h3>
                 <p class="text-xs text-[#6C1802] font-marcellus">
                     Full Legal Name: <strong class="text-[#1C120C]">{{ $devotee->name }}</strong> • Enrolled on {{ $devotee->created_at->format('d M, Y') }}
+                    @if ($devotee->sponsor)
+                        • Sponsor: <strong class="text-[#912003] font-mono">{{ $devotee->sponsor->name }} ({{ $devotee->sponsor->member_id }})</strong>
+                    @endif
                 </p>
             </div>
         </div>
@@ -50,6 +53,30 @@
             <form action="{{ route('admin.devotee.update', $devotee->id) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                 @csrf
                 @method('PUT')
+
+                <!-- MLM Identity & Sponsor Configuration -->
+                <div class="bg-[#FAF7F2] border border-[#DEC7A2] rounded-xl p-4">
+                    <h4 class="font-cinzel text-xs font-bold uppercase tracking-wider text-[#912003] mb-3">
+                        🌿 MLM Network & Sponsor Assignment
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label for="member_id" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1 font-mono">
+                                Member ID (Unique 12-digit DS Number)
+                            </label>
+                            <input type="text" id="member_id" name="member_id" value="{{ old('member_id', $devotee->member_id) }}"
+                                class="w-full font-mono uppercase bg-white border border-[#E5DCD0] rounded-xl px-4 py-2 text-sm text-[#1C120C] focus:outline-none focus:border-[#912003]">
+                        </div>
+                        <div>
+                            <label for="sponsor_member_id" class="block text-xs uppercase tracking-wider font-bold text-[#2C1D14] mb-1 font-mono">
+                                Sponsor Member ID (Current: {{ $devotee->sponsor?->name ?? 'None' }})
+                            </label>
+                            <input type="text" id="sponsor_member_id" name="sponsor_member_id" value="{{ old('sponsor_member_id', $devotee->sponsor?->member_id) }}"
+                                placeholder="e.g. DS101010101010"
+                                class="w-full font-mono uppercase bg-white border border-[#E5DCD0] rounded-xl px-4 py-2 text-sm text-[#1C120C] focus:outline-none focus:border-[#912003]">
+                        </div>
+                    </div>
+                </div>
 
                 <!-- 10. Photo / Selfie Upload & Preview -->
                 <div class="bg-[#FAF7F2] border border-[#E5DCD0] rounded-xl p-4">

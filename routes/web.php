@@ -39,6 +39,7 @@ Route::get('/facilities', [TemplePublicController::class, 'facilities'])->name('
 Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
+    Route::get('/verify-sponsor', [AuthController::class, 'verifySponsor'])->name('sponsor.verify');
 
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);

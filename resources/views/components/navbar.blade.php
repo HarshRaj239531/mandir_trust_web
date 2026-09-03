@@ -58,7 +58,7 @@
                 <!-- Devotee Registration Link -->
                 @guest
                     <a href="{{ route('register') }}" class="px-3 py-2 rounded-xl transition-all duration-300 relative group hover:scale-105 text-[#912003] hover:bg-[#912003]/10 font-bold border border-[#912003]/30">
-                        <span>भक्त पंजीकरण</span>
+                        <span>Register</span>
                     </a>
                 @endguest
             </nav>
@@ -133,10 +133,10 @@
                 @else
                     <div class="grid grid-cols-2 gap-2">
                         <a href="{{ route('register') }}" class="py-2.5 px-3 rounded-xl bg-[#912003] text-[#FFFDF9] text-center font-bold text-xs uppercase tracking-wider">
-                            भक्त पंजीकरण
+                            User Register
                         </a>
                         <a href="{{ route('login') }}" class="py-2.5 px-3 rounded-xl bg-[#FAF6EC] border border-[#DEC7A2] text-[#422B1E] text-center font-bold text-xs uppercase tracking-wider">
-                            भक्त लॉगिन
+                            User Login
                         </a>
                     </div>
                 @endauth

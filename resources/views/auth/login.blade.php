@@ -80,7 +80,7 @@
                 <p class="text-xs text-[#6C1802] font-marcellus">
                     New Devotee? 
                     <a href="{{ route('register') }}" class="text-[#912003] font-bold underline hover:text-black ml-1">
-                        भक्त पंजीकरण (Register Here)
+                        Register Here
                     </a>
                 </p>
 

@@ -95,6 +95,8 @@
                 <thead class="bg-[#FAF7F2] text-[#422B1E] uppercase font-cinzel tracking-wider border-b border-[#E5DCD0] text-[11px]">
                     <tr>
                         <th class="py-3.5 px-4">Selfie</th>
+                        <th class="py-3.5 px-4">Member ID</th>
+                        <th class="py-3.5 px-4">Sponsor</th>
                         <th class="py-3.5 px-4">1. Full Name (Legal)</th>
                         <th class="py-3.5 px-4">2. Nick Name (Public)</th>
                         <th class="py-3.5 px-4">3. Mother's Name</th>
@@ -115,6 +117,26 @@
                                 <div class="w-10 h-10 rounded-xl border border-[#DEC7A2] overflow-hidden shadow-2xs shrink-0 cursor-pointer bg-[#FAF7F2] hover:scale-105 transition-transform" onclick="viewPhotoModal('{{ $devotee->profile_photo_url }}', '{{ $devotee->nickname }}', '{{ $devotee->name }}')">
                                     <img src="{{ $devotee->profile_photo_url }}" alt="{{ $devotee->nickname }}" class="w-full h-full object-cover">
                                 </div>
+                            </td>
+
+                            <!-- Member ID -->
+                            <td class="py-3 px-4 font-mono font-bold text-[#912003] whitespace-nowrap">
+                                <div class="flex items-center gap-1.5">
+                                    <span>{{ $devotee->member_id ?? 'N/A' }}</span>
+                                    @if ($devotee->member_id)
+                                        <button type="button" onclick="navigator.clipboard.writeText('{{ $devotee->member_id }}'); alert('Member ID copied: {{ $devotee->member_id }}');" class="text-xs text-[#A16207] hover:text-black cursor-pointer" title="Copy ID">📋</button>
+                                    @endif
+                                </div>
+                            </td>
+
+                            <!-- Sponsor -->
+                            <td class="py-3 px-4 whitespace-nowrap">
+                                @if ($devotee->sponsor)
+                                    <span class="font-semibold text-[#1C120C] block">{{ $devotee->sponsor->name }}</span>
+                                    <span class="font-mono text-[10px] text-[#A16207] block">{{ $devotee->sponsor->member_id }}</span>
+                                @else
+                                    <span class="text-[10px] text-gray-500 italic">Root / Master</span>
+                                @endif
                             </td>
 
                             <!-- 1. Real / Legal Name -->

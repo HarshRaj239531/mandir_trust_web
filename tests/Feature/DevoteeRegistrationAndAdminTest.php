@@ -21,7 +21,7 @@ class DevoteeRegistrationAndAdminTest extends TestCase
         $response = $this->get('/register');
 
         $response->assertStatus(200);
-        $response->assertSee('भक्त पंजीकरण');
+        $response->assertSee('भक्त');
         $response->assertSee('Full Name');
         $response->assertSee('Nick Name');
         $response->assertSee("Mother's Name", false);
@@ -31,20 +31,38 @@ class DevoteeRegistrationAndAdminTest extends TestCase
         $response->assertSee('Mobile Number');
         $response->assertSee('WhatsApp Number');
         $response->assertSee('Pincode');
-        $response->assertSee('Profile / File Picture');
+        $response->assertSee('Profile Picture');
+        $response->assertSee('स्पॉन्सर सत्यापन');
     }
 
     /**
-     * 2. New Devotee can register with all 10 fields and is redirected to /my-account.
+     * 2. New Devotee can register with all 10 fields and valid Sponsor ID and is redirected to /my-account.
      */
     public function test_new_devotee_can_register_with_all_10_fields(): void
     {
         $this->withoutMiddleware();
         Storage::fake('public');
 
+        $sponsor = User::create([
+            'member_id' => 'DS101010101010',
+            'name' => 'DS SWAMI JEE',
+            'nickname' => 'DS SWAMI JEE',
+            'mother_name' => 'Maa Jagadamba',
+            'gender' => 'other',
+            'dob' => '1975-01-01',
+            'email' => 'dsswamijee1@mandirtrust.org',
+            'mobile_number' => '9900101010',
+            'whatsapp_number' => '9900101010',
+            'pincode' => '824231',
+            'password' => Hash::make('Swami@12345'),
+            'is_admin' => false,
+            'status' => 'active',
+        ]);
+
         $file = UploadedFile::fake()->image('selfie.jpg');
 
         $response = $this->post('/register', [
+            'sponsor_member_id' => 'DS101010101010',
             'name' => 'Aarav Nath Sharma',
             'nickname' => 'MahadevBhakt_Aarav',
             'mother_name' => 'Smt. Pushpa Devi',
@@ -63,6 +81,7 @@ class DevoteeRegistrationAndAdminTest extends TestCase
         $this->assertAuthenticated();
 
         $this->assertDatabaseHas('users', [
+            'sponsor_id' => $sponsor->id,
             'name' => 'Aarav Nath Sharma',
             'nickname' => 'MahadevBhakt_Aarav',
             'mother_name' => 'Smt. Pushpa Devi',
@@ -73,6 +92,11 @@ class DevoteeRegistrationAndAdminTest extends TestCase
             'pincode' => '201001',
             'is_admin' => false,
         ]);
+
+        $createdUser = User::where('email', 'aarav.bhakt@gmail.com')->first();
+        $this->assertNotNull($createdUser->member_id);
+        $this->assertStringStartsWith('DS', $createdUser->member_id);
+        $this->assertEquals(14, strlen($createdUser->member_id)); // DS + 12 digits = 14 chars
     }
 
     /**
@@ -81,6 +105,22 @@ class DevoteeRegistrationAndAdminTest extends TestCase
     public function test_new_devotee_can_register_with_base64_compressed_photo_and_visible_in_admin(): void
     {
         $this->withoutMiddleware();
+
+        $sponsor = User::create([
+            'member_id' => 'DS100100100100',
+            'name' => 'DS SWAMI JEE',
+            'nickname' => 'DS SWAMI JEE',
+            'mother_name' => 'Maa Jagadamba',
+            'gender' => 'other',
+            'dob' => '1975-01-01',
+            'email' => 'dsswamijee2@mandirtrust.org',
+            'mobile_number' => '9900100100',
+            'whatsapp_number' => '9900100100',
+            'pincode' => '824231',
+            'password' => Hash::make('Swami@12345'),
+            'is_admin' => false,
+            'status' => 'active',
+        ]);
 
         $im = imagecreatetruecolor(60, 60);
         $color = imagecolorallocate($im, 145, 32, 3);
@@ -91,6 +131,7 @@ class DevoteeRegistrationAndAdminTest extends TestCase
         imagedestroy($im);
 
         $response = $this->post('/register', [
+            'sponsor_member_id' => 'DS100100100100',
             'name' => 'Bhanu Pratap Singh',
             'nickname' => 'BhanuBhakt',
             'mother_name' => 'Smt. Sarita Devi',
@@ -111,6 +152,7 @@ class DevoteeRegistrationAndAdminTest extends TestCase
         $this->assertNotNull($devotee);
         $this->assertNotNull($devotee->profile_photo);
         $this->assertStringStartsWith('devotees/', $devotee->profile_photo);
+        $this->assertStringStartsWith('DS', $devotee->member_id);
 
         // Admin checks devotees table
         $admin = User::create([
@@ -195,16 +237,48 @@ class DevoteeRegistrationAndAdminTest extends TestCase
 
         $response->assertRedirect('/my-account');
 
-        // Check that allowed fields updated
+        // Check that allowed fields updated (Nick Name only)
         $user->refresh();
         $this->assertEquals('UpdatedBhakt_Aarav', $user->nickname);
-        $this->assertEquals('9876500000', $user->mobile_number);
-        $this->assertEquals('110002', $user->pincode);
 
-        // Check that locked fields were NOT changed
+        // Check that locked fields were NOT changed (Name, Mother, Email, Mobile, Pincode)
+        $this->assertEquals('9876543211', $user->mobile_number);
+        $this->assertEquals('201001', $user->pincode);
         $this->assertEquals('Aarav Nath Sharma', $user->name);
         $this->assertEquals('Smt. Pushpa Devi', $user->mother_name);
         $this->assertEquals('aarav.bhakt@gmail.com', $user->email);
+    }
+
+    /**
+     * 4b. Sponsor verification endpoint returns sponsor details.
+     */
+    public function test_verify_sponsor_endpoint(): void
+    {
+        $sponsor = User::create([
+            'member_id' => 'DS101010101010',
+            'name' => 'DS SWAMI JEE',
+            'nickname' => 'DS SWAMI JEE',
+            'mother_name' => 'Maa Jagadamba',
+            'gender' => 'other',
+            'dob' => '1975-01-01',
+            'email' => 'dsswamijee1@mandirtrust.org',
+            'mobile_number' => '9900101010',
+            'whatsapp_number' => '9900101010',
+            'pincode' => '824231',
+            'password' => Hash::make('Swami@12345'),
+            'is_admin' => false,
+            'status' => 'active',
+        ]);
+
+        $response = $this->getJson('/verify-sponsor?sponsor_id=DS101010101010');
+        $response->assertStatus(200);
+        $response->assertJson([
+            'success' => true,
+            'sponsor' => [
+                'name' => 'DS SWAMI JEE',
+                'member_id' => 'DS101010101010',
+            ],
+        ]);
     }
 
     /**
