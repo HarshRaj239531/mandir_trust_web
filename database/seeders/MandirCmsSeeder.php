@@ -95,35 +95,37 @@ class MandirCmsSeeder extends Seeder
             Pooja::updateOrCreate(['slug' => $p['slug']], $p);
         }
 
-        // 2. Seed Pooja Bookings
-        $rudra = Pooja::where('slug', 'maha-rudrabhishek')->first();
-        $satya = Pooja::where('slug', 'satyanarayan-katha')->first();
+        // 2. Seed Pooja Bookings (only if table is empty)
+        if (PoojaBooking::count() === 0) {
+            $rudra = Pooja::where('slug', 'maha-rudrabhishek')->first();
+            $satya = Pooja::where('slug', 'satyanarayan-katha')->first();
 
-        PoojaBooking::create([
-            'pooja_id' => $rudra ? $rudra->id : null,
-            'pooja_name' => 'Maha Rudrabhishek (Panchamrit & Rudram)',
-            'devotee_name' => 'Ramesh Chandra Sharma',
-            'gotra' => 'Kashyap',
-            'nakshatra' => 'Rohini',
-            'preferred_date' => now()->addDays(3),
-            'mobile_number' => '9812345678',
-            'email' => 'ramesh.bhakt@gmail.com',
-            'amount' => 2100.00,
-            'status' => 'confirmed',
-        ]);
+            PoojaBooking::create([
+                'pooja_id' => $rudra ? $rudra->id : null,
+                'pooja_name' => 'Maha Rudrabhishek (Panchamrit & Rudram)',
+                'devotee_name' => 'Ramesh Chandra Sharma',
+                'gotra' => 'Kashyap',
+                'nakshatra' => 'Rohini',
+                'preferred_date' => now()->addDays(3),
+                'mobile_number' => '9812345678',
+                'email' => 'ramesh.bhakt@gmail.com',
+                'amount' => 2100.00,
+                'status' => 'confirmed',
+            ]);
 
-        PoojaBooking::create([
-            'pooja_id' => $satya ? $satya->id : null,
-            'pooja_name' => 'Shri Satyanarayan Maha Vrat Katha',
-            'devotee_name' => 'Sunita Kumari Verma',
-            'gotra' => 'Bharadwaj',
-            'nakshatra' => 'Pushya',
-            'preferred_date' => now()->addDays(7),
-            'mobile_number' => '9876501234',
-            'email' => 'sunita.verma@gmail.com',
-            'amount' => 1500.00,
-            'status' => 'confirmed',
-        ]);
+            PoojaBooking::create([
+                'pooja_id' => $satya ? $satya->id : null,
+                'pooja_name' => 'Shri Satyanarayan Maha Vrat Katha',
+                'devotee_name' => 'Sunita Kumari Verma',
+                'gotra' => 'Bharadwaj',
+                'nakshatra' => 'Pushya',
+                'preferred_date' => now()->addDays(7),
+                'mobile_number' => '9876501234',
+                'email' => 'sunita.verma@gmail.com',
+                'amount' => 1500.00,
+                'status' => 'confirmed',
+            ]);
+        }
 
         // 3. Seed Donations
         $donations = [
